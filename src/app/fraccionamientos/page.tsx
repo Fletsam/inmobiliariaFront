@@ -8,99 +8,63 @@ import {
   TableRow,
   TableCell,
   getKeyValue,
-  Chip,
-  Tooltip,
-  useDisclosure,
   Modal,
   ModalContent,
   ModalHeader,
   ModalBody,
   ModalFooter,
-  Button,
-  SortDescriptor,
   Input,
+  Tooltip,
+  Chip,
+  useDisclosure,
 } from "@nextui-org/react";
-import React, { useEffect, useState } from "react";
-import useCliente from "./hooks/useGetClientes";
-import { IoLogoReddit, IoSearchOutline, IoTrash } from "react-icons/io5";
-import { EyeFilledIcon } from "@/helpers";
-import { TbEditCircle } from "react-icons/tb";
-import { FiDelete } from "react-icons/fi";
-import moment from "moment";
-import 'moment/locale/es';
-import { redirect } from "next/dist/server/api-utils";
+import React, { useEffect } from "react";
+import useFraccs from "./hooks/useGetFracc";
+import { IoSearchOutline } from "react-icons/io5";
 import Link from "next/link";
-import useDeleteCliente from "./hooks/useDeleteCliente";
-import axios from "axios";
-import { useRouter } from "next/navigation";
 
 
-
-
-export default function Home() {
-
-  const {isOpen, onOpen, onOpenChange} = useDisclosure();
-const {clientes,dataCliente, startLoadingClientes,  showClient } = useCliente()
-
-   const {startDeleteCliente,DeleteClienteApi } = useDeleteCliente()
-
-  const router = useRouter() 
-const Swal = require('sweetalert2')
- const [cliente, setCliente] = useState({})
- const DeleteCliente = async (id) => {
-
- const pathPag = `clientes/${id}`
- await DeleteClienteApi({},pathPag)
- Swal.fire({
-  title: "Eliminacion exitosa",
-  text: "Acabas de eliminar al cliente",
-  icon: "error"
-    });
- router.push("/cliente")
- }
-
- const openModalCliente = (e) => {  
-      setCliente(e)    
-  }
+export default function Fraccionamiento() {
+const {isOpen, onOpen, onOpenChange} = useDisclosure();
+const {startLoadingFraccs,dataFracc, fraccs } = useFraccs()
 
 useEffect(() => {
-  startLoadingClientes()  
+  startLoadingFraccs()  
   
-}, [dataCliente])
+}, [dataFracc])
 
-
-
-
-type Clientes = typeof clientes[0];
+type Fraccs = typeof fraccs[0];
 const columns = [
   {name: "Nombre", uid: "nombre",sortable:true},
-  {name: "Ocupacion", uid: "ocupacion"},
+  {name: "Propietario", uid: "propietario"},
+  {name: "Telefono", uid: "telefono"},
+  {name: "Direccion", uid: "direccion"},
+  {name: "Total de lotes", uid: "totaldelotes"},
+  {name: "Total de Manzanas", uid: "totaldemanzanas"},
+  {name: "Costo", uid: "costototal"},
+  
   {name: "Acciones", uid: "actions"},
 ];
   
- const renderCell = React.useCallback((clientes: Clientes, columnKey: React.Key) => {
-    const cellValue = clientes[columnKey as keyof Clientes];
+ const renderCell = React.useCallback((fraccs: Fraccs, columnKey: React.Key) => {
+    const cellValue = fraccs[columnKey as keyof Fraccs];
 
-
-
-    
-    moment.locale("es")
 
  switch (columnKey) {
       case "name":
         return (
-          <Clientes
-            description={clientes.nombre}
+          <Fraccs
+            description={fraccs.nombre}
             name={cellValue}
           >
-            {clientes.correo}
-          </Clientes>
+            {/* {fraccs.propietario} */}
+          </Fraccs>
         );
-      case "role":
+      case "propietario":
         return (
           <div className="flex flex-col">
             <p className="text-bold text-sm capitalize">{cellValue}</p>
-            <p className="text-bold text-sm capitalize text-default-400">{ clientes.ocupacion}</p>
+            {/* <p className="text-bold text-sm capitalize text-default-400">{ fraccs.propietario}</p> */}
           </div>
         );
       case "status":
@@ -112,23 +76,23 @@ const columns = [
       case "actions":
         return (
           <div className="relative flex items-center gap-2">
-            <Tooltip content="Detalles" color="success" className="text-white">
-              <span className="text-lg  cursor-pointer text-success active:opacity-50" onClick={onOpen}>
-                <EyeFilledIcon onClick={() => openModalCliente(clientes)}   />
+            <Tooltip content="Details" color="success" className="text-white">
+              <span className="text-lg  cursor-pointer text-success active:opacity-50" /* onClick={onOpen} */>
+                {/* <EyeFilledIcon onClick={() => openModalCliente(fraccs)}   /> */}
           
               </span>
             </Tooltip>
-            <Tooltip color="warning" content="Editar Cliente" className="text-white">
+            <Tooltip color="warning" content="Edit user" className="text-white">
               <span className="text-lg text-warning cursor-pointer active:opacity-50">
-                <Link href={`/cliente/${clientes.id}`}>
-                  <TbEditCircle onClick={() => showClient(clientes) } />
+                <Link href={`/cliente/${fraccs.id}`}>
+                  {/* <TbEditCircle onClick={() => showClient(fraccs) } /> */}
                 </Link>
                 
               </span>
             </Tooltip>
-            <Tooltip color="danger" content="Borrar Cliente">
+            <Tooltip color="danger" content="Delete user">
               <span className="text-lg text-danger cursor-pointer active:opacity-50">
-                <FiDelete onClick={() => DeleteCliente(clientes.id) } />
+                {/* <FiDelete onClick={() => DeleteCliente(fraccs.id) } /> */}
               </span>
             </Tooltip>
           </div>
@@ -138,6 +102,13 @@ const columns = [
     }
   }, []);
 
+
+
+
+
+
+  console.log(fraccs);
+  
 
 
   return (
@@ -157,12 +128,10 @@ const columns = [
 
       <Table 
       className="h-[90vh] w-[auto] p-5"
-      >
-          
+      >   
         <TableHeader className=" " columns={columns}>
           {(columns) => (
             <TableColumn
-              allowsSorting={columns.sortable}
               className=" min-w-72 text-red-800 font-bold text-base"
               key={columns.uid}
             >
@@ -171,7 +140,7 @@ const columns = [
           )}
         </TableHeader>
 
-        <TableBody className="text-black  font-semibold" items={clientes}>
+        <TableBody className="text-black  font-semibold" items={fraccs}>
           {(item) => (
             <TableRow
               className="shadow-slate-200 border text-black"

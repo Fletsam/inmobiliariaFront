@@ -1,11 +1,13 @@
 "use client"
-import { Button, Input, Select, SelectItem } from '@nextui-org/react';
-import React from 'react'
-import DatePicker from "react-datepicker";
+import { Button, Input, Link, Select, SelectItem } from '@nextui-org/react';
+import React, { useEffect } from 'react'
 import useRegisterCliente from '../hooks/useRegisterCliente';
 import { useSelector } from 'react-redux';
+import useEditCliente from '../hooks/usePatchCliente';
+import { useParams, useRouter } from 'next/navigation';
 import { RootState } from '@/store';
-import { useRouter } from 'next/navigation';
+import useGetClientebyId from '../hooks/useGetClientebyId';
+
 
 export const genero = [
   {label: "Masculino", value: "masculino"},
@@ -20,17 +22,35 @@ export const estadocivil = [
   {label: "Concubinato/a", value: "concubinato"},
 ]
 
-const RegisterCliente = () => {
-	const { data, handleSetData, handleSetDate, registerClienteApi } =
-    useRegisterCliente();
+
+const ClienteId = () => {
+
+	const params = useParams();
+	const itemfind  = (parseInt(params.id));
+	
+const { data, handleSetData, handleSetDate, editClienteApi } =
+    useEditCliente(itemfind);
+
+const {ClienteApi, dataCliente,startLoadingClientes,cliente } = useGetClientebyId(itemfind)	
+	
 const { isLogged, nombre , id } = useSelector((state: RootState) => state.users); 
+
+	useEffect(() => {
+  	startLoadingClientes()  
+		
+		}, [dataCliente])
+
+console.log(cliente);
+
 const router = useRouter()
 	const handleRegisterCliente  = (e:any) => {
 			e.preventDefault();
-			registerClienteApi({...data , usuarioId: id})
+			editClienteApi({...data , usuarioId: id})
+			router.push("/cliente")
 			console.log(data);	
-      router.push("/cliente")
 	}
+
+	const isFormValid = data.correo !== '' && data.nombre !== '' && data.ciudad !== '' && data.ocupacion !== '' ; 
 
 
   return (
@@ -38,7 +58,7 @@ const router = useRouter()
       
       <form action="submit" className=" p-2 bg-slate-200/90 w-full  lg:h-[100vh] rounded-xl shadow-2xl ">
 			<h2 className="p-3 font-bold text-2xl  text-primary/100">
-			Registra a un Cliente
+			Edita a {cliente.nombre}
 			</h2>
         <div className=" md:grid md:grid-cols-3 md:gap-10 lg:py-0  ">
           <div className=" py-1 md:py-0 order-first">
@@ -48,9 +68,10 @@ const router = useRouter()
               onChange={handleSetData}
 			  className='text-black'
               label="Nombre"
-             variant='flat'
+            	variant='flat'
               name="nombre"
               id="nombre"
+			  defaultValue={cliente.nombre}
             />
           </div>
           <div className=" py-1 md:py-0  order-2 ">
@@ -257,27 +278,34 @@ const router = useRouter()
           	</div>
         </div>  		
         <div className="flex justify-between xl:justify-end xl:gap-10 w-auto p-6 md:pt-8 xl:pt-10">
-          <Button
+			
+		
+				<Button
 		  	color='success'
-			/* onClick={} */
             id="create-btn"
 			className='text-white bg-primary shadow-md shadow-primary '
 			onClick={handleRegisterCliente}
-      
+			isDisabled = {!isFormValid}
           > 
-		  Registrar
+		  Editar
 		  </Button>
+		
+			
+		
 		  <Button
-      onClick={()=>router.push("/cliente")}
-           /*  onClick={() => handleRegisterCliente} */
-            id="cancelar-btn"
+		  id="cancelar-btn"
+		  color='default'
+		  className='text-white bg-slate-600'
+		  onClick={()=>router.push("/cliente")}
 		  >
 			Cancelar
 		  </Button>
+	
+		  
         </div>
       </form>
     </main>
   );
 };
 
-export default RegisterCliente
+export default ClienteId

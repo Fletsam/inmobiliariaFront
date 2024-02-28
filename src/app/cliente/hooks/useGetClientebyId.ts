@@ -1,24 +1,24 @@
-
-
 import { useApiRequest } from "@/app/hooks/useApiRequest";
 import { useEffect, useState } from "react";
 
-const useCliente = () => {
+const useGetClientebyId = (id:number) => {
   
   const {
     execute: ClienteApi,
     status: statusCliente,
     value: dataCliente,
   } = useApiRequest<IParamsLogin, IResponseLogin>({
-    path: `clientes`,
+    path: `clientes/${id}`,
     method: "get",
   });
-  const [clientes, setClientes] = useState([]);
+  const [cliente, setCliente] = useState({});
   useEffect(() => {
     if (statusCliente === "success") {
-      const cliente = dataCliente.data;
-
-      setClientes(cliente);
+      const cliente = dataCliente;
+		/* console.log(cliente); */
+		
+		
+      setCliente(cliente);
     } else if (statusCliente === "error") {
       console.log(dataCliente);
     }
@@ -34,8 +34,6 @@ const useCliente = () => {
     }
   };
 
-
-
   const showClient = (e) => {  
       console.log(e)
   }
@@ -50,10 +48,10 @@ const useCliente = () => {
     ClienteApi,
     dataCliente,
     statusCliente,
-    clientes,
+    cliente,
     startLoadingClientes,
     showClient,
   };
 };
 
-export default useCliente;
+export default useGetClientebyId

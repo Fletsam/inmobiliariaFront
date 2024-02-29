@@ -47,19 +47,33 @@ const {clientes,dataCliente, startLoadingClientes,  showClient } = useCliente()
   const router = useRouter() 
 const Swal = require('sweetalert2')
  const [cliente, setCliente] = useState({})
- const DeleteCliente = async (id) => {
+ const DeleteCliente = async (id:number) => {
 
  const pathPag = `clientes/${id}`
- await DeleteClienteApi({},pathPag)
- Swal.fire({
-  title: "Eliminacion exitosa",
-  text: "Acabas de eliminar al cliente",
-  icon: "error"
+ 
+  Swal.fire({
+  title: "Estas Seguro?",
+  text: "Esto no se puede revertir!",
+  icon: "warning",
+  showCancelButton: true,
+  confirmButtonColor: "#3085d6",
+  cancelButtonColor: "#d33",
+  confirmButtonText: "Si, estoy seguro!"
+}).then((result:any) => {
+  if (result.isConfirmed) {
+    Swal.fire({
+      title: "Eliminado!",
+      text: "El cliente ha sido eliminado!.",
+      icon: "success"
     });
- router.push("/cliente")
+   DeleteClienteApi({},pathPag)
+  }
+  router.push("/cliente")
+});
+ 
  }
 
- const openModalCliente = (e) => {  
+ const openModalCliente = (e:number) => {  
       setCliente(e)    
   }
 
@@ -143,6 +157,8 @@ const columns = [
   return (
     <main className="bg-slate-200 p-5">
       
+         
+          <div className="flex flex-1 justify-between">
             <Input
             isClearable
             className="w-full sm:max-w-[44%] text-black"
@@ -152,7 +168,17 @@ const columns = [
                          onValueChange={onSearchChange}
  */
           />
-          <div className="flex gap-3"></div>
+
+            <Button
+		  	    color='success'
+            id="create-btn"
+			      className='text-white bg-primary shadow-md shadow-primary '
+			      onClick={()=> router.push("/cliente/registrar")}
+            > 
+              Registrar un Cliente
+            </Button>
+		
+          </div>
 
 
       <Table 
@@ -186,6 +212,9 @@ const columns = [
         </TableBody>
       </Table>
         
+	
+
+
       <>
       <Modal isOpen={isOpen} onOpenChange={onOpenChange} isDismissable={false} isKeyboardDismissDisabled={true}>
         <ModalContent className="text-black">

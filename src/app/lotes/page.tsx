@@ -25,7 +25,7 @@ import Link from "next/link";
 import useLotes from "./hooks/useGetLotes";
 
 
-export default function Fraccionamiento() {
+export default function Lotes() {
 const {isOpen, onOpen, onOpenChange} = useDisclosure();
 const {startLoadingLotes,dataLotes, lotes } = useLotes()
 

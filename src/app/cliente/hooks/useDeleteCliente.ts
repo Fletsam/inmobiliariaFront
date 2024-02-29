@@ -19,16 +19,12 @@ const useDeleteCliente = () => {
       console.log(dataDeleteCliente);
     }
   }, [statusDeleteCliente]);
-const Swal = require('sweetalert2')
+
   const startDeleteCliente = async () => {
     if (statusDeleteCliente === "pending") {
       try {
        await DeleteClienteApi();
-	   Swal.fire({
-  title: "Good job!",
-  text: "You clicked the button!",
-  icon: "success"
-});
+	   
       } catch (error) {
         console.log(error);
       }

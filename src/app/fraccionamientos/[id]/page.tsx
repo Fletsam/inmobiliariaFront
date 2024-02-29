@@ -1,43 +1,48 @@
 "use client"
-import { Button, Input, Select, SelectItem } from '@nextui-org/react';
-import React from 'react'
-import DatePicker from "react-datepicker";
-import useRegisterCliente from '../hooks/useRegisterCliente';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/store';
-import { useRouter } from 'next/navigation';
+import { RootState } from "@/store";
+import { useParams } from "next/navigation";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import useGetFraccbyId from "../hooks/useGetFraccbyId";
+import { Button, Input, Select, SelectItem } from "@nextui-org/react";
+import useEditCliente from "@/app/cliente/hooks/usePatchCliente";
 
-export const genero = [
-  {label: "Masculino", value: "masculino"},
-  {label: "Femenino", value: "femenino"}
-]
-export const estadocivil = [
-  {label: "Casado/a", value: "casado"},
-  {label: "Soltero/a", value: "soltero"},
-  {label: "Divorciado/a", value: "divorciado"},
-  {label: "Separado/a", value: "separado"},
-  {label: "Viudo/a", value: "viudo"},
-  {label: "Concubinato/a", value: "concubinato"},
-]
+const ClienteId = () => {
 
-const RegisterCliente = () => {
-	const { data, handleSetData, handleSetDate, registerClienteApi } =
-    useRegisterCliente();
+	const params = useParams();
+	const itemfind  = (parseInt(params.id));
+	
+	const { data, handleSetData, handleSetDate, editClienteApi } =
+    useEditCliente(itemfind);
 const { isLogged, nombre , id } = useSelector((state: RootState) => state.users); 
-const router = useRouter()
+
+const {startLoadingFracc , dataFracc , fracc} = useGetFraccbyId(itemfind)
+
+
+	useEffect(() => {
+  	startLoadingFracc()  
+		
+		}, [dataFracc])
+
+console.log(fracc.Manzanas);
+
+/* const router = useRouter()
 	const handleRegisterCliente  = (e:any) => {
 			e.preventDefault();
-			registerClienteApi({...data , usuarioId: id})
+			editClienteApi({...data , usuarioId: id})
+			router.push("/cliente")
 			console.log(data);	
-      router.push("/cliente")
-	}
+	} */
+
+	/* const isFormValid = data.correo !== '' && data.nombre !== '' && data.ciudad !== '' && data.ocupacion !== '' ;  */
 
 
   return (
     <main className=" bg-slate-100  p-3 ">
+      
       <form action="submit" className=" p-2 bg-slate-200/90 w-full  lg:h-[100vh] rounded-xl shadow-2xl ">
 			<h2 className="p-3 font-bold text-2xl  text-primary/100">
-			Registra a un Cliente
+			Edita a {fracc.nombre}
 			</h2>
         <div className=" md:grid md:grid-cols-3 md:gap-10 lg:py-0  ">
           <div className=" py-1 md:py-0 order-first">
@@ -47,9 +52,10 @@ const router = useRouter()
               onChange={handleSetData}
 			  className='text-black'
               label="Nombre"
-             variant='flat'
+            	variant='flat'
               name="nombre"
               id="nombre"
+			  defaultValue={fracc.nombre}
             />
           </div>
           <div className=" py-1 md:py-0  order-2 ">
@@ -226,7 +232,7 @@ const router = useRouter()
           </div>
           <div className="form-group mb-2 w-auto py-1 md:py-0 order-5">
 			 <div className=" py-1 md:py-0 order-5 ">
-           <Select
+          {/*  <Select
 		   value={data.genero}
 			items={genero}
 			label="Genero"
@@ -237,11 +243,11 @@ const router = useRouter()
 			name='genero'
 			>
     		  {(genero) => <SelectItem className='text-black' key={genero.value}>{genero.label}</SelectItem>}
-    		</Select>
+    		</Select> */}
           </div>
           </div>
 			<div className=" py-1 md:py-0 order-4">
-            <Select
+            {/* <Select
 			value={data.estadocivil}
 			items={estadocivil}
 			label="Estado Civil"
@@ -252,31 +258,38 @@ const router = useRouter()
 			name='estadocivil'
 			>
      		 {(estadocivil) => <SelectItem className='text-black' key={estadocivil.value}>{estadocivil.label}</SelectItem>}
-    		</Select>
+    		</Select> */}
           	</div>
         </div>  		
         <div className="flex justify-between xl:justify-end xl:gap-10 w-auto p-6 md:pt-8 xl:pt-10">
-          <Button
+			
+		
+				<Button
 		  	color='success'
-			/* onClick={} */
             id="create-btn"
 			className='text-white bg-primary shadow-md shadow-primary '
-			onClick={handleRegisterCliente}
-      
+			/* onClick={handleRegisterCliente} */
+			/* isDisabled = {!isFormValid} */
           > 
-		  Registrar
+		  Editar
 		  </Button>
+		
+			
+		
 		  <Button
-      onClick={()=>router.push("/cliente")}
-           /*  onClick={() => handleRegisterCliente} */
-            id="cancelar-btn"
+		  id="cancelar-btn"
+		  color='default'
+		  className='text-white bg-slate-600'
+		  /* onClick={()=>router.push("/cliente")} */
 		  >
 			Cancelar
 		  </Button>
+	
+		  
         </div>
       </form>
     </main>
   );
 };
 
-export default RegisterCliente
+export default ClienteId

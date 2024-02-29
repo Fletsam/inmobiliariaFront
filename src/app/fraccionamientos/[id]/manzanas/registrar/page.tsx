@@ -1,26 +1,11 @@
 "use client"
 import { Button, Input, Select, SelectItem } from '@nextui-org/react';
 import React from 'react'
-import DatePicker from "react-datepicker";
-import useRegisterCliente from '../hooks/useRegisterCliente';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store';
 import { useRouter } from 'next/navigation';
 
-export const genero = [
-  {label: "Masculino", value: "masculino"},
-  {label: "Femenino", value: "femenino"}
-]
-export const estadocivil = [
-  {label: "Casado/a", value: "casado"},
-  {label: "Soltero/a", value: "soltero"},
-  {label: "Divorciado/a", value: "divorciado"},
-  {label: "Separado/a", value: "separado"},
-  {label: "Viudo/a", value: "viudo"},
-  {label: "Concubinato/a", value: "concubinato"},
-]
-
-const RegisterCliente = () => {
+const RegisterManzana = () => {
 	const { data, handleSetData, handleSetDate, registerClienteApi } =
     useRegisterCliente();
 const { isLogged, nombre , id } = useSelector((state: RootState) => state.users); 

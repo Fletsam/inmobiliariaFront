@@ -20,7 +20,7 @@ import {
   Button,
 } from "@nextui-org/react";
 import React, { useEffect, useState } from "react";
-import useFraccs from "./hooks/useGetFracc";
+
 import { IoSearchOutline } from "react-icons/io5";
 import Link from "next/link";
 import { EyeFilledIcon } from "@/helpers";
@@ -29,22 +29,35 @@ import { formatPrecio } from "@/helpers/formatearprecios";
 import { formatters } from "date-fns";
 import { TbEditCircle } from "react-icons/tb";
 
+import { useParams } from "next/navigation";
+import useGetManzanabyId from "../hooks/useGetManzanabyId";
 
-export default function Fraccionamiento() {
-const {isOpen, onOpen, onOpenChange} = useDisclosure();
-const {startLoadingFraccs,dataFracc, fraccs } = useFraccs()
+
+const ClienteId = () => {
+	const params = useParams();
+	const itemfind  = (parseInt(params.id));
+	console.log(itemfind);
+	
+const {startLoadingManzana,dataManzana, manzana ,lotes } = useGetManzanabyId(itemfind)	
+/* const {isOpen, onOpen, onOpenChange} = useDisclosure();
+ */
+
 
 useEffect(() => {
   
-  startLoadingFraccs()  
+  startLoadingManzana()  
   
-}, [dataFracc])
-console.log(fraccs);
+}, [dataManzana])
+console.log(lotes);
 
-type Fraccs = typeof fraccs[0];
+
+
+type Lotes = typeof lotes[0];
 const columns = [
-  {name: "Nombre", uid: "nombre",sortable:true},
-  {name: "Propietario", uid: "propietario"},
+	{name: "Numero de Lote", uid: "numero"},
+  {name: "Clave de Lote", uid: "clave"},
+   {name: "Metros Cuadrados (m²)", uid: "m2"},
+  {name: "Costo", uid: "costo"},
 /*   {name: "Telefono", uid: "telefono"},
   {name: "Direccion", uid: "direccion"},
   {name: "Total de lotes", uid: "totaldelotes"},
@@ -54,14 +67,13 @@ const columns = [
 ];
   let numeral = require('numeral');
 
-const [fracc, setFracc] = useState({})
 
-const openModalFracc = (e:number) => {  
+/* const openModalFracc = (e:number) => {  
       setFracc(e)    
-  }
+  } */
 
- const renderCell = React.useCallback((fraccs: Fraccs, columnKey: React.Key) => {
-    const cellValue = fraccs[columnKey as keyof Fraccs];
+ const renderCell = React.useCallback((lotes: Lotes, columnKey: React.Key) => {
+    const cellValue = lotes[columnKey as keyof Lotes];
 
 
 
@@ -72,12 +84,12 @@ const openModalFracc = (e:number) => {
  switch (columnKey) {
       case "name":
         return (
-          <Fraccs
-            description={fraccs.nombre}
+          <Lotes
+            description={lotes.nombre}
             name={cellValue}
           >
             {/* {fraccs.propietario} */}
-          </Fraccs>
+          </Lotes>
         );
       case "propietario":
         return (
@@ -94,18 +106,18 @@ const openModalFracc = (e:number) => {
         );
       case "actions":
         return (
-          <div className="relative flex items-center gap-2">
+          <div className="relative flex gap-2">
             <Tooltip content="Details" color="success" className="text-white">
-              <span className="text-lg  cursor-pointer text-success active:opacity-50" onClick={onOpen}>
-                <EyeFilledIcon onClick={() => openModalFracc(fraccs)}   />
+              <span className="text-lg  cursor-pointer text-success active:opacity-50" /* onClick={onOpen} */>
+                {/* <EyeFilledIcon onClick={() => openModalFracc(fraccs)}   /> */}
           
               </span>
             </Tooltip>
             <Tooltip color="warning" content="Edit user" className="text-white">
               <span className="text-lg text-warning cursor-pointer active:opacity-50">
-                <Link href={`/cliente/${fraccs.id}`}>
-                  {/* <TbEditCircle onClick={() => showClient(fraccs) } /> */}
-                </Link>
+                {/* <Link href={`/cliente/${manzanas.id}`}>
+                  <TbEditCircle onClick={() => showClient(fraccs) } />
+                </Link> */}
                 
               </span>
             </Tooltip>
@@ -121,7 +133,7 @@ const openModalFracc = (e:number) => {
     }
   }, []);
   return (
-    <main className="bg-slate-200 p-5">
+    <main className="bg-slate-200 p-5 text-black">
       
             <Input
             isClearable
@@ -132,12 +144,13 @@ const openModalFracc = (e:number) => {
                          onValueChange={onSearchChange}
  */
           />
-          <div className="flex gap-3"></div>
+        <h1 className="text-primary font-semibold text-2xl pt-2">{/*  {fracc.nombre} */} </h1>
 
-
+	
       <Table 
       className="h-[90vh] w-[auto] p-5"
       >   
+	  
         <TableHeader className=" " columns={columns}>
           {(columns) => (
             <TableColumn
@@ -149,7 +162,7 @@ const openModalFracc = (e:number) => {
           )}
         </TableHeader>
 
-        <TableBody className="text-black  font-semibold" items={fraccs}>
+        <TableBody className="text-black  font-semibold" items={lotes}>
           {(item) => (
             <TableRow
               className="shadow-slate-200 border text-black"
@@ -164,7 +177,7 @@ const openModalFracc = (e:number) => {
         </TableBody>
       </Table>
         
-      <>
+     {/*  <>
       <Modal isOpen={isOpen} onOpenChange={onOpenChange} isDismissable={false} isKeyboardDismissDisabled={true}>
         <ModalContent className="text-black">
           {(onClose) => (
@@ -215,9 +228,11 @@ const openModalFracc = (e:number) => {
           )}
         </ModalContent>
       </Modal>
-    </>
+    </> */}
 
 
     </main>
   );
 }
+
+export default ClienteId

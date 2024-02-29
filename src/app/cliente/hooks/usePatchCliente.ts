@@ -60,7 +60,7 @@ const useEditCliente = (id:number) => {
   });
 
   useEffect(() => {
-    if (statusEditCliente === "success") {
+    if (statusEditCliente === "success" ) {
       const dateFormat = moment(dataEditCliente.date).format(
         "MMMM Do YYYY, h:mm:ss a"
       );
@@ -92,7 +92,7 @@ const useEditCliente = (id:number) => {
       setData({ ...data, date: date });
     }
   };
-
+  
   return {
     handleSetDate,
     data,

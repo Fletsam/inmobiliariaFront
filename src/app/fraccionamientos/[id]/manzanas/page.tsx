@@ -33,33 +33,48 @@ import { useParams } from "next/navigation";
 import useRegisterManzana from "@/app/manzanas/hooks/useRegisterManzana";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
+import useFraccs from "../../hooks/useGetFracc";
 
 
 const ClienteId = () => {
-	const params = useParams();
-	const itemfind  = (parseInt(params.id));
+const params = useParams();
+const itemfind  = (parseInt(params.id));
 const { isLogged, nombre , id } = useSelector((state: RootState) => state.users)	
-const {startLoadingFracc,dataFracc, fracc,manzanas } = useGetFraccbyId(itemfind)	
+const {startLoadingFraccs,dataFracc,fraccs,manzanas } = useFraccs()	
 /* const {isOpen, onOpen, onOpenChange} = useDisclosure();
  */
 const {handleSetData ,data ,registerManzanaApi} = useRegisterManzana()
 
+const param = `fraccionamientos/usuario/${id}`
+
 useEffect(() => {
   
-  startLoadingFracc()  
-  
+  startLoadingFraccs(param)  
+
 }, [dataFracc])
+
+
+
 const Swal = require('sweetalert2')
+
+
+
+
+
+/* if (!llave){
+    throw Swal.fire({
+  title: 'Aqui no puedes estar',
+  text: 'Regresa a la pantalla de inicio',
+  icon: 'warning',
+  confirmButtonText: 'OK'
+})
+  } */
+
 
 const handleAddManzana = (e) => {
 	e.preventDefault()
 	registerManzanaApi({...data , usuarioId: id, fraccionamientoId: itemfind, costototal: 0})
-	Swal.fire({
-  title: 'Se ha añadido Correctamente!',
-  text: 'Refresca la pagina para ver los cambios',
-  icon: 'success',
-  confirmButtonText: 'Hecho'
-})
+	
 }
 
 
@@ -142,6 +157,8 @@ const [manzana, setManzana] = useState({})
         return cellValue;
     }
   }, []);
+  
+  
   return (
     <main className="bg-slate-200 p-5 text-black">
       
@@ -155,7 +172,7 @@ const [manzana, setManzana] = useState({})
  */
           />
 		  <div className="flex flex-1 justify-between">
-		<h1 className="text-primary font-semibold text-2xl pt-2"> {fracc.nombre} </h1>
+		<h1 className="text-primary font-semibold text-2xl pt-2"> {fraccs.nombre} </h1>
 				
 			<form action="submit" onSubmit={(e)=> handleAddManzana(e)}>
 				<Input

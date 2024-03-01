@@ -6,6 +6,7 @@ import React, { useState } from "react";
 import useLogin from "./login/hooks/useLogin";
 
 
+
 const Login = () => {
   const [isVisible, setIsVisible] = useState(false);
 
@@ -32,17 +33,17 @@ const Login = () => {
         <div className="w-auto">
           <p className="text-red-700 font-bold text-base w-auto">
             {" "}
-            Nombre{" "}
+            Usuario{" "}
           </p>
           <Input
             variant="bordered"
             placeholder="Coloque su numero de cliente"
             type="text"
             className="max-w-xs text-black py-5"
-            value={data.nombre}
+            value={data.usuario}
             onChange={handleSetData}
-            id="nombre"
-            name="nombre"
+            id="usuario"
+            name="usuario"
           />
         </div>
         <div className=" w-full">
@@ -68,11 +69,7 @@ const Login = () => {
               </button>
             }
             type={isVisible ? "text" : "password"}
-            onKeyPress={(e: React.KeyboardEvent<HTMLInputElement>) => {
-              if (e.key === "Enter") {
-                handleLogin();
-              }
-            }}
+        
             className="max-w-xs text-black py-2"
           />
         </div>

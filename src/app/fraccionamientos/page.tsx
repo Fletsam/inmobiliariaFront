@@ -28,18 +28,24 @@ import moment from "moment";
 import { formatPrecio } from "@/helpers/formatearprecios";
 import { formatters } from "date-fns";
 import { TbEditCircle } from "react-icons/tb";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store";
 
 
 export default function Fraccionamiento() {
 const {isOpen, onOpen, onOpenChange} = useDisclosure();
 const {startLoadingFraccs,dataFracc, fraccs } = useFraccs()
+const { isLogged, nombre, id } = useSelector((state: RootState) => state.users); 
+console.log(id);
 
 useEffect(() => {
-  
-  startLoadingFraccs()  
+  const param = `fraccionamientos/usuario/${id}`
+  startLoadingFraccs(param)  
   
 }, [dataFracc])
 console.log(fraccs);
+
+
 
 type Fraccs = typeof fraccs[0];
 const columns = [

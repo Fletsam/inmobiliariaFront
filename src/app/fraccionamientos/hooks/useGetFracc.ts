@@ -10,24 +10,26 @@ const useFraccs = () => {
     status: statusFracc,
     value: dataFracc,
   } = useApiRequest<IParamsLogin, IResponseLogin>({
-    path: `fraccionamientos`,
+    path: "",
     method: "get",
   });
   const [fraccs, setFraccs] = useState([]);
+  const [manzanas, setManzanas] = useState([]);
   useEffect(() => {
     if (statusFracc === "success") {
-      const fraccs = dataFracc.data;
-
-      setFraccs(fraccs);
+      const fraccs = dataFracc.Manzanas
+      const manzanas = dataFracc.Manzanas
+      setManzanas(manzanas)
+      setFraccs([{...fraccs}]);
     } else if (statusFracc === "error") {
       console.log(dataFracc);
     }
   }, [statusFracc]);
 
-  const startLoadingFraccs = async () => {
+  const startLoadingFraccs = async (param:string) => {
     if (statusFracc === "pending") {
       try {
-        useFraccsApi();
+        useFraccsApi([],param);
       } catch (error) {
         console.log(error);
       }
@@ -40,7 +42,8 @@ const useFraccs = () => {
     useFraccsApi,
     dataFracc,
     statusFracc,
-	fraccs
+	fraccs,
+  manzanas
   };
 };
 

@@ -13,12 +13,12 @@ import { redirect } from "next/navigation";
 
 
 interface LoginData {
-  nombre: string;
+  usuario: string;
   pass: string;
 }
 
 const defaultDataLogin: LoginData = {
-  nombre: "",
+  usuario: "",
   pass: "",
 };
 
@@ -38,7 +38,11 @@ const useLogin = () => {
 
   useEffect(() => {
     if (statusLogin === "success") {
+      console.log(data);
+      
       const decoded = jwtDecode(dataLogin.data.access_token);
+      console.log(decoded);
+      
       const userLogged = {
         ...decoded,
         token: dataLogin.data.access_token,
@@ -46,7 +50,7 @@ const useLogin = () => {
       };
       console.log(userLogged);
       dispatch(setUser(userLogged));
-      redirect("/usuario")
+      /* redirect("/usuario") */
     } else if (statusLogin === "error") {
       console.log(dataLogin);
     }
@@ -65,8 +69,8 @@ const useLogin = () => {
     setData((dataValue) => ({ ...dataValue, [name]: value }));
   };
 
-  const handleLogin = () => {
-    loginApi(data);
+  const handleLogin = async () => {
+    await loginApi(data);
   };
 
   return {

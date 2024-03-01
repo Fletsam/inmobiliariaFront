@@ -3,9 +3,10 @@ import { RootState } from "@/store";
 import { useParams } from "next/navigation";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
-import useGetFraccbyId from "../hooks/useGetFraccbyId";
+
 import { Button, Input, Select, SelectItem } from "@nextui-org/react";
 import useEditCliente from "@/app/cliente/hooks/usePatchCliente";
+import useFraccs from "../hooks/useGetFracc";
 
 const ClienteId = () => {
 
@@ -16,15 +17,19 @@ const ClienteId = () => {
     useEditCliente(itemfind);
 const { isLogged, nombre , id } = useSelector((state: RootState) => state.users); 
 
-const {startLoadingFracc , dataFracc , fracc} = useGetFraccbyId(itemfind)
+const {startLoadingFraccs , dataFracc , fraccs,} = useFraccs()
 
+const param = `fraccionamientos/usuario/${id}`
 
 	useEffect(() => {
-  	startLoadingFracc()  
+  
+  	startLoadingFraccs(param)  
 		
 		}, [dataFracc])
 
-console.log(fracc.Manzanas);
+console.log(fraccs);
+
+
 
 /* const router = useRouter()
 	const handleRegisterCliente  = (e:any) => {

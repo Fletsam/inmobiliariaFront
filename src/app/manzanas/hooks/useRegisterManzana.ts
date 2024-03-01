@@ -19,6 +19,8 @@ const defaultDataLogin: RegisterDataCliente = {
 
 /* registerLocale("es", es); */
 
+const Swal = require('sweetalert2')
+
 const useRegisterManzana = () => {
   const {
     execute: registerManzanaApi,
@@ -29,16 +31,28 @@ const useRegisterManzana = () => {
     method: "POST",
   });
 
+  
   useEffect(() => {
     if (statusRegisterManzana === "success") {
       const Cliente = {
         dataRegisterManzana };
       console.log(Cliente);
-
+      Swal.fire({
+        title: 'Se ha añadido Correctamente!',
+        text: 'Refresca la pagina para ver los cambios',
+        icon: 'success',
+        confirmButtonText: 'Hecho'
+      })
       console.log(statusRegisterManzana);
     } else if (statusRegisterManzana === "error") {
       console.log(statusRegisterManzana);
       console.log(statusRegisterManzana);
+      Swal.fire({
+        title: 'No tienes permisos!...',
+        text: 'No tienes los permisos para editar este apartado',
+        icon: 'error',
+        confirmButtonText: 'Hecho'
+      })
     }
   }, [statusRegisterManzana]);
 

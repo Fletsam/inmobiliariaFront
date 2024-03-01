@@ -41,15 +41,13 @@ const ClienteId = () => {
 const {startLoadingManzana,dataManzana, manzana ,lotes } = useGetManzanabyId(itemfind)	
 /* const {isOpen, onOpen, onOpenChange} = useDisclosure();
  */
-
-
+const { isLogged, nombre , id } = useSelector((state: RootState) => state.users); 
 useEffect(() => {
+  const param = `fraccionamientos/usuario/${id}`
+  startLoadingManzana(param)  
   
-  startLoadingManzana()  
-  
-}, [dataManzana])
-console.log(lotes);
-
+}, [dataFracc])
+console.log(fraccs);
 
 
 type Lotes = typeof lotes[0];

@@ -2,14 +2,14 @@
 import { useApiRequest } from "@/app/hooks/useApiRequest";
 import { useEffect, useState } from "react";
 
-const useGetFraccbyId = (id:number) => {
+const useGetFraccbyId = () => {
   
   const {
     execute: FraccApi,
     status: statusFracc,
     value: dataFracc,
   } = useApiRequest<IParamsLogin, IResponseLogin>({
-    path: `fraccionamientos/${id}`,
+    path: "",
     method: "get",
   });
   const [fracc, setFracc] = useState({});

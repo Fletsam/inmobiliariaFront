@@ -1,72 +1,67 @@
 import Image from "next/image";
 import React from "react";
 import {
-  IoBrowsersOutline,
-  IoCalculator,
-  IoHomeOutline,
-  IoLogoReact,
-  IoMoon,
+  IoBriefcaseOutline,
+  IoDocumentAttachOutline,
+  IoPersonAdd,
 } from "react-icons/io5";
 import { SidebarMenuitem } from "./SidebarMenuitem";
-import { Logo } from "@/helpers";
-import { TbHomePlus } from "react-icons/tb";
-import { BsFileEarmark, BsFileEarmarkPerson } from "react-icons/bs";
+import {  BsFileEarmarkPerson, BsMegaphoneFill } from "react-icons/bs";
 import { FiDollarSign } from "react-icons/fi";
+
 
 const menuItems = [
   {
     path: "/login",
-    icon: <FiDollarSign size={40} />,
-    title: "Cobranza",
-    subtitle: "Cobranza",
+    icon: <FiDollarSign size={50} />,
+    title: "Contabilidad",
+    subtitle: "Apartado de contabilidad",
   },
   {
     path: "/cliente",
-    icon: <BsFileEarmarkPerson size={40} />,
+    icon: <BsFileEarmarkPerson size={50} />,
     title: "Clientes",
-    subtitle: "Lista de Clientes",
+    subtitle: "Apartado de Clientes",
   },
   {
-    path: "/lotes",
-    icon: <TbHomePlus size={40} />,
-    title: "Lotes",
-    subtitle: "Lista de Lotes",
+    path: "/ventas",
+    icon: <IoBriefcaseOutline size={50} />,
+    title: "Ventas",
+    subtitle: "Apartado de ventas",
+  },
+  {
+    path: "/rh",
+    icon: <IoPersonAdd size={50} />,
+    title: "Recursos Humanos",
+    subtitle: "Apartado de Recursos Humanos",
+  },
+  {
+    path: "/marketing",
+    icon: <BsMegaphoneFill size={50} />,
+    title: "Marketing",
+    subtitle: "Apartado de Publicidad",
+  },
+  {
+    path: "/produccion",
+    icon: <IoDocumentAttachOutline size={50} />,
+    title: "Producción",
+    subtitle: "Apartado de producción",
   },
 ];
 
 export const Sidebar = () => {
+ 
+
+
   return (
     <nav
       id="menu"
       style={{ width: "300px" }}
-      className="bg-red-800 min-h-screen z-10 text-slate-300 w-64 left-0 "
+      className="bg-primary min-h-screen z-10 text-white w-64 left-0 relative pt-10 border-r-1 border-white "
     >
-      <div id="logo" className="my-4 px-6">
-        <h1 className=" flex items-center text-lg md:text-2xl font-bold text-white">
-          <Image width={200} height={200} src={"/Logo.png"} alt="logo" />
-        </h1>
-        <p className="text-white font-normal text-xl">Maneja tus Actividades</p>
-      </div>
-      <div id="profile" className="px-6 py-10">
-        <p className="text-white font-normal text-xl">Bienvenido</p>
-        <a href="#" className="inline-flex space-x-2 items-center">
-          <span>
-            {/*  <Image
-              width={50}
-              height={50}
-              className="rounded-full w-8 h-8"
-              src="https://images.unsplash.com/photo-1542909168-82c3e7fdca5c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=128&q=80"
-              alt=""
-            /> */}
-          </span>
-          <span className="text-white font-normal text-xl bg-red-700 p-2 border rounded-md">
-            Luis Cervantes
-          </span>
-        </a>
-      </div>
-      <div id="nav" className="w-full px-6">
+      <div id="nav" className="w-full px-6 text-xs">
         {menuItems.map((item) => (
-          <SidebarMenuitem key={item.path} {...item} />
+          <SidebarMenuitem  key={item.path} {...item} />
         ))}
       </div>
     </nav>

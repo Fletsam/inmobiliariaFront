@@ -50,7 +50,7 @@ const useLogin = () => {
       };
       console.log(userLogged);
       dispatch(setUser(userLogged));
-      /* redirect("/usuario") */
+      redirect("/usuario")
     } else if (statusLogin === "error") {
       console.log(dataLogin);
     }

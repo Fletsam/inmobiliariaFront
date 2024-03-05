@@ -24,7 +24,7 @@ export default function RootLayout({
     <Provider store={store}>
       <AuthInitializer>
           <html lang="es">
-              <body className="">{children}</body>
+              <body className={inter.className}>{children}</body>
           </html>
       </AuthInitializer>
           </Provider>

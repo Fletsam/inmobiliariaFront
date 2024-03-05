@@ -20,82 +20,67 @@ import {
   Button,
 } from "@nextui-org/react";
 import React, { useEffect, useState } from "react";
-import useFraccs from "./hooks/useGetFracc";
 import { IoSearchOutline } from "react-icons/io5";
 import Link from "next/link";
 import { EyeFilledIcon } from "@/helpers";
-import moment from "moment";
-import { formatPrecio } from "@/helpers/formatearprecios";
-import { formatters } from "date-fns";
-import { TbEditCircle } from "react-icons/tb";
-import { useSelector } from "react-redux";
-import { RootState } from "@/store";
-import useRegisterFracc from "./hooks/useRegisterFracc";
+import useGetEstadoCuenta from "../../hooks/useGetEstadoCuenta";
+import { useParams } from "next/navigation";
 
 
 export default function Fraccionamientos() {
+	const params = useParams();
+const itemfind  = (parseInt(params.id));
 const {isOpen, onOpen, onOpenChange} = useDisclosure();
-const {startLoadingFraccs,dataFracc, fraccs } = useFraccs()
-const { isLogged, nombre, id } = useSelector((state: RootState) => state.users); 
+const {startLoadingEstadoCuenta,estadoCuenta,dataEstadoCuenta,ingresos,egresos } = useGetEstadoCuenta()
 
-const { handleSetData, data,registerFraccApi} = useRegisterFracc()
 
 
 useEffect(() => {
-  const param = `fraccionamientos/usuario/${id}`
-  startLoadingFraccs(param)  
+  const param = `estadocuenta/contrato/${itemfind}`
+  startLoadingEstadoCuenta(param)  
   
-}, [dataFracc])
+}, [dataEstadoCuenta])
 
-console.log(fraccs);
+console.log(estadoCuenta);
 
-const handleAddFracc = () => {
-  console.log(data);
-  
-  registerFraccApi({...data,totaldelotes:0,totaldemanzanas:0,costototal:0, usuarioId:id})
+const estadocuentaIngresos = [estadoCuenta].concat(ingresos).concat(egresos)
 
-} 
+console.log(estadocuentaIngresos);
 
 
-type Fraccs = typeof fraccs[0];
+type EstadoCuenta = typeof estadocuentaIngresos[0];
 const columns = [
-  {name: "Nombre", uid: "nombre",sortable:true},
-  {name: "Propietario", uid: "propietario"},
-  {name: "Telefono", uid: "telefono"},
-  {name: "Direccion", uid: "direccion"},
+  {name: "Concepto", uid: "concepto"},
+  {name: "Monto Egreso", uid: "monto"},
+  {name: "Monto Ingreso", uid: "monto"},
+  {name: "Cuenta Saldo", uid: "cuentasaldo"},
   {name: "Total de lotes", uid: "totaldelotes"},
   {name: "Total de Manzanas", uid: "totaldemanzanas"},
   {name: "Costo", uid: "costototal"},
   {name: "Acciones", uid: "actions"},
 ];
-  let numeral = require('numeral');
 
-const [fracc, setFracc] = useState({})
 
+/* 
 const openModalFracc = (e:number) => {  
       setFracc(e)    
-  }
+  } */
 
- const renderCell = React.useCallback((fraccs: Fraccs, columnKey: React.Key) => {
-    const cellValue = fraccs[columnKey as keyof Fraccs];
-
-
-
-
-
-
+ const renderCell = React.useCallback((estadocuentaIngresos: EstadoCuenta, columnKey: React.Key) => {
+    const cellValue = estadocuentaIngresos[columnKey as keyof EstadoCuenta];
+	
 
  switch (columnKey) {
       case "name":
         return (
-          <Fraccs
+          <EstadoCuenta
             description={fraccs.nombre}
             name={cellValue}
           >
             {/* {fraccs.propietario} */}
-          </Fraccs>
+          </EstadoCuenta>
         );
-      case "propietario":
+      case "egresos":
         return (
           <div className="flex flex-col">
             <p className="text-bold text-sm capitalize">{cellValue}</p>
@@ -113,15 +98,15 @@ const openModalFracc = (e:number) => {
           <div className="relative flex items-center gap-2">
             <Tooltip content="Details" color="success" className="text-white">
               <span className="text-lg  cursor-pointer text-success active:opacity-50" onClick={onOpen}>
-                <EyeFilledIcon onClick={() => openModalFracc(fraccs)}   />
+                {/* <EyeFilledIcon onClick={() => openModalFracc(fraccs)}   /> */}
           
               </span>
             </Tooltip>
             <Tooltip color="warning" content="Edit user" className="text-white">
               <span className="text-lg text-warning cursor-pointer active:opacity-50">
-                <Link href={`/cliente/${fraccs.id}`}>
+                {/* <Link href={`/cliente/${fraccs.id}`}> */}
                   {/* <TbEditCircle onClick={() => showClient(fraccs) } /> */}
-                </Link>
+               {/*  </Link> */}
                 
               </span>
             </Tooltip>
@@ -170,7 +155,7 @@ const openModalFracc = (e:number) => {
           )}
         </TableHeader>
 
-        <TableBody className="text-black  font-semibold" items={fraccs}>
+        <TableBody className="text-black  font-semibold" items={estadocuentaIngresos}>
           {(item) => (
             <TableRow
               className="shadow-slate-200 border text-black"
@@ -184,7 +169,7 @@ const openModalFracc = (e:number) => {
           )}
         </TableBody>
       </Table>
-        
+     
      <>
       <Modal isOpen={isOpen} onOpenChange={onOpenChange} isDismissable={false} isKeyboardDismissDisabled={true}>
         <ModalContent className="text-black">

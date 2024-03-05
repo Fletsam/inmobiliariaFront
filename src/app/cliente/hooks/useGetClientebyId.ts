@@ -1,14 +1,14 @@
 import { useApiRequest } from "@/app/hooks/useApiRequest";
 import { useEffect, useState } from "react";
 
-const useGetClientebyId = (id:number) => {
+const useGetClientebyId = () => {
   
   const {
     execute: ClienteApi,
     status: statusCliente,
     value: dataCliente,
   } = useApiRequest<IParamsLogin, IResponseLogin>({
-    path: `clientes/${id}`,
+    path: "",
     method: "get",
   });
   const [cliente, setCliente] = useState({});
@@ -24,33 +24,23 @@ const useGetClientebyId = (id:number) => {
     }
   }, [statusCliente]);
 
-  const startLoadingClientes = async () => {
+  const startLoadingClientes = async (param:string) => {
     if (statusCliente === "pending") {
       try {
-        ClienteApi();
+        ClienteApi({},param);
       } catch (error) {
         console.log(error);
       }
     }
   };
 
-  const showClient = (e) => {  
-      console.log(e)
-  }
-
-  const edit = () => {
-    ClienteApi();
-    /*  navigate(`/Clientes/${users.id}`); */
-  };
 
   return {
-    edit,
     ClienteApi,
     dataCliente,
     statusCliente,
     cliente,
     startLoadingClientes,
-    showClient,
   };
 };
 

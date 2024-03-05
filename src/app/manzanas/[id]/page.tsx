@@ -43,7 +43,7 @@ const {startLoadingManzana,dataManzana, manzana ,lotes } = useGetManzanabyId(ite
  */
 const { isLogged, nombre , id } = useSelector((state: RootState) => state.users); 
 useEffect(() => {
-  const param = `fraccionamientos/usuario/${id}`
+  const param = `fraccionamientos/${itemfind}/usuario/${id}`
   startLoadingManzana(param)  
   
 }, [dataFracc])

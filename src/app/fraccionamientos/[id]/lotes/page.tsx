@@ -20,65 +20,92 @@ import {
   Button,
 } from "@nextui-org/react";
 import React, { useEffect, useState } from "react";
-import useFraccs from "./hooks/useGetFracc";
-import { IoSearchOutline } from "react-icons/io5";
+
+import { IoAdd, IoSearchOutline } from "react-icons/io5";
 import Link from "next/link";
 import { EyeFilledIcon } from "@/helpers";
 import moment from "moment";
 import { formatPrecio } from "@/helpers/formatearprecios";
 import { formatters } from "date-fns";
 import { TbEditCircle } from "react-icons/tb";
+import useGetFraccbyId from "../../hooks/useGetFraccbyId";
+import { useParams } from "next/navigation";
+import useRegisterManzana from "@/app/manzanas/hooks/useRegisterManzana";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
-import useRegisterFracc from "./hooks/useRegisterFracc";
+import useFraccs from "../../hooks/useGetFracc";
+import Lotes from "@/app/lotes/page";
+import useRegisterLote from "@/app/lotes/hooks/useRegisterLote";
 
 
-export default function Fraccionamientos() {
+const ClienteId = () => {
+const params = useParams();
+const itemfind  = (parseInt(params.id));
+const { isLogged, nombre , id } = useSelector((state: RootState) => state.users)	
+const {startLoadingFracc,dataFracc,fracc,manzanas,lotes } = useGetFraccbyId()	
 const {isOpen, onOpen, onOpenChange} = useDisclosure();
-const {startLoadingFraccs,dataFracc, fraccs } = useFraccs()
-const { isLogged, nombre, id } = useSelector((state: RootState) => state.users); 
 
-const { handleSetData, data,registerFraccApi} = useRegisterFracc()
+const {handleSetData ,data ,registerLoteApi} = useRegisterLote()
 
+const param = `fraccionamientos/${itemfind}/usuario/${id}`
 
 useEffect(() => {
-  const param = `fraccionamientos/usuario/${id}`
-  startLoadingFraccs(param)  
   
+  startLoadingFracc(param)  
+
 }, [dataFracc])
 
-console.log(fraccs);
-
-const handleAddFracc = () => {
-  console.log(data);
-  
-  registerFraccApi({...data,totaldelotes:0,totaldemanzanas:0,costototal:0, usuarioId:id})
-
-} 
 
 
-type Fraccs = typeof fraccs[0];
+const Swal = require('sweetalert2')
+
+
+
+
+
+
+/* if (!llave){
+    throw Swal.fire({
+  title: 'Aqui no puedes estar',
+  text: 'Regresa a la pantalla de inicio',
+  icon: 'warning',
+  confirmButtonText: 'OK'
+})
+  } */
+
+
+const handleAddLote = () => {
+	
+	
+	registerLoteApi({...data , usuarioId: id, fraccionamientoId: itemfind, costototal: 0, contratoId:0})
+	console.log(data);
+	
+}
+
+
+type Lotes = typeof lotes[0];
 const columns = [
-  {name: "Nombre", uid: "nombre",sortable:true},
-  {name: "Propietario", uid: "propietario"},
-  {name: "Telefono", uid: "telefono"},
+	{name : "Numero de Manzana" , uid: "manzanaId"},
+	{name: "Numero de Lote", uid: "numero"},
+  {name: "Clave de Lote", uid: "clave"},
+  {name: "Costo Total", uid: "costo"},
+/*   {name: "Telefono", uid: "telefono"},
   {name: "Direccion", uid: "direccion"},
   {name: "Total de lotes", uid: "totaldelotes"},
   {name: "Total de Manzanas", uid: "totaldemanzanas"},
-  {name: "Costo", uid: "costototal"},
+  {name: "Costo", uid: "costototal"}, */
   {name: "Acciones", uid: "actions"},
 ];
   let numeral = require('numeral');
 
-const [fracc, setFracc] = useState({})
+const [lote, setLote] = useState({})
 
-const openModalFracc = (e:number) => {  
+/* const openModalFracc = (e:number) => {  
       setFracc(e)    
-  }
+  } */
 
- const renderCell = React.useCallback((fraccs: Fraccs, columnKey: React.Key) => {
-    const cellValue = fraccs[columnKey as keyof Fraccs];
-
+ const renderCell = React.useCallback((lotes: Lotes, columnKey: React.Key) => {
+    const cellValue = lotes[columnKey as keyof Lotes];
 
 
 
@@ -88,12 +115,12 @@ const openModalFracc = (e:number) => {
  switch (columnKey) {
       case "name":
         return (
-          <Fraccs
-            description={fraccs.nombre}
+          <Lotes
+            description={lotes.nombre}
             name={cellValue}
           >
             {/* {fraccs.propietario} */}
-          </Fraccs>
+          </Lotes>
         );
       case "propietario":
         return (
@@ -112,16 +139,16 @@ const openModalFracc = (e:number) => {
         return (
           <div className="relative flex items-center gap-2">
             <Tooltip content="Details" color="success" className="text-white">
-              <span className="text-lg  cursor-pointer text-success active:opacity-50" onClick={onOpen}>
-                <EyeFilledIcon onClick={() => openModalFracc(fraccs)}   />
+              <span className="text-lg  cursor-pointer text-success active:opacity-50" /* onClick={onOpen} */>
+                {/* <EyeFilledIcon onClick={() => openModalFracc(fraccs)}   /> */}
           
               </span>
             </Tooltip>
             <Tooltip color="warning" content="Edit user" className="text-white">
               <span className="text-lg text-warning cursor-pointer active:opacity-50">
-                <Link href={`/cliente/${fraccs.id}`}>
-                  {/* <TbEditCircle onClick={() => showClient(fraccs) } /> */}
-                </Link>
+                {/* <Link href={`/cliente/${manzanas.id}`}>
+                  <TbEditCircle onClick={() => showClient(fraccs) } />
+                </Link> */}
                 
               </span>
             </Tooltip>
@@ -136,8 +163,10 @@ const openModalFracc = (e:number) => {
         return cellValue;
     }
   }, []);
+  
+  
   return (
-    <main className="bg-slate-200 p-5">
+    <main className="bg-slate-200 p-5 text-black">
       
             <Input
             isClearable
@@ -148,21 +177,23 @@ const openModalFracc = (e:number) => {
                          onValueChange={onSearchChange}
  */
           />
-          <div className="flex justify-end">
-             <Button className='text-white bg-primary shadow-md shadow-primary ' onPress={onOpen}>
-                  Agregar Fraccionamiento
+		  <div className="flex flex-1 justify-between">
+		<h1 className="text-primary font-semibold text-2xl pt-2"> {fracc.nombre} </h1>
+				  <Button className='text-white bg-primary shadow-md shadow-primary ' onPress={onOpen}>
+                  Agregar Lote
                 </Button>
-          </div>
-
-               
-
+			
+		  </div>
+			
+	
       <Table 
       className="h-[90vh] w-[auto] p-5"
       >   
+	  
         <TableHeader className=" " columns={columns}>
           {(columns) => (
             <TableColumn
-              className=" min-w-30 text-red-800 font-bold text-base"
+              className=" min-w-50 text-red-800 font-bold text-base"
               key={columns.uid}
             >
               {columns.name}
@@ -170,7 +201,7 @@ const openModalFracc = (e:number) => {
           )}
         </TableHeader>
 
-        <TableBody className="text-black  font-semibold" items={fraccs}>
+        <TableBody className="text-black font-semibold" items={lotes}>
           {(item) => (
             <TableRow
               className="shadow-slate-200 border text-black"
@@ -184,8 +215,9 @@ const openModalFracc = (e:number) => {
           )}
         </TableBody>
       </Table>
-        
-     <>
+
+	   
+      <>
       <Modal isOpen={isOpen} onOpenChange={onOpenChange} isDismissable={false} isKeyboardDismissDisabled={true}>
         <ModalContent className="text-black">
           {(onClose) => (
@@ -195,61 +227,50 @@ const openModalFracc = (e:number) => {
 				
 				
 				<Input
-              value={data.nombre}
-              type="text"
+              value={(data.manzanaId).toString()}
+              type="number"
               onChange={handleSetData}
 			  className='text-black'
-              label="Escribe el nombre del Fraccionamiento o Parcela"
-			  description = "Escriba el nombre"
+              label="Añadir en la Manzana"
+			  description = "Escriba el numero de Manzana"
              variant='bordered'
-              name="nombre"
-              id="nombre"
+              name="manzanaId"
+              id="manzanaId"
             />
 				
 				<Input
-              value={data.clave}
+              value={data.numero}
               type="text"
               onChange={handleSetData}
 			  className='text-black'
-              label="Escrba la Clave del Fraccionamiento"
-			  description = "Escriba la clave"
+              label="Añadir una Lote"
+			  description = "Escriba el numero de Lote"
              variant='bordered'
-              name="clave"
-              id="clave"
+              name="numero"
+              id="numero"
             />
 			
 			<Input
-              value={data.propietario}
+              value={(data.costo).toString()}
               type="text"
               onChange={handleSetData}
 			  className='text-black'
-              label="Escriba el Propietario"
-			  description = "Escriba el propietario"
+              label="Escriba el costo del Lote"
+			  description = "Escriba el costo del lote"
              variant='flat'
-              name="propietario"
-              id="propietario"
+              name="costo"
+              id="costo"
             />
 			<Input
-              value={data.telefono}
+              value={(data.m2).toString()}
               type="text"
               onChange={handleSetData}
 			  className='text-black'
-              label="Escriba el Telefono para contacto"
-			  description = "Escriba el telefono"
+              label="Escriba los metros cuadrados del Lote"
+			  description = "Escriba los metros cuadrados del lote"
              variant='flat'
-              name="telefono"
-              id="telefono"
-            />
-			<Input
-              value={data.direccion}
-              type="text"
-              onChange={handleSetData}
-			  className='text-black'
-              label="Escriba la Direccion del Fraccionamiento"
-			  description = "Escriba la direccion"
-             variant='flat'
-              name="direccion"
-              id="direccion"
+              name="m2"
+              id="m2"
             />
 			
 
@@ -259,7 +280,7 @@ const openModalFracc = (e:number) => {
                 <Button className='text-white bg-primary shadow-md shadow-primary ' onPress={onClose}>
                   Close
                 </Button>
-                <Button className='text-white bg-primary shadow-md shadow-primary ' onPress={handleAddFracc}>
+                <Button className='text-white bg-primary shadow-md shadow-primary ' onPress={handleAddLote}>
                   Agregar Lote
                 </Button>
               </ModalFooter>
@@ -273,3 +294,5 @@ const openModalFracc = (e:number) => {
     </main>
   );
 }
+
+export default ClienteId

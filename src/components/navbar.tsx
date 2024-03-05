@@ -16,13 +16,13 @@ const NavbarInicio = () => {
   return (
 	<section className='bg-primary h-1/4 border-white border-b-1 p-5 static '>
 
-	<div className='flex justify-center gap-10'>
+	<div className='flex justify-center gap-10 '>
 		<div>
 	<Image className='rounded-full shadow-white shadow-lg  ' width={100} height={100} src={"/logo2.webp"} alt="logo" />
 		</div>
 		
 		<div className='px-6 text-white '>
-			<h1 className=' p-2 text-4xl' >
+			<h1 className=' p-2 text-4xl  ' >
 			Tu Hogar Inmobiliaria 
 			</h1>
 			<h3 className=' px-9 text-2xl'>
@@ -31,10 +31,25 @@ const NavbarInicio = () => {
 				<h4 className='px-20 text-xl font-thin'>
 					Sistema Informacion Administrativo Tu Hogar Inmobiliaria 
 				</h4>
+				
 		</div>
-          <Link href="/usuario" onClick={onOpen} className="text-white font-normal text-xl bg-primary p-2 border rounded-md shadow-white shadow-sm">
+		<div className='flex-col justify-self-start'>
+			<div className='pt-2'>
+				<Link href="/usuario" onClick={onOpen} className="  text-white font-normal text-xl p-1 bg-primary hover:bg-white/5 ">
 				Perfil
           </Link>
+			</div>
+			 <div className='pt-2'>
+				<Link href="/usuario" onClick={onOpen} className="h-auto text-white font-normal text-xl p-1 bg-primary hover:bg-white/5   ">
+				Capacitacion
+          		</Link>
+			 </div>
+			<div className='pt-2'>
+				<Link href="/usuario" onClick={onOpen} className="h-auto text-white font-normal text-xl p-1 bg-primary hover:bg-white/5 ">
+				Estadistica
+          		</Link>
+			 </div>
+		</div>
 	</div>
 	
    <>

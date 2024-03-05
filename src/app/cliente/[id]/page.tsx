@@ -31,12 +31,13 @@ const ClienteId = () => {
 const { data, handleSetData, handleSetDate, editClienteApi } =
     useEditCliente(itemfind);
 
-const {ClienteApi, dataCliente,startLoadingClientes,cliente } = useGetClientebyId(itemfind)	
+const {ClienteApi, dataCliente,startLoadingClientes,cliente } = useGetClientebyId()	
 	
 const { isLogged, nombre , id } = useSelector((state: RootState) => state.users); 
 
+const pathpag = `clientes/${itemfind}`
 	useEffect(() => {
-  	startLoadingClientes()  
+  	startLoadingClientes(pathpag)  
 		
 		}, [dataCliente])
 

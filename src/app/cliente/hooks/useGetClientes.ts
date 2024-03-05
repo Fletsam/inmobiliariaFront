@@ -10,24 +10,27 @@ const useCliente = () => {
     status: statusCliente,
     value: dataCliente,
   } = useApiRequest<IParamsLogin, IResponseLogin>({
-    path: `clientes`,
+    path: "",
     method: "get",
   });
   const [clientes, setClientes] = useState([]);
   useEffect(() => {
     if (statusCliente === "success") {
-      const cliente = dataCliente.data;
-
+      const cliente = dataCliente;
+     
+      
       setClientes(cliente);
     } else if (statusCliente === "error") {
       console.log(dataCliente);
     }
   }, [statusCliente]);
 
-  const startLoadingClientes = async () => {
+  const startLoadingClientes = async (pathpag:string) => {
     if (statusCliente === "pending") {
       try {
-        ClienteApi();
+
+        
+        ClienteApi({},pathpag);
       } catch (error) {
         console.log(error);
       }

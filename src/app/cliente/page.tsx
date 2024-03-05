@@ -22,7 +22,7 @@ import {
 } from "@nextui-org/react";
 import React, { useEffect, useState } from "react";
 import useCliente from "./hooks/useGetClientes";
-import { IoLogoReddit, IoSearchOutline, IoTrash } from "react-icons/io5";
+import { IoLogoReddit, IoNewspaper, IoNewspaperOutline, IoSearchOutline, IoTrash } from "react-icons/io5";
 import { EyeFilledIcon } from "@/helpers";
 import { TbEditCircle } from "react-icons/tb";
 import { FiDelete } from "react-icons/fi";
@@ -33,6 +33,9 @@ import Link from "next/link";
 import useDeleteCliente from "./hooks/useDeleteCliente";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store";
+
 
 
 
@@ -44,31 +47,41 @@ const {clientes,dataCliente, startLoadingClientes,  showClient } = useCliente()
 
    const {startDeleteCliente,DeleteClienteApi } = useDeleteCliente()
 
+const { isLogged, nombre, id } = useSelector((state: RootState) => state.users); 
+
   const router = useRouter() 
 const Swal = require('sweetalert2')
  const [cliente, setCliente] = useState({})
- const DeleteCliente = async (id:number) => {
-
- const pathPag = `clientes/${id}`
  
-  Swal.fire({
-  title: "Estas Seguro?",
-  text: "Esto no se puede revertir!",
-  icon: "warning",
-  showCancelButton: true,
-  confirmButtonColor: "#3085d6",
-  cancelButtonColor: "#d33",
-  confirmButtonText: "Si, estoy seguro!"
-}).then((result:any) => {
-  if (result.isConfirmed) {
-    Swal.fire({
-      title: "Eliminado!",
-      text: "El cliente ha sido eliminado!.",
-      icon: "success"
-    });
-   DeleteClienteApi({},pathPag)
-  }
-  router.push("/cliente")
+ useEffect(() => {
+  const pathPag = `clientes/usuario/${id}`
+  startLoadingClientes(pathPag)  
+  
+}, [dataCliente])
+
+
+ 
+ const DeleteCliente = async (id:number) => {
+    const pathPag = `clientes/${id}`
+ 
+        Swal.fire({
+        title: "Estas Seguro?",
+        text: "Esto no se puede revertir!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Si, estoy seguro!"
+      }).then((result:any) => {
+        if (result.isConfirmed) {
+          Swal.fire({
+            title: "Eliminado!",
+            text: "El cliente ha sido eliminado!.",
+            icon: "success"
+          });
+        DeleteClienteApi({},pathPag)
+        }
+        router.push("/cliente")
 });
  
  }
@@ -77,10 +90,6 @@ const Swal = require('sweetalert2')
       setCliente(e)    
   }
 
-useEffect(() => {
-  startLoadingClientes()  
-  
-}, [dataCliente])
 
 
 
@@ -140,6 +149,14 @@ const columns = [
                 
               </span>
             </Tooltip>
+            <Tooltip color="default" content="Contratos" className="text-blue-600">
+              <span className="text-lg text-blue-600 cursor-pointer active:opacity-50">
+                <Link href={`/cliente/${clientes.id}/contratos`}>
+                  <IoNewspaper color="primary" onClick={() => showClient(clientes) } />
+                </Link>
+                
+              </span>
+            </Tooltip>
             <Tooltip color="danger" content="Borrar Cliente">
               <span className="text-lg text-danger cursor-pointer active:opacity-50">
                 <FiDelete onClick={() => DeleteCliente(clientes.id) } />
@@ -157,7 +174,6 @@ const columns = [
   return (
     <main className="bg-slate-200 p-5">
       
-         
           <div className="flex flex-1 justify-between">
             <Input
             isClearable
@@ -189,7 +205,7 @@ const columns = [
           {(columns) => (
             <TableColumn
               allowsSorting={columns.sortable}
-              className=" min-w-72 text-red-800 font-bold text-base"
+              className=" min-w-40 text-red-800 font-bold text-base"
               key={columns.uid}
             >
               {columns.name}
@@ -301,7 +317,7 @@ const columns = [
       </Modal>
     </>
 
-
+           
     </main>
   );
 }

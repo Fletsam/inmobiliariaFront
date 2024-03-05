@@ -8,7 +8,7 @@ import { Button, Input, Select, SelectItem } from "@nextui-org/react";
 import useEditCliente from "@/app/cliente/hooks/usePatchCliente";
 import useFraccs from "../hooks/useGetFracc";
 
-const ClienteId = () => {
+const Fraccionamiento = () => {
 
 	const params = useParams();
 	const itemfind  = (parseInt(params.id));
@@ -26,8 +26,6 @@ const param = `fraccionamientos/usuario/${id}`
   	startLoadingFraccs(param)  
 		
 		}, [dataFracc])
-
-console.log(fraccs);
 
 
 
@@ -297,4 +295,4 @@ console.log(fraccs);
   );
 };
 
-export default ClienteId
+export default Fraccionamiento

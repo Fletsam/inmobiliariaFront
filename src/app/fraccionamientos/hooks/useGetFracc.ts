@@ -15,12 +15,17 @@ const useFraccs = () => {
   });
   const [fraccs, setFraccs] = useState([]);
   const [manzanas, setManzanas] = useState([]);
+  const [lotes, setLotes] = useState([]);
   useEffect(() => {
     if (statusFracc === "success") {
-      const fraccs = dataFracc.Manzanas
-      const manzanas = dataFracc.Manzanas
+      const fraccs = dataFracc
+      const manzanas = fraccs.Manzanas
+      const lotes = fraccs.Lotes
+
+      
+      setLotes(lotes)
       setManzanas(manzanas)
-      setFraccs([{...fraccs}]);
+      setFraccs(fraccs);
     } else if (statusFracc === "error") {
       console.log(dataFracc);
     }
@@ -43,7 +48,8 @@ const useFraccs = () => {
     dataFracc,
     statusFracc,
 	fraccs,
-  manzanas
+  manzanas,
+  lotes
   };
 };
 

@@ -21,7 +21,7 @@ import {
 } from "@nextui-org/react";
 import React, { useEffect, useState } from "react";
 
-import { IoAdd, IoSearchOutline } from "react-icons/io5";
+import { IoAdd, IoSearchOutline, IoTrashBinOutline, IoTrashOutline } from "react-icons/io5";
 import Link from "next/link";
 import { EyeFilledIcon } from "@/helpers";
 import moment from "moment";
@@ -34,42 +34,62 @@ import useRegisterManzana from "@/app/manzanas/hooks/useRegisterManzana";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
 import useFraccs from "../../hooks/useGetFracc";
+import { FiDelete } from "react-icons/fi";
+import useDeleteManzana from "@/app/manzanas/hooks/useDeleteManzana";
+import { useRouter } from "next/router";
 
 
 const ClienteId = () => {
-const params = useParams();
+
+/*   const router = useRouter()
+ */const params = useParams();
 const itemfind  = (parseInt(params.id));
 const { isLogged, nombre , id } = useSelector((state: RootState) => state.users)	
-const {startLoadingFraccs,dataFracc,fraccs,manzanas } = useFraccs()	
+const {startLoadingFracc,dataFracc,fracc,manzanas } = useGetFraccbyId()	
 /* const {isOpen, onOpen, onOpenChange} = useDisclosure();
  */
 const {handleSetData ,data ,registerManzanaApi} = useRegisterManzana()
+const {DeleteManzanaApi} = useDeleteManzana()
 
-const param = `fraccionamientos/usuario/${id}`
+const param = `fraccionamientos/${itemfind}/usuario/${id}`
 
 useEffect(() => {
   
-  startLoadingFraccs(param)  
+  startLoadingFracc(param)  
 
 }, [dataFracc])
+
+console.log(fracc);
+console.log(manzanas);
 
 
 
 const Swal = require('sweetalert2')
 
+const deleteManzana = async (id:number) => {
 
-
-
-
-/* if (!llave){
-    throw Swal.fire({
-  title: 'Aqui no puedes estar',
-  text: 'Regresa a la pantalla de inicio',
-  icon: 'warning',
-  confirmButtonText: 'OK'
-})
-  } */
-
+ const pathPag = `manzanas/${id}`
+ 
+  Swal.fire({
+  title: "Estas Seguro?",
+  text: "Esto no se puede revertir!",
+  icon: "warning",
+  showCancelButton: true,
+  confirmButtonColor: "#3085d6",
+  cancelButtonColor: "#d33",
+  confirmButtonText: "Si, estoy seguro!"
+}).then((result:any) => {
+  if (result.isConfirmed) {
+    Swal.fire({
+      title: "Eliminado!",
+      text: "El cliente ha sido eliminado!.",
+      icon: "success"
+    });
+   DeleteManzanaApi({},pathPag)
+  }
+  /* router.push("/usuario") */
+});
+}
 
 const handleAddManzana = (e) => {
 	e.preventDefault()
@@ -148,7 +168,7 @@ const [manzana, setManzana] = useState({})
             </Tooltip>
             <Tooltip color="danger" content="Delete user">
               <span className="text-lg text-danger cursor-pointer active:opacity-50">
-                {/* <FiDelete onClick={() => DeleteCliente(fraccs.id) } /> */}
+                <IoTrashOutline onClick={() => deleteManzana(manzanas.id) } />
               </span>
             </Tooltip>
           </div>
@@ -172,7 +192,7 @@ const [manzana, setManzana] = useState({})
  */
           />
 		  <div className="flex flex-1 justify-between">
-		<h1 className="text-primary font-semibold text-2xl pt-2"> {fraccs.nombre} </h1>
+		<h1 className="text-primary font-semibold text-2xl pt-2"> {fracc.nombre} </h1>
 				
 			<form action="submit" onSubmit={(e)=> handleAddManzana(e)}>
 				<Input
@@ -196,7 +216,7 @@ const [manzana, setManzana] = useState({})
         <TableHeader className=" " columns={columns}>
           {(columns) => (
             <TableColumn
-              className=" min-w-72 text-red-800 font-bold text-base"
+              className=" min-w-40 text-red-800 font-bold text-base"
               key={columns.uid}
             >
               {columns.name}

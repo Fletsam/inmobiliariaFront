@@ -22,10 +22,11 @@ useEffect(() => {
   return (
     
 
-      <section className="w-full h-[100vh] p-2 bg-primary inline-block">
+      <section className="w-full h-[100vh] p-2 bg-red-600 opacity-80 inline-block">
         <div className="flex place-content-center ">
-        <div className=" mt-10 ">
-         <Image className='rounded-md shadow-white shadow-sm  ' width={500} height={500} src={"/openplot.webp"} alt="news" />
+
+        <div className=" mt-10 bg-gray-800 rounded-lg ">
+         <Image className='rounded-lg shadow-white shadow-sm p-1 ' width={500} height={500} src={"/openplot.webp"} alt="news" />
         </div>
 
         </div>

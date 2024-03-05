@@ -14,13 +14,13 @@ const useGetFraccbyId = () => {
   });
   const [fracc, setFracc] = useState({});
   const [manzanas, setManzanas] = useState([])
-  
+  const [lotes, setLotes] = useState([])
   useEffect(() => {
     if (statusFracc === "success") {
       const fracc = dataFracc;
 		/* console.log(cliente); */
 		
-
+      setLotes(fracc.Lotes)
       setFracc(fracc);
 	  setManzanas(fracc.Manzanas)
     } else if (statusFracc === "error") {
@@ -28,10 +28,10 @@ const useGetFraccbyId = () => {
     }
   }, [statusFracc]);
 
-  const startLoadingFracc = async () => {
+  const startLoadingFracc = async (param:string) => {
     if (statusFracc === "pending") {
       try {
-        FraccApi();
+        FraccApi({},param);
       } catch (error) {
         console.log(error);
       }
@@ -52,6 +52,7 @@ const useGetFraccbyId = () => {
     fracc,
     startLoadingFracc,
     showClient,
+    lotes,
   };
 };
 

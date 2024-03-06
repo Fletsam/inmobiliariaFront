@@ -27,7 +27,7 @@ const useGetClientebyId = () => {
   const startLoadingClientes = async (param:string) => {
     if (statusCliente === "pending") {
       try {
-        ClienteApi({},param);
+      await  ClienteApi({},param);
       } catch (error) {
         console.log(error);
       }

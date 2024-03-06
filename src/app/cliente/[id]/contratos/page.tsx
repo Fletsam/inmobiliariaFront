@@ -16,8 +16,9 @@ const itemfind = (parseInt(params.id))
 
 const {startLoadingClientes,dataCliente,cliente} = useGetClientebyId()
 const { isLogged, nombre , id } = useSelector((state: RootState) => state.users)
-const {lotes,startLoadingLotes,dataLotes} = useLotes()
+const {lotesVendidos,startLoadingLotes,dataLotes} = useLotes()
 
+const lotes = lotesVendidos
 
 const {data, handleSetData,registerContratoApi} = useRegisterContrato()
 
@@ -43,7 +44,7 @@ const img = "/S_002.jpg"
 const [lote , setLote] = useState({})
 
 const handleRegisterContrato = async () => {
- console.log(lote.id);
+ 
  
   const path = `contratos/lote/${lote.id}`
 await  registerContratoApi({...data, 
@@ -60,53 +61,9 @@ await  registerContratoApi({...data,
 const handleOpenLote = (loteid:number) => {
   onOpen()
   setLote(loteid)
- console.log(loteid.id);
  
 }
-console.log(lotes);
 
-/* const list = [
-    {
-      title: "Casa Sophia",
-      img: "/S_002.jpg",
-      price: "$300,000.00mxn",
-    },
-    {
-      title: "Tangerine",
-      img: "/images/fruit-2.jpeg",
-      price: "$3.00",
-    },
-    {
-      title: "Raspberry",
-      img: "/images/fruit-3.jpeg",
-      price: "$10.00",
-    },
-    {
-      title: "Lemon",
-      img: "/images/fruit-4.jpeg",
-      price: "$5.30",
-    },
-    {
-      title: "Avocado",
-      img: "/images/fruit-5.jpeg",
-      price: "$15.70",
-    },
-    {
-      title: "Lemon 2",
-      img: "/images/fruit-6.jpeg",
-      price: "$8.00",
-    },
-    {
-      title: "Banana",
-      img: "/images/fruit-7.jpeg",
-      price: "$7.50",
-    },
-    {
-      title: "Watermelon",
-      img: "/images/fruit-8.jpeg",
-      price: "$12.20",
-    },
-  ]; */
 
   return (
     <div className="bg-white gap-3 grid grid-cols-2 sm:grid-cols-4 p-5">
@@ -242,7 +199,7 @@ console.log(lotes);
                   Close
                 </Button>
                 <Button className='text-white bg-primary shadow-md shadow-primary ' onPress={handleRegisterContrato}>
-                  Agregar Lote
+                  Registrar Contrato
                 </Button>
               </ModalFooter>
             </>

@@ -13,12 +13,12 @@ const useLotes = () => {
     path: `lotes`,
     method: "get",
   });
-  const [lotes, setLotes] = useState([]);
+  const [lotesVendidos, setLotesVendidos] = useState([]);
   useEffect(() => {
     if (statusLotes === "success") {
       const lotes = dataLotes.data;
 
-      setLotes(lotes);
+      setLotesVendidos(lotes);
     } else if (statusLotes === "error") {
       console.log(dataLotes);
     }
@@ -40,7 +40,7 @@ const useLotes = () => {
     useLotesApi,
     dataLotes,
     statusLotes,
-	lotes
+	lotesVendidos
   };
 };
 

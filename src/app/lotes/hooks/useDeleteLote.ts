@@ -1,8 +1,11 @@
 import { useApiRequest } from "@/app/hooks/useApiRequest";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 const useDeleteLote = () => {
-  
+  const Swal = require('sweetalert2')
+  const router = useRouter()
+
   const {
     execute: DeleteLoteApi,
     status: statusDeleteLote,
@@ -14,19 +17,30 @@ const useDeleteLote = () => {
   
    useEffect(() => {
     if (statusDeleteLote === "success") {
-		 console.log(dataDeleteLote);
+		
+      Swal.fire({
+            title: "Borrado!",
+            text: "El Lote ha sido Eliminado!.",
+            icon: "success"
+          });
     } else if (statusDeleteLote === "error") {
-      console.log(dataDeleteLote);
+      Swal.fire({
+            title: "Rechazo!",
+            text: "El Lote no se puede eliminar!.",
+            icon: "error"
+          });
     }
+    
   }, [statusDeleteLote]);
 
-  const startDeleteLote = async () => {
+  const startDeleteLote = async (param:string) => {
     if (statusDeleteLote === "pending") {
       try {
-       await DeleteLoteApi();
+
+       await DeleteLoteApi({},param);
 	   
       } catch (error) {
-        console.log(error);
+        
       }
     }
   };
@@ -36,7 +50,8 @@ const useDeleteLote = () => {
   return {
 
     startDeleteLote,
-	DeleteLoteApi
+	DeleteLoteApi,
+  statusDeleteLote
   };
 };
 

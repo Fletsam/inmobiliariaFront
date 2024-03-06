@@ -21,7 +21,7 @@ import {
 } from "@nextui-org/react";
 import React, { useEffect, useState } from "react";
 
-import { IoAdd, IoSearchOutline } from "react-icons/io5";
+import { IoAdd, IoSearchOutline, IoTrashOutline } from "react-icons/io5";
 import Link from "next/link";
 import { EyeFilledIcon } from "@/helpers";
 import moment from "moment";
@@ -29,13 +29,14 @@ import { formatPrecio } from "@/helpers/formatearprecios";
 import { formatters } from "date-fns";
 import { TbEditCircle } from "react-icons/tb";
 import useGetFraccbyId from "../../hooks/useGetFraccbyId";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import useRegisterManzana from "@/app/manzanas/hooks/useRegisterManzana";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
 import useFraccs from "../../hooks/useGetFracc";
 import Lotes from "@/app/lotes/page";
 import useRegisterLote from "@/app/lotes/hooks/useRegisterLote";
+import useDeleteLote from "@/app/lotes/hooks/useDeleteLote";
 
 
 const ClienteId = () => {
@@ -44,10 +45,13 @@ const itemfind  = (parseInt(params.id));
 const { isLogged, nombre , id } = useSelector((state: RootState) => state.users)	
 const {startLoadingFracc,dataFracc,fracc,manzanas,lotes } = useGetFraccbyId()	
 const {isOpen, onOpen, onOpenChange} = useDisclosure();
-
 const {handleSetData ,data ,registerLoteApi} = useRegisterLote()
+const {DeleteLoteApi,startDeleteLote,statusDeleteLote} = useDeleteLote()
+
 
 const param = `fraccionamientos/${itemfind}/usuario/${id}`
+
+const router = useRouter()
 
 useEffect(() => {
   
@@ -75,12 +79,29 @@ const Swal = require('sweetalert2')
 
 
 const handleAddLote = () => {
-	
-	
+
 	registerLoteApi({...data , usuarioId: id, fraccionamientoId: itemfind, costototal: 0, contratoId:0})
-	console.log(data);
+  router.refresh()
 	
 }
+const handleDeleteLote = (e:number) => {
+  const param = `lotes/${e}`
+ 
+	 Swal.fire({
+        title: "Estas Seguro?",
+        text: "Esto no se puede revertir!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Si, estoy seguro!"
+      }).then((result:any) => {
+        if (result.isConfirmed) {
+        startDeleteLote(param)
+        router.refresh()
+        } 
+        router.push('/fraccionamientos')
+})}
 
 
 type Lotes = typeof lotes[0];
@@ -152,9 +173,9 @@ const [lote, setLote] = useState({})
                 
               </span>
             </Tooltip>
-            <Tooltip color="danger" content="Delete user">
+            <Tooltip color="danger" content="Borrar Lote">
               <span className="text-lg text-danger cursor-pointer active:opacity-50">
-                {/* <FiDelete onClick={() => DeleteCliente(fraccs.id) } /> */}
+                <IoTrashOutline onClick={() => handleDeleteLote(lotes.id) } />
               </span>
             </Tooltip>
           </div>

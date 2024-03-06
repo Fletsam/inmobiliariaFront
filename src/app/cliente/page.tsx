@@ -22,7 +22,7 @@ import {
 } from "@nextui-org/react";
 import React, { useEffect, useState } from "react";
 import useCliente from "./hooks/useGetClientes";
-import { IoLogoReddit, IoNewspaper, IoNewspaperOutline, IoSearchOutline, IoTrash } from "react-icons/io5";
+import { IoLogoReddit, IoNewspaper, IoNewspaperOutline, IoSearchOutline, IoTrash, IoTrashBinOutline, IoTrashOutline } from "react-icons/io5";
 import { EyeFilledIcon } from "@/helpers";
 import { TbEditCircle } from "react-icons/tb";
 import { FiDelete } from "react-icons/fi";
@@ -159,7 +159,7 @@ const columns = [
             </Tooltip>
             <Tooltip color="danger" content="Borrar Cliente">
               <span className="text-lg text-danger cursor-pointer active:opacity-50">
-                <FiDelete onClick={() => DeleteCliente(clientes.id) } />
+                <IoTrashOutline onClick={() => DeleteCliente(clientes.id) } />
               </span>
             </Tooltip>
           </div>

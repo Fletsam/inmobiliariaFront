@@ -15,17 +15,22 @@ const useGetEstadoCuenta = () => {
   });
   const [ingresos, setIngresos] = useState([]);
   const [egresos, setEgresos] = useState([]);
+  const [egresosfracc, setEgresosFracc] = useState([]);
+  const [ingresosfracc, setIngresosFracc] = useState([]);
   const [estadoCuenta, setEstadoCuenta] = useState({});
   useEffect(() => {
     if (statusEstadoCuenta === "success") {
     
 		const estadocuenta = (dataEstadoCuenta.data);
-		const ingresos = (dataEstadoCuenta.data.IngresosContratos)
-		const egresos = (dataEstadoCuenta.data.EgresosContratos)
+		const ingresoscontratos = (dataEstadoCuenta.data.IngresosContratos)
+		const egresoscontratos = (dataEstadoCuenta.data.EgresosContratos)
+		const ingresosfracc = (dataEstadoCuenta.data.IngresosFraccionamientos)
+		const egresosfracc = (dataEstadoCuenta.data.EgresosFraccionamiento)
 		
-		
-		setEgresos(egresos)
-		setIngresos(ingresos)
+    setEgresosFracc(egresosfracc)
+    setIngresosFracc(ingresosfracc)
+		setEgresos(egresoscontratos)
+		setIngresos(ingresoscontratos)
       setEstadoCuenta( estadocuenta);
     } else if (statusEstadoCuenta === "error") {
       console.log(dataEstadoCuenta);
@@ -50,7 +55,9 @@ const useGetEstadoCuenta = () => {
     statusEstadoCuenta,
 	estadoCuenta,
 	egresos,
-	ingresos
+	ingresos,
+  egresosfracc,
+  ingresosfracc
   };
 };
 

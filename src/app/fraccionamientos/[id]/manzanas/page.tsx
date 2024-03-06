@@ -51,6 +51,8 @@ const {startLoadingFracc,dataFracc,fracc,manzanas } = useGetFraccbyId()
 const {handleSetData ,data ,registerManzanaApi} = useRegisterManzana()
 const {DeleteManzanaApi} = useDeleteManzana()
 
+console.log(id);
+
 const param = `fraccionamientos/${itemfind}/usuario/${id}`
 
 useEffect(() => {

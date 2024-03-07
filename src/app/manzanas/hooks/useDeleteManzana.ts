@@ -20,10 +20,10 @@ const useDeleteManzana = () => {
     }
   }, [statusDeleteManzana]);
 
-  const startDeleteManzana = async () => {
+  const startDeleteManzana = async (param:string) => {
     if (statusDeleteManzana === "pending") {
       try {
-       await DeleteManzanaApi();
+       await DeleteManzanaApi({},param);
 	   
       } catch (error) {
         console.log(error);

@@ -32,9 +32,12 @@ import { redirect } from "next/dist/server/api-utils";
 import Link from "next/link";
 import useDeleteCliente from "./hooks/useDeleteCliente";
 import axios from "axios";
-import { useRouter } from "next/navigation";
+
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
+import { useRouter } from "next/navigation";
+
+
 
 
 
@@ -53,9 +56,11 @@ const { isLogged, nombre, id } = useSelector((state: RootState) => state.users);
 const Swal = require('sweetalert2')
  const [cliente, setCliente] = useState({})
  
+
+ const param = `clientes/usuario/${id}`
  useEffect(() => {
-  const pathPag = `clientes/usuario/${id}`
-  startLoadingClientes(pathPag)  
+  
+  startLoadingClientes(param)  
   
 }, [dataCliente])
 
@@ -74,14 +79,13 @@ const Swal = require('sweetalert2')
         confirmButtonText: "Si, estoy seguro!"
       }).then((result:any) => {
         if (result.isConfirmed) {
-          Swal.fire({
-            title: "Eliminado!",
-            text: "El cliente ha sido eliminado!.",
-            icon: "success"
-          });
-        DeleteClienteApi({},pathPag)
+
+        startDeleteCliente(pathPag)
+      
+        startLoadingClientes(param)  
+
         }
-        router.push("/cliente")
+      
 });
  
  }

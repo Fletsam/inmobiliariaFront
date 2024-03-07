@@ -44,7 +44,7 @@ const params = useParams();
 const itemfind  = (parseInt(params.id));
 const { isLogged, nombre , id } = useSelector((state: RootState) => state.users)	
 const {startLoadingFracc,dataFracc,fracc,manzanas,lotes } = useGetFraccbyId()	
-const {isOpen, onOpen, onOpenChange} = useDisclosure();
+const {isOpen, onOpen, onOpenChange ,onClose} = useDisclosure();
 const {handleSetData ,data ,registerLoteApi} = useRegisterLote()
 const {DeleteLoteApi,startDeleteLote,statusDeleteLote} = useDeleteLote()
 
@@ -78,11 +78,11 @@ const Swal = require('sweetalert2')
   } */
 
 
-const handleAddLote = () => {
+const handleAddLote = async () => {
 
-	registerLoteApi({...data , usuarioId: id, fraccionamientoId: itemfind, costototal: 0, contratoId:0})
-  router.refresh()
-	
+	await registerLoteApi({...data , usuarioId: id, fraccionamientoId: itemfind, costototal: 0, contratoId:0})
+	onClose()
+  
 }
 const handleDeleteLote = (e:number) => {
   const param = `lotes/${e}`
@@ -98,9 +98,9 @@ const handleDeleteLote = (e:number) => {
       }).then((result:any) => {
         if (result.isConfirmed) {
         startDeleteLote(param)
-        router.refresh()
+        startLoadingFracc(param)
         } 
-        router.push('/fraccionamientos')
+        
 })}
 
 
@@ -143,10 +143,11 @@ const [lote, setLote] = useState({})
             {/* {fraccs.propietario} */}
           </Lotes>
         );
-      case "propietario":
+      case "costo":
+          const costo = numeral(cellValue).format('$0,0')
         return (
           <div className="flex flex-col">
-            <p className="text-bold text-sm capitalize">{cellValue}</p>
+            <p className="text-bold text-sm capitalize">{costo}mxn</p>
             {/* <p className="text-bold text-sm capitalize text-default-400">{ fraccs.propietario}</p> */}
           </div>
         );

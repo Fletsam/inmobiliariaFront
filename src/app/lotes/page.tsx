@@ -17,20 +17,24 @@ import {
   Tooltip,
   Chip,
   useDisclosure,
+  Button,
 } from "@nextui-org/react";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 import { IoSearchOutline } from "react-icons/io5";
 import Link from "next/link";
 import useLotes from "./hooks/useGetLotes";
 
+import XLSX from "xlsx"
 
 export default function Lotes() {
 const {isOpen, onOpen, onOpenChange} = useDisclosure();
-const {startLoadingLotes,dataLotes, lotes } = useLotes()
+const {startLoadingLotes,dataLotes, lotesVendidos } = useLotes()
 
+const lotes = lotesVendidos
+const param = `lotes`
 useEffect(() => {
-  startLoadingLotes()  
+  startLoadingLotes(param)  
   
 }, [dataLotes])
 
@@ -43,7 +47,37 @@ const columns = [
   {name: "Costo", uid: "costo"},
   {name: "Acciones", uid: "actions"},
 ];
+
+
+  const [lotesxlxs, setLotesxlxs] = useState()
+const handleImport = async () =>{
+  const url = "/MyLotes.xlsx";
+  console.log(url);
   
+const workbook = XLSX.read(await (await fetch(url)).arrayBuffer());
+const worksheet = workbook.Sheets[workbook.SheetNames[0]];
+    const raw_data = XLSX.utils.sheet_to_json(worksheet, {header:1});
+
+  const rows = raw_data.filter(r => r[1] );
+  
+    const objects = rows.map(r => ({id: r[0], numero: r[1], clave: r[2],m2: r[3], costo: r[4] }));
+    objects.shift()
+      setLotesxlxs(objects)
+}
+
+  console.log(lotesxlxs);
+  
+
+const handleExport = () => {
+
+  var wb = XLSX.utils.book_new()
+  const ws = XLSX.utils.json_to_sheet(lotes)
+
+  XLSX.utils.book_append_sheet(wb ,ws ,"lotes")
+
+  XLSX.writeFile(wb, "MyLotes.xlsx")
+}
+
  const renderCell = React.useCallback((lotes: Lotes, columnKey: React.Key) => {
     const cellValue = lotes[columnKey as keyof Lotes];
 
@@ -117,6 +151,14 @@ const columns = [
  */
           />
           <div className="flex gap-3"></div>
+
+    <Button onClick={handleExport}>
+      export
+    </Button>
+    <Button onClick={handleImport}>
+      import
+    </Button>
+
 
 
       <Table 

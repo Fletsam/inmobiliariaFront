@@ -14,7 +14,7 @@ const NavbarInicio = () => {
 
 
   return (
-	<section className='bg-primary h-1/4 border-white border-b-1 p-5 static '>
+	<section className=' bg-red-800 h-1/4 border-white border-b-1 p-5 '>
 
 	<div className='flex justify-center gap-10 '>
 		<div>

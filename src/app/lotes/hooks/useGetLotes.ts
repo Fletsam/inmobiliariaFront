@@ -10,7 +10,7 @@ const useLotes = () => {
     status: statusLotes,
     value: dataLotes,
   } = useApiRequest<IParamsLogin, IResponseLogin>({
-    path: `lotes`,
+    path: "",
     method: "get",
   });
   const [lotesVendidos, setLotesVendidos] = useState([]);
@@ -24,10 +24,10 @@ const useLotes = () => {
     }
   }, [statusLotes]);
 
-  const startLoadingLotes = async () => {
+  const startLoadingLotes = async (param:string) => {
     if (statusLotes === "pending") {
       try {
-        useLotesApi();
+        useLotesApi({},param);
       } catch (error) {
         console.log(error);
       }

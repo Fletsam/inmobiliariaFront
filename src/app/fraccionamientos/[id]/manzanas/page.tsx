@@ -49,7 +49,7 @@ const {startLoadingFracc,dataFracc,fracc,manzanas } = useGetFraccbyId()
 /* const {isOpen, onOpen, onOpenChange} = useDisclosure();
  */
 const {handleSetData ,data ,registerManzanaApi} = useRegisterManzana()
-const {DeleteManzanaApi} = useDeleteManzana()
+const {DeleteManzanaApi, startDeleteManzana} = useDeleteManzana()
 
 console.log(id);
 
@@ -87,7 +87,8 @@ const deleteManzana = async (id:number) => {
       text: "El cliente ha sido eliminado!.",
       icon: "success"
     });
-   DeleteManzanaApi({},pathPag)
+   startDeleteManzana(pathPag)
+   startLoadingFracc(param)
   }
   /* router.push("/usuario") */
 });

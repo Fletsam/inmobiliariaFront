@@ -36,7 +36,8 @@ if (cliente.usuarioId!==id) {
 }
 console.log(cliente); */
 useEffect(() => {
-  startLoadingLotes()
+  const param = `lotes/disponibles`
+  startLoadingLotes(param)
 	
 }, [dataLotes])
 const img = "/S_002.jpg"

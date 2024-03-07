@@ -1,8 +1,10 @@
 import { useApiRequest } from "@/app/hooks/useApiRequest";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 const useDeleteCliente = () => {
-  
+  const Swal = require('sweetalert2')
+  const router = useRouter()
   const {
     execute: DeleteClienteApi,
     status: statusDeleteCliente,
@@ -14,19 +16,29 @@ const useDeleteCliente = () => {
   
    useEffect(() => {
     if (statusDeleteCliente === "success") {
-		 console.log(dataDeleteCliente);
+		  Swal.fire({
+            title: "Borrado!",
+            text: "El Cliente ha sido Eliminado!.",
+            icon: "success"
+          });
+           router.refresh()
     } else if (statusDeleteCliente === "error") {
-      console.log(dataDeleteCliente);
+       Swal.fire({
+            title: "Rechazo!",
+            text: "Este Cliente no se puede eliminar!.",
+            icon: "error"
+          });
+          router.refresh()
     }
   }, [statusDeleteCliente]);
 
-  const startDeleteCliente = async () => {
+  const startDeleteCliente = async (param:string) => {
     if (statusDeleteCliente === "pending") {
       try {
-       await DeleteClienteApi();
-	   
+       await DeleteClienteApi({},param);
+       
       } catch (error) {
-        console.log(error);
+        
       }
     }
   };

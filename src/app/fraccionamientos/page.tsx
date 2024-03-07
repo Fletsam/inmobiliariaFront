@@ -106,10 +106,11 @@ const toEstadoCuenta = (e:number) => {
             {/* {fraccs.propietario} */}
           </Fraccs>
         );
-      case "propietario":
+      case "costototal":
+        const costo = numeral(cellValue).format('$0,0')
         return (
           <div className="flex flex-col">
-            <p className="text-bold text-sm capitalize">{cellValue}</p>
+            <p className="text-bold text-sm capitalize">{costo}Mxn</p>
             {/* <p className="text-bold text-sm capitalize text-default-400">{ fraccs.propietario}</p> */}
           </div>
         );

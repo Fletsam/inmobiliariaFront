@@ -17,7 +17,7 @@ export const SidebarMenuitem = ({ path, icon, title, subtitle }: Props) => {
     <Link
       href={path}
       className={`w-full px-2 inline-flex space-x-2 items-center border-b border-white py-3  hover:bg-white/5 transition ease-linear duration-150 ${
-        pathname === path ? "bg-white" : ""
+        pathname === path ? "bg-white/10" : ""
       }`}
     >
       {icon}

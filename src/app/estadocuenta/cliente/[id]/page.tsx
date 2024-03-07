@@ -29,8 +29,8 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/store";
 import moment from "moment";
 import 'moment/locale/es';
-import { formatPrecio } from "@/helpers/formatearprecios";
 
+import XLSX from "xlsx"
 export default function Fraccionamientos ()  {
 	const params = useParams();
 const itemfind  = (parseInt(params.id));
@@ -81,6 +81,18 @@ var numeral = require('numeral');
 const openModalFracc = (e:number) => {  
       setFracc(e)    
   } */
+
+const handleExport = () => {
+
+  var wb = XLSX.utils.book_new()
+  const ws = XLSX.utils.json_to_sheet(estadocuentaIngresos)
+
+  XLSX.utils.book_append_sheet(wb ,ws ,"estadocuentaingresos")
+
+  XLSX.writeFile(wb, `EstadoCuenta ${cliente.nombre}.xlsx`)
+}
+
+
 
  const renderCell = React.useCallback((estadocuentaIngresos: EstadoCuenta, columnKey: React.Key) => {
     const cellValue = estadocuentaIngresos[columnKey as keyof EstadoCuenta];
@@ -246,7 +258,9 @@ const openModalFracc = (e:number) => {
       <h1 className="text-primary font-bold text-xl">
         Fecha de inicio:  <span className=" text-black font-semibold capitalize">{moment(contrato.inicio).format('dddd, Do [de] MMMM [de] YYYY')} </span>
       </h1>
-    
+                <Button className='text-white bg-primary shadow-md shadow-primary w-auto h-5 ' onClick={handleExport}>
+                  Exportar Excel
+                </Button>
   </div>         
 
       <Table 

@@ -47,10 +47,6 @@ const {data,handleSetData,registerAbonoApi} = useRegisterAbono()
 
 
 const { isLogged, nombre , id } = useSelector((state: RootState) => state.users)
-console.log(estadoCuenta);
-
-console.log(fracc);
-console.log(lotes);
 
 
 useEffect(() => {
@@ -66,8 +62,8 @@ useEffect(() => {
 
 }, [dataFracc])
 useEffect(() => {
-  
-  startLoadingLotes()
+  const param =  `lotes/disponibles/${itemfind}`
+  startLoadingLotes(param)
 
 
 }, [dataLotes])

@@ -12,12 +12,17 @@ const useGetClientebyId = () => {
     method: "get",
   });
   const [cliente, setCliente] = useState({});
+  const [clientes, setClientes] = useState([]);
+  const [clientesContratos, setClientesContratos] = useState([])
   useEffect(() => {
     if (statusCliente === "success") {
       const cliente = dataCliente;
-		/* console.log(cliente); */
+     
+      const clientes = dataCliente.clientes
+      const contratos = dataCliente.contratos
 		
-		
+      setClientes(clientes);
+      setClientesContratos(contratos);
       setCliente(cliente);
     } else if (statusCliente === "error") {
       console.log(dataCliente);
@@ -40,6 +45,8 @@ const useGetClientebyId = () => {
     dataCliente,
     statusCliente,
     cliente,
+    clientesContratos,
+    clientes,
     startLoadingClientes,
   };
 };

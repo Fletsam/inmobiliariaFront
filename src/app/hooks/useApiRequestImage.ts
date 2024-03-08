@@ -37,13 +37,9 @@ export const useApiRequestImage = <ParamsType, ResponseType>(
     }
     return "";
   };
-const AWS = require('aws-sdk');
 
- AWS.config.update({
-  accessKeyId: 'AKIAVRUVQYJLX45NKPWI',
-  secretAccessKey: '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',
-  region: 'us-east-2', // Reemplaza con la región de tu bucket, por ejemplo, 'us-east-1'
-});
+
+
 
  
     // Reemplaza 'nombre_de_tu_folder' con el nombre de tu folder en Cloudinary

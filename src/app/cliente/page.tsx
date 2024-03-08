@@ -48,7 +48,7 @@ export default function Home() {
   const {isOpen, onOpen, onOpenChange} = useDisclosure();
 const {clientes,dataCliente, startLoadingClientes,  showClient } = useCliente()
 
-   const {startDeleteCliente,DeleteClienteApi } = useDeleteCliente()
+   const {startDeleteCliente } = useDeleteCliente()
 
 const { isLogged, nombre, id } = useSelector((state: RootState) => state.users); 
 
@@ -81,9 +81,7 @@ const Swal = require('sweetalert2')
         if (result.isConfirmed) {
 
         startDeleteCliente(pathPag)
-      
         startLoadingClientes(param)  
-
         }
       
 });
@@ -147,7 +145,7 @@ const columns = [
             </Tooltip>
             <Tooltip color="warning" content="Editar Cliente" className="text-white">
               <span className="text-lg text-warning cursor-pointer active:opacity-50">
-                <Link href={`/cliente/${clientes.id}`}>
+                <Link href={`/cliente/${clientes.id}/editar`}>
                   <TbEditCircle onClick={() => showClient(clientes) } />
                 </Link>
                 

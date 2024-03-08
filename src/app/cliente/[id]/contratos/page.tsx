@@ -9,6 +9,7 @@ import useGetFraccbyId from '@/app/fraccionamientos/hooks/useGetFraccbyId'
 import { Button, Card, CardBody, CardFooter, Image, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, useDisclosure } from '@nextui-org/react'
 import useLotes from '@/app/lotes/hooks/useGetLotes'
 import useRegisterContrato from './hooks/useRegisterContrato'
+import { CldImage } from 'next-cloudinary'
 
 const Contrato = () => {
 const params = useParams()
@@ -69,23 +70,20 @@ const handleOpenLote = (loteid:number) => {
   return (
     <div className="bg-white gap-3 grid grid-cols-2 sm:grid-cols-4 p-5">
       {lotes.map((item, index) => (
-        <Card shadow="sm" className="bg-slate-100 shadow-primary shadow-md" key={index} isPressable onPress={()=>handleOpenLote(item)}>
-          <CardBody className="overflow-visible p-0 ">
-            
-           <Image
-              shadow="sm"
-              radius="lg"
-              width="100%"
-              alt={item.clave}
-              className="w-full object-cover h-[140px]"
-              src={img}
-            />
-          </CardBody>
-          <CardFooter className="flex gap-3 text-small justify-between">
-            <b > {item.clave} </b>
-            <p className="text-default-500"> costo : $ {item.costo} mxn </p>
-            <p className="text-default-500"> m²: {item.m2} </p>
+        <Card shadow="sm" className="bg-slate-100 shadow-primary shadow-md p-0 w-52 h-60" key={index} isPressable onPress={()=>handleOpenLote(item)}>
+          <CardBody className=" p-0">
+            <CldImage
+            className='w-auto h-auto p-1 bg-gray-950/5'
+            alt=''
+            width="300"
+            height="300"
+            src={`Logos/${item.clave.slice(0,-4)}`}/>
+          <CardFooter className=" bg-slate-200/25 flex gap-3 text-small justify-between h-auto p-2">
+            <h1 className='text-black drop-shadow-md shadow-red-900' > {item.clave} </h1>
+            <h2> {item.m2} m²</h2>
           </CardFooter>
+          </CardBody>
+        
         </Card>
         
       ))}

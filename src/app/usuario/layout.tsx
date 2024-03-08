@@ -11,7 +11,7 @@ export default function DashboarLayout({
     
      return (
         <div className=" text-slate-300">
-           <NavbarInicio/>
+           <NavbarInicio> </NavbarInicio>
            <div className="flex ">
             <Sidebar /> 
                   {children}

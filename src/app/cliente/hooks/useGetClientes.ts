@@ -16,7 +16,9 @@ const useCliente = () => {
   const [clientes, setClientes] = useState([]);
   useEffect(() => {
     if (statusCliente === "success") {
-      const cliente = dataCliente;
+      console.log(dataCliente);
+      
+      const cliente = dataCliente.clientes;
      
       
       setClientes(cliente);

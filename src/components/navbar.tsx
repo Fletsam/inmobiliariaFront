@@ -6,7 +6,7 @@ import Link from 'next/link';
 import React, { useEffect } from 'react'
 import { useSelector } from 'react-redux';
 
-const NavbarInicio = () => {
+const NavbarInicio = ({children}) => {
 	
 		const { isLogged, nombre, id } = useSelector((state: RootState) => state.users); 
 	 	const {isOpen, onOpen, onOpenChange} = useDisclosure();
@@ -14,7 +14,7 @@ const NavbarInicio = () => {
 
 
   return (
-	<section className=' bg-red-800 h-1/4 border-white border-b-1 p-5 '>
+	<section className=' sm:visible bg-red-800 h-1/4 border-white border-b-1 p-5  '>
 
 	<div className='flex justify-center gap-10 '>
 		<div>
@@ -51,6 +51,8 @@ const NavbarInicio = () => {
 			 </div>
 		</div>
 	</div>
+	{children}
+
 	
    <>
       <Modal isOpen={isOpen} onOpenChange={onOpenChange} isDismissable={false} isKeyboardDismissDisabled={true}>

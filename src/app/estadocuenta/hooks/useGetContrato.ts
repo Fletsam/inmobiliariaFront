@@ -13,6 +13,7 @@ const useGetContratobyId = () => {
     path: "",
     method: "get",
   });
+  const [contratos, setContratos] = useState([]);
   const [contrato, setContrato] = useState({});
   const [cliente , setCliente] = useState({})
   const [lote , setLote] = useState({})
@@ -20,8 +21,10 @@ const useGetContratobyId = () => {
     if (statusContrato === "success") {
    
 		setCliente(dataContrato.Cliente)
-      setContrato( dataContrato.Found);
+    setContrato( dataContrato.Found);
 	  setLote(dataContrato.Lote)
+    setContratos(dataContrato.data)
+    /* setContratos() */
     } else if (statusContrato === "error") {
       console.log(dataContrato);
     }
@@ -43,6 +46,7 @@ const useGetContratobyId = () => {
     useContratoApi,
     dataContrato,
     contrato,
+    contratos,
 	cliente,
 	lote
   };

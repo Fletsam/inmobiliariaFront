@@ -3,6 +3,7 @@
 import { RootState } from '@/store';
 import { Button, Image, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, useDisclosure } from '@nextui-org/react'
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import React, { useEffect } from 'react'
 import { useSelector } from 'react-redux';
 
@@ -10,18 +11,18 @@ const NavbarInicio = ({children}) => {
 	
 		const { isLogged, nombre, id } = useSelector((state: RootState) => state.users); 
 	 	const {isOpen, onOpen, onOpenChange} = useDisclosure();
-
+		
+		const router = useRouter()
 
 
   return (
-	<section className=' sm:visible bg-red-800 h-1/4 border-white border-b-1 p-5  '>
+	<section className='bg-red-800 h-1/4 border-white border-b-1 p-5  '>
 
-	<div className='flex justify-center gap-10 '>
+	<div className=' grid sm:flex justify-center gap-10 '>
 		<div>
-	<Image className='rounded-full shadow-white shadow-lg  ' width={100} height={100} src={"/logo2.webp"} alt="logo" />
+	<Image className='rounded-full shadow-white shadow-lg  ' width={100} height={100} src={"/logo2.webp"} alt="logo" onClick={()=>router.push("/usuario")} />
 		</div>
-		
-		<div className='px-6 text-white '>
+		<div className=' hidden sm:block px-6 text-white '>
 			<h1 className=' p-2 text-4xl  ' >
 			Tu Hogar Inmobiliaria 
 			</h1>
@@ -31,9 +32,7 @@ const NavbarInicio = ({children}) => {
 				<h4 className='px-20 text-xl font-thin'>
 					Sistema Informacion Administrativo Tu Hogar Inmobiliaria 
 				</h4>
-				
-		</div>
-		<div className='flex-col justify-self-start'>
+				<div className=' sm:flex justify-self-start'>
 			<div className='pt-2'>
 				<Link href="/usuario" onClick={onOpen} className="  text-white font-normal text-xl p-1 bg-primary hover:bg-white/5 ">
 				Perfil
@@ -50,6 +49,8 @@ const NavbarInicio = ({children}) => {
           		</Link>
 			 </div>
 		</div>
+		</div>
+		
 	</div>
 	{children}
 

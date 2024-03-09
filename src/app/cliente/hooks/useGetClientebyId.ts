@@ -14,14 +14,17 @@ const useGetClientebyId = () => {
   const [cliente, setCliente] = useState({});
   const [clientes, setClientes] = useState([]);
   const [clientesContratos, setClientesContratos] = useState([])
+  const [clienteContratos, setClienteContratos] = useState([])
   useEffect(() => {
     if (statusCliente === "success") {
       const cliente = dataCliente;
-     
+      
+      const contratosbycliente = dataCliente.Contratos
       const clientes = dataCliente.clientes
       const contratos = dataCliente.contratos
-		
+      
       setClientes(clientes);
+      setClienteContratos(contratosbycliente)
       setClientesContratos(contratos);
       setCliente(cliente);
     } else if (statusCliente === "error") {
@@ -47,6 +50,7 @@ const useGetClientebyId = () => {
     cliente,
     clientesContratos,
     clientes,
+    clienteContratos,
     startLoadingClientes,
   };
 };

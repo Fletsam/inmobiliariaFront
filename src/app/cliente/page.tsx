@@ -22,7 +22,7 @@ import {
 } from "@nextui-org/react";
 import React, { useEffect, useState } from "react";
 import useCliente from "./hooks/useGetClientes";
-import { IoLogoReddit, IoNewspaper, IoNewspaperOutline, IoSearchOutline, IoTrash, IoTrashBinOutline, IoTrashOutline } from "react-icons/io5";
+import { IoLogoReddit, IoNewspaper, IoNewspaperOutline, IoPersonCircle, IoSearchOutline, IoTrash, IoTrashBinOutline, IoTrashOutline } from "react-icons/io5";
 import { EyeFilledIcon } from "@/helpers";
 import { TbEditCircle } from "react-icons/tb";
 import { FiDelete } from "react-icons/fi";
@@ -99,14 +99,12 @@ const Swal = require('sweetalert2')
 type Clientes = typeof clientes[0];
 const columns = [
   {name: "Nombre", uid: "nombre",sortable:true},
-  {name: "Ocupacion", uid: "ocupacion"},
+  {name: "Ocupación", uid: "ocupacion"},
   {name: "Acciones", uid: "actions"},
 ];
   
  const renderCell = React.useCallback((clientes: Clientes, columnKey: React.Key) => {
     const cellValue = clientes[columnKey as keyof Clientes];
-
-
 
     
     moment.locale("es")
@@ -138,29 +136,36 @@ const columns = [
         return (
           <div className="relative flex items-center gap-2">
             <Tooltip content="Detalles" color="success" className="text-white">
-              <span className="text-lg  cursor-pointer text-success active:opacity-50" onClick={onOpen}>
+              <span className="text-2xl  cursor-pointer text-success active:opacity-50" onClick={onOpen}>
                 <EyeFilledIcon onClick={() => openModalCliente(clientes)}   />
-          
+              </span>
+            </Tooltip>
+            <Tooltip content="Ficha del Cliente" color="secondary" className="text-white">
+              <span className="text-2xl  cursor-pointer text-secondary active:opacity-50">
+                <Link href={`/cliente/${clientes.id}`}>
+                <IoPersonCircle />
+                </Link>
+                
               </span>
             </Tooltip>
             <Tooltip color="warning" content="Editar Cliente" className="text-white">
-              <span className="text-lg text-warning cursor-pointer active:opacity-50">
+              <span className="text-2xl text-warning cursor-pointer active:opacity-50">
                 <Link href={`/cliente/${clientes.id}/editar`}>
-                  <TbEditCircle onClick={() => showClient(clientes) } />
+                  <TbEditCircle />
                 </Link>
                 
               </span>
             </Tooltip>
             <Tooltip color="default" content="Contratos" className="text-blue-600">
-              <span className="text-lg text-blue-600 cursor-pointer active:opacity-50">
+              <span className="text-2xl text-blue-600 cursor-pointer active:opacity-50">
                 <Link href={`/cliente/${clientes.id}/contratos`}>
-                  <IoNewspaper color="primary" onClick={() => showClient(clientes) } />
+                  <IoNewspaper color="primary" />
                 </Link>
                 
               </span>
             </Tooltip>
             <Tooltip color="danger" content="Borrar Cliente">
-              <span className="text-lg text-danger cursor-pointer active:opacity-50">
+              <span className="text-2xl text-danger cursor-pointer active:opacity-50">
                 <IoTrashOutline onClick={() => DeleteCliente(clientes.id) } />
               </span>
             </Tooltip>

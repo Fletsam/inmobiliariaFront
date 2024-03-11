@@ -19,7 +19,7 @@ import {
   Button,
 } from "@nextui-org/react";
 import React, { useEffect } from "react";
-import { IoSearchOutline } from "react-icons/io5";
+import { IoPersonCircle, IoSearchOutline } from "react-icons/io5";
 import useGetEstadoCuenta from "../../hooks/useGetEstadoCuenta";
 import { useParams } from "next/navigation";
 import useGetContratobyId from "../../hooks/useGetContrato";
@@ -31,6 +31,9 @@ import moment from "moment";
 import 'moment/locale/es';
 
 import XLSX from "xlsx"
+import Link from "next/link";
+import { TbEditCircle } from "react-icons/tb";
+import { EyeFilledIcon } from "@/helpers";
 export default function Fraccionamientos ()  {
 	const params = useParams();
 const itemfind  = (parseInt(params.id));
@@ -193,10 +196,29 @@ const handleExport = () => {
             Telefono : <span className="text-black font-normal"> {cliente.telefono}</span>
           </h1>
         </div>
-        <div className="p-3">
-                <Button className='text-white bg-primary shadow-md shadow-primary w-auto h-5 ' onClick={onOpen}>
+        <div className="p-3 flex justify-between">
+                {/* <Button className='text-white bg-primary shadow-md shadow-primary w-auto h-5 ' onClick={onOpen}>
                   Ficha del cliente
-                </Button>
+                </Button> */}
+                 <Tooltip content="Ficha del Cliente" color="secondary" className="text-white">
+              <span className="text-2xl  cursor-pointer text-secondary active:opacity-50" >
+                <Link href={`/cliente/${cliente.id}`}>
+                <IoPersonCircle />
+                </Link>
+              </span>
+            </Tooltip>
+            <Tooltip content="Detalles" color="success" className="text-white">
+              <span className="text-2xl  cursor-pointer text-success active:opacity-50" onClick={onOpen}>
+                <EyeFilledIcon onClick={onOpen}   />
+              </span>
+            </Tooltip>
+            <Tooltip color="warning" content="Editar Cliente" className="text-white">
+              <span className="text-2xl text-warning cursor-pointer active:opacity-50">
+                <Link href={`/cliente/${cliente.id}/editar`}>
+                  <TbEditCircle />
+                </Link>
+                </span>
+                </Tooltip>
         </div>    
        </div>
         <div>

@@ -6,6 +6,9 @@ import { redirect, useParams, usePathname, useRouter, useSearchParams } from 'ne
 import { CldImage } from 'next-cloudinary'
 import { Button, Card, CardBody, CardFooter } from '@nextui-org/react'
 import Link from 'next/link'
+import ReactPDF, { PDFViewer } from '@react-pdf/renderer'
+import Contrato from './contratos/page'
+import { ContratoPDF } from './contratos/contratopdf/contrato'
 
 const page = () => {
 
@@ -27,6 +30,7 @@ const router = useRouter()
 
 const handleToEstadoCuenta = (id:number) => {
 	router.push(`/estadocuenta/cliente/${id}`)
+
 }
 
   return (
@@ -150,10 +154,10 @@ const handleToEstadoCuenta = (id:number) => {
 					</div>
 				</div>	
 		</section>
-
-
+	
 
 	</main>
+	
   )
 }
 

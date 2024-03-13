@@ -39,6 +39,7 @@ const itemfind  = (parseInt(params.id));
 const {isOpen, onOpen, onOpenChange} = useDisclosure();
 const {startLoadingEstadoCuenta,estadoCuenta,dataEstadoCuenta,ingresosfracc,egresosfracc } = useGetEstadoCuenta()
 
+const {startLoadingContrato,dataContrato, contratoFracc} = useGetContratobyId()
 const {fracc,lotes,dataFracc,startLoadingFracc} = useGetFraccbyId()
 
 const {dataLotes,lotesVendidos,startLoadingLotes} = useLotes()
@@ -54,6 +55,12 @@ useEffect(() => {
   startLoadingEstadoCuenta(param)  
   
 }, [dataEstadoCuenta])
+
+useEffect(() => {
+  const param = `contratos/fracc/${itemfind}`
+  startLoadingContrato(param)  
+  
+}, [dataContrato])
 
 useEffect(() => {
   const param = `fraccionamientos/${itemfind}/usuario/${id}`
@@ -81,13 +88,12 @@ moment.locale("es")
 
 const estadocuentaIngresos = [estadoCuenta].concat(ingresosfracc).concat(egresosfracc)
 
-console.log(estadocuentaIngresos);
+console.log(contratoFracc);
 
 
 type EstadoCuenta = typeof estadocuentaIngresos[0];
 const columns = [
   {name: "Concepto", uid: "concepto"},
-  {name: "Contrato", uid: "contratoId"},
   {name: "Monto Egreso", uid: "montoegreso"},
   {name: "Monto Ingreso", uid: "montoingreso"},
   {name: "Cuenta Saldo", uid: "cuentasaldo"},
@@ -204,8 +210,35 @@ const openModalFracc = (e:number) => {
           <h1 className="text-primary font-semibold pt-2 ">
             Direccion : <span className="text-black font-normal"> {fracc.direccion}</span>
           </h1>
+           <h1 className="text-primary font-semibold pt-2 ">
+            Metros² : <span className="text-black font-normal"> {fracc.m2} m²</span>
+          </h1>
+           <h1 className="text-primary font-semibold pt-2 ">
+            Costo Neto : <span className="text-black font-normal"> $ {numeral(contratoFracc.costo).format('0,0')} Mxn</span>
+          </h1>
         </div>  
 </div>
+   <div>
+          <h1 className="text-primary font-bold text-xl border-white border-b-3">
+          Contrato
+        </h1>
+        <div className="">
+           <h1 className="text-primary font-semibold pt-2 ">
+            Pagos a Financiar: <span className="text-black font-normal">{contratoFracc.pagosafinanciar} </span> 
+          </h1>
+          <h1 className="text-primary font-semibold pt-2 ">
+            Pago Mensual : <span className="text-black font-normal"> $ {numeral(contratoFracc.pagomensual).format('0,0')} Mxn</span>
+          </h1>
+          <h1 className="text-primary font-semibold pt-2 ">
+            Precio por M² : <span className="text-black font-normal"> $ {numeral(contratoFracc.preciom2).format('0,0')} Mxn</span>
+          </h1>
+             <h1 className="text-primary font-semibold pt-2 ">
+            Interesanual : <span className="text-black font-normal"> {numeral(contratoFracc.interesanual).format('0%')} </span>
+          </h1>
+         
+               
+        </div>
+       </div>
         <div>
           <h1 className="text-primary font-bold text-xl border-white border-b-3">
           Total de Lotes

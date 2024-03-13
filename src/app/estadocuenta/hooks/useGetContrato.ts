@@ -13,6 +13,7 @@ const useGetContratobyId = () => {
     path: "",
     method: "get",
   });
+  const [contratoFracc, setContratoFracc] = useState({})
   const [contratos, setContratos] = useState([]);
   const [contrato, setContrato] = useState({});
   const [cliente , setCliente] = useState({})
@@ -20,6 +21,7 @@ const useGetContratobyId = () => {
   useEffect(() => {
     if (statusContrato === "success") {
    
+    setContratoFracc(dataContrato)
 		setCliente(dataContrato.Cliente)
     setContrato( dataContrato.Found);
 	  setLote(dataContrato.Lote)
@@ -48,7 +50,8 @@ const useGetContratobyId = () => {
     contrato,
     contratos,
 	cliente,
-	lote
+	lote,
+  contratoFracc
   };
 };
 

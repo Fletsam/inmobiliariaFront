@@ -232,6 +232,10 @@ const handleExport = () => {
           <h1 className="text-primary font-semibold pt-2 ">
             Metros Cuadrados : <span className="text-black font-normal"> {lote.m2}m²</span>
           </h1>
+            <h1 className="text-primary font-semibold pt-2 ">
+            Costo Neto : <span className="text-black font-normal"> $ {numeral(contrato.costo).format('0,0')} Mxn</span>
+          </h1>
+         
         </div>
        </div>
       <div >
@@ -247,6 +251,9 @@ const handleExport = () => {
           </h1>
           <h1 className="text-primary font-semibold pt-2 ">
             Pago Mensual : <span className="text-black font-normal"> $ {numeral(contrato.pagomensual).format('0,0')} Mxn</span>
+          </h1>
+          <h1 className="text-primary font-semibold pt-2 ">
+            Descuento : <span className="text-black font-normal"> $ {numeral(contrato.descuento).format('0,0')} Mxn</span>
           </h1>
          
           <h3 className="text-primary font-semibold pt-2 ">

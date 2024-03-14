@@ -4,19 +4,34 @@ import React, { useEffect } from 'react'
 import useGetClientebyId from '../hooks/useGetClientebyId'
 import { redirect, useParams, usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { CldImage } from 'next-cloudinary'
-import { Button, Card, CardBody, CardFooter } from '@nextui-org/react'
+import { Button, Card, CardBody, CardFooter, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, Popover, PopoverContent, PopoverTrigger, useDisclosure } from '@nextui-org/react'
 import Link from 'next/link'
 import ReactPDF, { PDFViewer } from '@react-pdf/renderer'
 import Contrato from './contratos/page'
 import { ContratoPDF } from './contratos/contratopdf/contrato'
-
+import useRegisterInversion from './contratos/hooks/useRegisterInversion'
+import { CalendarIcon } from 'lucide-react'
+import moment from 'moment'
+import DatePicker, { registerLocale } from "react-datepicker";
+import { cn } from '@/lib/utils'
+import 'moment/locale/es';
+import { es } from 'date-fns/locale/es';
+import 'moment/locale/es';
+import "react-datepicker/dist/react-datepicker.css";
+import { useSelector } from 'react-redux'
+import { RootState } from '@/store'
 const page = () => {
 
-	
-	const params = useParams()
+const params = useParams()
 const itemfind = (parseInt(params.id))
+const {dataCliente, startLoadingClientes, cliente,clienteContratos} = useGetClientebyId()
+const {data, handleSetData, handleSetDate, registerInversionApi} =useRegisterInversion()
+const {isOpen, onOpen, onOpenChange} = useDisclosure();
+const { isLogged, nombre , id } = useSelector((state: RootState) => state.users)
+registerLocale('es', es)
+moment.locale("es")
 
-	const {dataCliente, startLoadingClientes, cliente,clienteContratos} = useGetClientebyId()
+
 
 useEffect(() => {
 	const pathpag = `clientes/${itemfind}`
@@ -30,7 +45,24 @@ const router = useRouter()
 
 const handleToEstadoCuenta = (id:number) => {
 	router.push(`/estadocuenta/cliente/${id}`)
+}
 
+const handleRegisterInversion = async () => {
+ 
+ 
+  const path = `contratos/inversionista/${cliente.id}`
+
+  await  registerInversionApi({...data, 
+    fecha: (new Date()),
+	inicion: (new Date()),
+    pagado:0, 
+    estatus: 0, 
+    usuarioId: id, 
+	interesanual:0,
+    clientesId: cliente.id,
+	contratoInversionistaId: cliente.id
+}
+    ,path)
 }
 
   return (
@@ -63,14 +95,16 @@ const handleToEstadoCuenta = (id:number) => {
 					Estado Civil : <span className='text-black font-normal'> {cliente.estadocivil} </span>
 				</h1>
 				</div>
-			<div className='flex pt-4 justify-center'>
+			<div className='flex pt-4 justify-between'>
 				<Link href={`${cliente.id}/editar`}>
 				<Button className='text-white bg-primary shadow-md shadow-primary'>
                   Editar
                 </Button>
 				
 				</Link>
-				
+				<Button className='text-white bg-primary shadow-md shadow-primary' onClick={onOpen}>
+                  Invertir
+                </Button>
 			</div>
 			</div>
 			
@@ -154,7 +188,123 @@ const handleToEstadoCuenta = (id:number) => {
 					</div>
 				</div>	
 		</section>
-	
+	  <>
+      <Modal isOpen={isOpen} onOpenChange={onOpenChange} isDismissable={false} isKeyboardDismissDisabled={true} >
+        <ModalContent className="text-black">
+          {(onClose) => (
+            <>
+              <ModalHeader className="flex flex-col gap-1"> <p className="text-primary"></p></ModalHeader>
+              <ModalBody className="text-black " >
+				
+				
+				
+				<Input
+              value={data.testigo1}
+              type="text"
+              onChange={handleSetData}
+			  className='text-black'
+              label="El nombre del primer testigo"
+			  description = "Escriba el nombre"
+             variant='bordered'
+              name="testigo1"
+              id="testigo1"
+            />
+			
+			<Input
+              value={data.testigo2}
+              type="text"
+              onChange={handleSetData}
+			  className='text-black'
+              label="El nombre del segundo testigo"
+			  description = "Escriba el nombre"
+             variant='flat'
+              name="testigo2"
+              id="testigo2"
+            />
+			<Input
+              value={(data.pagosafinanciar).toString()}
+              type="text"
+              onChange={handleSetData}
+			  className='text-black'
+              label="Pagos a financiar"
+			  description = "Escriba los meses"
+             variant='flat'
+              name="pagosafinanciar"
+              id="pagosafinanciar"
+            />
+			<Input
+              value={(data.interesmensual).toString()}
+              type="text"
+              onChange={handleSetData}
+			  className='text-black'
+              label="Interes Mensual"
+			  description = "Escrba la tasa Mensual"
+             variant='flat'
+              name="interesmensual"
+              id="interesmensual"
+            />
+			<Input
+              value={(data.monto).toString()}
+              type="text"
+              onChange={handleSetData}
+			  className='text-black'
+              label="Monto de la Inversion"
+			  description = "Escriba el monto"
+             variant='flat'
+              name="monto"
+              id="monto"
+            />
+			<Input
+              value={(data.comision).toString()}
+              type="text"
+              onChange={handleSetData}
+			  className='text-black'
+              label="Monto de la comision"
+			  description = "monto de la comision"
+             variant='flat'
+              name="comision"
+              id="comision"
+            />
+			
+
+{/* 
+ 		<Popover className='text-black'>
+					<PopoverTrigger >
+						<Button
+						variant={"light"}
+						className={cn(
+							"w-[240px] justify-start text-left font-normal",
+							!data.inicio && "text-muted-foreground"
+						)}
+						>
+						<CalendarIcon className="mr-2 h-4 w-4 capitalize" />
+						{data.inicio ? moment(data.inicio).format("LLL") : <span>Pick a date</span>}
+						</Button>
+					</PopoverTrigger>
+					<PopoverContent className="w-auto p-0" >
+						<DatePicker
+							locale="es"
+							selected={data.inicio}
+							className="block w-full border-spacing-5 rounded-lg border-2 border-gray-700/40 bg-transparent px-5 py-3 font-semibold"
+							onChange={handleSetDate}
+							/>
+						</PopoverContent>
+				</Popover> */}
+              </ModalBody>
+                <ModalFooter>
+                <Button className='text-white bg-primary shadow-md shadow-primary ' onPress={onClose}>
+                  Close
+                </Button>
+                <Button className='text-white bg-primary shadow-md shadow-primary ' onPress={handleRegisterInversion}>
+                  Registrar Contrato
+                </Button>
+              </ModalFooter>
+            </>
+          )}
+        </ModalContent>
+      </Modal>
+    </>
+      
 
 	</main>
 	

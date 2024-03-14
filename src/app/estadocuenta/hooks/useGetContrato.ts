@@ -14,19 +14,23 @@ const useGetContratobyId = () => {
     method: "get",
   });
   const [contratoFracc, setContratoFracc] = useState({})
+  const [contratoInv, setContratoInv] = useState({})
   const [contratos, setContratos] = useState([]);
   const [contrato, setContrato] = useState({});
   const [cliente , setCliente] = useState({})
+  const [clienteInv , setClienteInv] = useState({})
   const [lote , setLote] = useState({})
   useEffect(() => {
     if (statusContrato === "success") {
-   
-    setContratoFracc(dataContrato)
+      const contratoinv = dataContrato 
+      const contratofracc = dataContrato
+    setContratoInv(contratoinv.contratoInv)
+    setClienteInv(contratoinv.clienteInv)
+    setContratoFracc(contratofracc)
 		setCliente(dataContrato.Cliente)
     setContrato( dataContrato.Found);
 	  setLote(dataContrato.Lote)
     setContratos(dataContrato.data)
-    /* setContratos() */
     } else if (statusContrato === "error") {
       console.log(dataContrato);
     }
@@ -51,7 +55,9 @@ const useGetContratobyId = () => {
     contratos,
 	cliente,
 	lote,
-  contratoFracc
+  contratoFracc,
+  contratoInv,
+  clienteInv
   };
 };
 

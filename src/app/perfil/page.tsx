@@ -16,7 +16,8 @@ import { format } from 'path'
 import { cn } from '@/lib/utils'
 import { Calendar } from '@/components/Calendar'
 import { formatDate } from 'date-fns'
-import ReactDatePicker, { registerLocale } from 'react-datepicker'
+import { registerLocale } from 'react-datepicker'
+import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { es } from 'date-fns/locale/es';
 import moment from 'moment'
@@ -41,7 +42,7 @@ const options = [
 
 
 
-const page = () => {
+const Perfil = () => {
 	const {isOpen, onOpen, onOpenChange} = useDisclosure();
 	const {startLoadingUsuario,dataUsuario,usuario,area,funciones} = useGetUsuariobyId()
 	const { dataCliente, startLoadingClientes, clientes} = useGetClientebyId()
@@ -311,17 +312,15 @@ case "fraccs":
 							!data.fechafin && "text-muted-foreground"
 						)}
 						>
-						<CalendarIcon className="mr-2 h-4 w-4" />
-						{data.fechafin ? formatDate(data.fechafin, "PPP") : <span>Pick a date</span>}
+						<CalendarIcon className="mr-2 h-4 w-4 capitalize" />
+						{data.fechafin ? moment(data.fechafin).format("LLL") : <span>Pick a date</span>}
 						</Button>
 					</PopoverTrigger>
 					<PopoverContent className="w-auto p-0" >
-						<ReactDatePicker
+						<DatePicker
 							locale="es"
 							selected={data.fechafin}
 							className="block w-full border-spacing-5 rounded-lg border-2 border-gray-700/40 bg-transparent px-5 py-3 font-semibold"
-							dateFormat=" Pp"
-							showTimeSelect
 							onChange={handleSetDate}
 							/>
 						</PopoverContent>
@@ -343,4 +342,4 @@ case "fraccs":
   )
 }
 
-export default page
+export default Perfil

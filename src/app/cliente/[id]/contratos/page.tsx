@@ -57,6 +57,7 @@ await  registerContratoApi({...data,
     usuarioId: id, 
     clientesId: itemfind ,
     contratoId: lote.id ,
+    comision: 0,
     loteId: lote.id}
     ,path)
 }

@@ -2,14 +2,14 @@
 import { useApiRequest } from "@/app/hooks/useApiRequest";
 import { useEffect, useState } from "react";
 
-const useGetManzanabyId = (id:number) => {
+const useGetManzanabyId = () => {
   
   const {
     execute: ManzanaApi,
     status: statusManzana,
     value: dataManzana,
   } = useApiRequest<IParamsLogin, IResponseLogin>({
-    path: `manzanas/${id}`,
+    path: ``,
     method: "get",
   });
   const [manzana, setManzana] = useState({});
@@ -28,10 +28,10 @@ const useGetManzanabyId = (id:number) => {
     }
   }, [statusManzana]);
 
-  const startLoadingManzana = async () => {
+  const startLoadingManzana = async ( param:string) => {
     if (statusManzana === "pending") {
       try {
-        ManzanaApi();
+        ManzanaApi({},param);
       } catch (error) {
         console.log(error);
       }

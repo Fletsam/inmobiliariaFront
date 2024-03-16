@@ -54,7 +54,7 @@ console.log(fraccs);
 const handleAddFracc = () => {
   console.log(data);
   
-  registerFraccApi({...data,totaldelotes:0,totaldemanzanas:0,costototal:0, usuarioId:id})
+  registerFraccApi({...data,totaldelotes:0,costototal:0, usuarioId:id, contratoFraccId:0})
 
 } 
 
@@ -262,6 +262,29 @@ const toEstadoCuenta = (e:number) => {
              variant='flat'
               name="direccion"
               id="direccion"
+            />
+			<Input
+              value={(data.m2).toString()}
+              type="text"
+              onChange={handleSetData}
+			  className='text-black'
+              label="Cuantos Metros Cuadrados Tiene"
+			  description = "Escriba los metros cuadrados"
+             variant='flat'
+              name="m2"
+              id="m2"
+            />
+			
+			<Input
+              value={(data.totaldemanzanas).toString()}
+              type="text"
+              onChange={handleSetData}
+			  className='text-black'
+              label="Cuantas Manzanas tienes"
+			  description = "Escriba las manzanas que tiene"
+             variant='flat'
+              name="totaldemanzanas"
+              id="totaldemanzanas"
             />
 			
 

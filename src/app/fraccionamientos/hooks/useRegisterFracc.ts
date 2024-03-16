@@ -11,6 +11,8 @@ interface RegisterDataFracc {
   propietario:string
   telefono:string
   direccion:string
+  totaldemanzanas:number
+  m2:number
 }
 
 const defaultDataLogin: RegisterDataFracc = {
@@ -18,7 +20,9 @@ const defaultDataLogin: RegisterDataFracc = {
   clave:"",
   propietario:"",
   telefono:"",
-  direccion:""
+  direccion:"",
+  totaldemanzanas:0,
+  m2: 0
 
 };
 

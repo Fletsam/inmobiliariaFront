@@ -21,7 +21,7 @@ import {
 } from "@nextui-org/react";
 import React, { useEffect, useState } from "react";
 import useFraccs from "./hooks/useGetFracc";
-import { IoDocumentTextOutline, IoImageOutline, IoImagesOutline, IoSearchOutline } from "react-icons/io5";
+import { IoBusiness, IoDocumentTextOutline, IoImageOutline, IoImagesOutline, IoSearchOutline } from "react-icons/io5";
 import Link from "next/link";
 import { EyeFilledIcon } from "@/helpers";
 import moment from "moment";
@@ -49,10 +49,9 @@ useEffect(() => {
   
 }, [dataFracc])
 
-console.log(fraccs);
 
 const handleAddFracc = () => {
-  console.log(data);
+
   
   registerFraccApi({...data,totaldelotes:0,costototal:0, usuarioId:id, contratoFraccId:0})
 
@@ -75,17 +74,25 @@ const columns = [
 const [fracc, setFracc] = useState({})
 
 const toManzana = (e:number) => {  
-  console.log(e);
+  
     router.push(`/fraccionamientos/${e}/manzanas`)
   }
 const toLotes = (e:number) => {  
-  console.log(e);
+  
     router.push(`/fraccionamientos/${e}/lotes`)
   }
 const toEstadoCuenta = (e:number) => {  
-  console.log(e);
+  
     router.push(`estadocuenta/fraccionamiento/${e}`)
   }
+const toFracc = (e:number) => {  
+  
+    router.push(`/fraccionamientos/${e}`)
+  }
+
+
+
+
 
  const renderCell = React.useCallback((fraccs: Fraccs, columnKey: React.Key) => {
     const cellValue = fraccs[columnKey as keyof Fraccs];
@@ -126,8 +133,6 @@ const toEstadoCuenta = (e:number) => {
             <Tooltip content="Manzanas" color="danger" className="text-white">
               <span className="text-lg  cursor-pointer text-danger active:opacity-50">
                 <IoImagesOutline onClick={ ()=> toManzana(fraccs.id) }   />
-                
-          
               </span>
             </Tooltip>
             <Tooltip color="warning" content="Lotes" className="text-white">
@@ -137,9 +142,9 @@ const toEstadoCuenta = (e:number) => {
                 
               </span>
             </Tooltip>
-            <Tooltip color="default" className="text-blue-600" content="Estado de Cuenta">
+            <Tooltip color="default" className="text-blue-600" content="Ficha de Fraccionamiento">
               <span className="text-lg  cursor-pointer active:opacity-50 text-blue-600">
-                <IoDocumentTextOutline onClick={() => toEstadoCuenta(fraccs.id) } />
+                <IoBusiness onClick={() => toFracc(fraccs.id) } />
               </span>
             </Tooltip>
           </div>
@@ -148,17 +153,25 @@ const toEstadoCuenta = (e:number) => {
         return cellValue;
     }
   }, []);
+
+
+  const [filter, setFilter] = useState('');
+
+  const filteredData = fraccs.filter(item => item.nombre.toLowerCase().includes(filter.toLocaleLowerCase()));
+
   return (
     <main className="bg-slate-200 p-5">
-      
+     
             <Input
             isClearable
+            type="text"
             className="w-full sm:max-w-[44%] text-black"
-            placeholder="Search by name..."
+            placeholder="Busca por nombre del Fraccionamiento"
             startContent={<IoSearchOutline className=" text-black"/>}
-  /*                       value={filterValue}
-                         onValueChange={onSearchChange}
- */
+            value={filter}
+            onChange={e => setFilter(e.target.value)}
+            id="search"
+            name="search"
           />
           <div className="flex justify-end">
              <Button className='text-white bg-primary shadow-md shadow-primary ' onPress={onOpen}>
@@ -182,7 +195,7 @@ const toEstadoCuenta = (e:number) => {
           )}
         </TableHeader>
 
-        <TableBody className="text-black  font-semibold" items={fraccs}>
+        <TableBody className="text-black  font-semibold" items={filteredData}>
           {(item) => (
             <TableRow
               className="shadow-slate-200 border text-black"

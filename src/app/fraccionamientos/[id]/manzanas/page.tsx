@@ -21,7 +21,7 @@ import {
 } from "@nextui-org/react";
 import React, { useEffect, useState } from "react";
 
-import { IoAdd, IoSearchOutline, IoTrashBinOutline, IoTrashOutline } from "react-icons/io5";
+import { IoAdd, IoImageOutline, IoImagesOutline, IoSearchOutline, IoTrashBinOutline, IoTrashOutline } from "react-icons/io5";
 import Link from "next/link";
 import { EyeFilledIcon } from "@/helpers";
 import moment from "moment";
@@ -94,23 +94,11 @@ const deleteManzana = async (id:number) => {
 });
 }
 
-const handleAddManzana = (e) => {
-	e.preventDefault()
-	registerManzanaApi({...data , usuarioId: id, fraccionamientoId: itemfind, costototal: 0})
-	
-}
-
 
 type Manzanas = typeof manzanas[0];
 const columns = [
 	{name: "Numero de Manzana", uid: "numero"},
   {name: "Clave de Manzana", uid: "clave"},
-  {name: "Costo Total", uid: "costototal"},
-/*   {name: "Telefono", uid: "telefono"},
-  {name: "Direccion", uid: "direccion"},
-  {name: "Total de lotes", uid: "totaldelotes"},
-  {name: "Total de Manzanas", uid: "totaldemanzanas"},
-  {name: "Costo", uid: "costototal"}, */
   {name: "Acciones", uid: "actions"},
 ];
   let numeral = require('numeral');
@@ -123,10 +111,6 @@ const [manzana, setManzana] = useState({})
 
  const renderCell = React.useCallback((manzanas: Manzanas, columnKey: React.Key) => {
     const cellValue = manzanas[columnKey as keyof Manzanas];
-
-
-
-
 
 
  switch (columnKey) {
@@ -161,11 +145,11 @@ const [manzana, setManzana] = useState({})
           
               </span>
             </Tooltip>
-            <Tooltip color="warning" content="Edit user" className="text-white">
+            <Tooltip color="warning" content="Lotes" className="text-white">
               <span className="text-lg text-warning cursor-pointer active:opacity-50">
-                {/* <Link href={`/cliente/${manzanas.id}`}>
-                  <TbEditCircle onClick={() => showClient(fraccs) } />
-                </Link> */}
+                <Link href={`/manzanas/${manzanas.id}`}>
+                  <IoImageOutline />
+                </Link>
                 
               </span>
             </Tooltip>
@@ -181,34 +165,16 @@ const [manzana, setManzana] = useState({})
     }
   }, []);
   
+
   
   return (
     <main className="bg-slate-200 p-5 text-black">
-      
-            <Input
-            isClearable
-            className="w-full sm:max-w-[44%] text-black"
-            placeholder="Search by name..."
-            startContent={<IoSearchOutline className=" text-black"/>}
-  /*                       value={filterValue}
-                         onValueChange={onSearchChange}
- */
-          />
+    
 		  <div className="flex flex-1 justify-between">
-		<h1 className="text-primary font-semibold text-2xl pt-2"> {fracc.nombre} </h1>
-				
-			<form action="submit" onSubmit={(e)=> handleAddManzana(e)}>
-				<Input
-              value={data.numero}
-              type="text"
-              onChange={handleSetData}
-			  className='text-black'
-              label="Añadir una Manzana"
-			  description = "Escriba el numero de Manzana"
-             variant='flat'
-              name="numero"
-              id="numero"
-            /></form>	
+		  <h1 className="text-primary font-semibold text-2xl pt-2"> {fracc.nombre} </h1>
+		  
+
+  
 		  </div>
 			
 	

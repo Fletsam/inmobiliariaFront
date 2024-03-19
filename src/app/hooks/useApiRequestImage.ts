@@ -37,7 +37,14 @@ export const useApiRequestImage = <ParamsType, ResponseType>(
     }
     return "";
   };
+const cloudinary = require('cloudinary');
 
+cloudinary.v2.config({
+  cloud_name: 'dea3bexw3',
+  api_key: '377374312816216',
+  api_secret: 'Cqimzf5ZOnrWeu4ges0MH6MpECg',
+  secure: true,
+});
 
 
 

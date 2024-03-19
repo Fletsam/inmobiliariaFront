@@ -63,21 +63,6 @@ useEffect(() => {
 
 const Swal = require('sweetalert2')
 
-
-
-
-
-
-/* if (!llave){
-    throw Swal.fire({
-  title: 'Aqui no puedes estar',
-  text: 'Regresa a la pantalla de inicio',
-  icon: 'warning',
-  confirmButtonText: 'OK'
-})
-  } */
-
-
 const handleAddLote = async () => {
 
 	await registerLoteApi({...data , usuarioId: id, fraccionamientoId: itemfind, costototal: 0, contratoId:0})
@@ -110,28 +95,12 @@ const columns = [
 	{name: "Numero de Lote", uid: "numero"},
   {name: "Clave de Lote", uid: "clave"},
   {name: "Costo Total", uid: "costo"},
-/*   {name: "Telefono", uid: "telefono"},
-  {name: "Direccion", uid: "direccion"},
-  {name: "Total de lotes", uid: "totaldelotes"},
-  {name: "Total de Manzanas", uid: "totaldemanzanas"},
-  {name: "Costo", uid: "costototal"}, */
   {name: "Acciones", uid: "actions"},
 ];
   let numeral = require('numeral');
 
-const [lote, setLote] = useState({})
-
-/* const openModalFracc = (e:number) => {  
-      setFracc(e)    
-  } */
-
  const renderCell = React.useCallback((lotes: Lotes, columnKey: React.Key) => {
     const cellValue = lotes[columnKey as keyof Lotes];
-
-
-
-
-
 
  switch (columnKey) {
       case "name":
@@ -203,8 +172,7 @@ const [lote, setLote] = useState({})
 		<h1 className="text-primary font-semibold text-2xl pt-2"> {fracc.nombre} </h1>
 				  <Button className='text-white bg-primary shadow-md shadow-primary ' onPress={onOpen}>
                   Agregar Lote
-                </Button>
-			
+          </Button>
 		  </div>
 			
 	

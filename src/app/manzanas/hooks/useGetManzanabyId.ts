@@ -14,6 +14,7 @@ const useGetManzanabyId = () => {
   });
   const [manzana, setManzana] = useState({});
   const [lotes, setLotes] = useState([])
+  const [fracc, setFracc] = useState({})
   
   useEffect(() => {
     if (statusManzana === "success") {
@@ -22,7 +23,8 @@ const useGetManzanabyId = () => {
 		
 
       setManzana(manzana);
-	  setLotes(manzana.Lotes)
+	    setLotes(manzana.Lotes)
+	    setFracc(manzana.fraccionamiento)
     } else if (statusManzana === "error") {
       console.log(dataManzana);
     }
@@ -50,6 +52,7 @@ const useGetManzanabyId = () => {
     dataManzana,
     statusManzana,
     manzana,
+    fracc,
     startLoadingManzana,
     showClient,
   };

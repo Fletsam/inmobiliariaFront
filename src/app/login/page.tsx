@@ -19,7 +19,7 @@ const Login = () => {
 
   return (
 
-    <main className="bg-white mx-auto md:grid md:grid-cols-2 mt-12 gap-10 p-5 items-center h-[80] ">
+    <main className=" bg-white mx-auto md:grid md:grid-cols-2 mt-12 gap-10 p-5 items-center">
       <Image className="p-10 w-auto h-auto" src="descarga.jpg" alt="logo" />
       {/*  <div className="flex  mb-4 mt-8 font-bold text-6xl ">
         <h1 className=" text-red-700">

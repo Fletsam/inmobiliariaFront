@@ -1,297 +1,291 @@
+
+
+
+
+
+
+
+
 "use client"
 import { RootState } from "@/store";
-import { useParams } from "next/navigation";
-import { useEffect } from "react";
+import { useParams, useRouter } from "next/navigation";
+import { useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
-import { Button, Input, Select, SelectItem } from "@nextui-org/react";
-import useEditCliente from "@/app/cliente/hooks/usePatchCliente";
-import useFraccs from "../hooks/useGetFracc";
+import { Button, Card, CardBody, CardFooter, Chip, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, Popover, PopoverTrigger, Select, SelectItem, Tab, Tabs, Tooltip, useDisclosure } from "@nextui-org/react";
+
+import useGetFraccbyId from "../hooks/useGetFraccbyId";
+import NavbarInicio from "@/components/navbar";
+import { CldImage } from "next-cloudinary";
+
+import useRegisterContratoFracc from "../hooks/useRegisterContratoFracc";
+
+const options = [
+  {
+    label: "Lotes" , 
+    value:  "Lotes"
+  },
+  {
+    label: "Manzanas" , 
+    value:  "Manzanas"
+  },
+  {
+    label: "Clientes" , 
+    value:  "Clientes"
+  }
+
+]
+
 
 const Fraccionamiento = () => {
-
 	const params = useParams();
 	const itemfind  = (parseInt(params.id));
-	
-	const { data, handleSetData, handleSetDate, editClienteApi } =
-    useEditCliente(itemfind);
-const { isLogged, nombre , id } = useSelector((state: RootState) => state.users); 
+  const router = useRouter()
+  const { isLogged, nombre , id } = useSelector((state: RootState) => state.users); 
+  const {isOpen, onOpen, onOpenChange,onClose} = useDisclosure();
+  const {startLoadingFracc,dataFracc,fracc,lotes,manzanas} = useGetFraccbyId()
+  const {data,handleSetData,setData,registerContratoFraccApi} = useRegisterContratoFracc()
+  const [selectedOption , setSelectedOption]  = useState<string>("Lotes") 
 
-const {startLoadingFraccs , dataFracc , fraccs,} = useFraccs()
-
-const param = `fraccionamientos/usuario/${id}`
+const param = `fraccionamientos/${itemfind}/usuario/${id}`
 
 	useEffect(() => {
   
-  	startLoadingFraccs(param)  
+  	startLoadingFracc(param)  
 		
 		}, [dataFracc])
 
+console.log(fracc);
+
+const handleContrato = () => {
+  const param = `contratos/fraccionamiento/${itemfind}`
+  registerContratoFraccApi({...data, contratoFraccId:itemfind , usuarioId: id,},param)
+  onClose()
+}
 
 
-/* const router = useRouter()
-	const handleRegisterCliente  = (e:any) => {
-			e.preventDefault();
-			editClienteApi({...data , usuarioId: id})
-			router.push("/cliente")
-			console.log(data);	
-	} */
-
-	/* const isFormValid = data.correo !== '' && data.nombre !== '' && data.ciudad !== '' && data.ocupacion !== '' ;  */
 
 
-  return (
-    <main className=" bg-slate-100  p-3 ">
-      
-      <form action="submit" className=" p-2 bg-slate-200/90 w-full  lg:h-[100vh] rounded-xl shadow-2xl ">
-			<h2 className="p-3 font-bold text-2xl  text-primary/100">
-			Edita a {fracc.nombre}
-			</h2>
-        <div className=" md:grid md:grid-cols-3 md:gap-10 lg:py-0  ">
-          <div className=" py-1 md:py-0 order-first">
-            <Input
-              value={data.nombre}
-              type="text"
-              onChange={handleSetData}
-			  className='text-black'
-              label="Nombre"
-            	variant='flat'
-              name="nombre"
-              id="nombre"
-			  defaultValue={fracc.nombre}
-            />
-          </div>
-          <div className=" py-1 md:py-0  order-2 ">
-            <Input
-              value={data.telefono}
-              type="text"
-              onChange={handleSetData}
-              label="Numero Telefonico"
-			  className='text-black'
-              variant='flat'
-              name="telefono"
-              id="telefono"
-            />
-          </div>
-   		<div className=" py-1 md:py-0 order-2">
-            <Input
-              value={data.correo}
-              type="text"
-              onChange={handleSetData}
-              label="Correo Electronico"
-			  className='text-black'
-              variant='flat'
-              name="correo"
-              id="correo"
-            />
-          </div>
-          
-          <div className=" py-1 md:py-0 order-2">
-            <Input
-              value={data.calle}
-              type="text"
-              onChange={handleSetData}
-              label="Calle"
-			  className='text-black'
-              variant='flat'
-              name="calle"
-              id="calle"
-            />
-          </div>
-          <div className=" py-1 md:py-0 order-2">
-            <Input
-              value={data.colonia}
-              type="text"
-              onChange={handleSetData}
-              label="Colonia"
-			  className='text-black'
-              variant='flat'
-              name="colonia"
-              id="colonia"
-            />
-          </div>
- 		<div className=" py-1 md:py-0 order-2">
-            <Input
-              value={data.numeroext}
-              type="text"
-              onChange={handleSetData}
-              label="Numero Exterior"
-			  className='text-black'
-              variant='flat'
-              name="numeroext"
-              id="numeroext"
-            />
-          </div>
-          <div className=" py-1 md:py-0 order-2">
-            <Input
-              value={data.numeroint}
-              type="text"
-              onChange={handleSetData}
-              label="Numero Interior"
-			  className='text-black'
-              variant='flat'
-              name="numeroint"
-              id="numeroint"
-            />
-          </div>
+const Cards = useCallback(() =>{  
+switch (selectedOption) {
+  case "Lotes":
+   
+    
+   return ( 
+	<div >
 
-          <div className=" py-1 md:py-0 order-2">
-            <Input
-              value={data.ciudad}
-              type="text"
-              onChange={handleSetData}
-              label="Ciudad"
-			  className='text-black'
-              variant='flat'
-              name="ciudad"
-              id="ciudad"
-            />
-          </div>
-          <div className=" py-1 md:py-0 order-4">
-            <Input
-              value={data.cp}
-              type="text"
-              onChange={handleSetData}
-              label="Codigo Postal"
-			  className='text-black'
-              variant='flat'
-              name="cp"
-              id="cp"
-            />
-          </div>
-          <div className=" py-1 md:py-0 order-4">
-            <Input
-              value={data.curp}
-              type="text"
-              onChange={handleSetData}
-              label="CURP"
-			  className='text-black'
-              variant='flat'
-              name="curp"
-              id="curp"
-            />
-          </div>
-		    <div className=" py-1 md:py-0 order-4">
-            <Input
-              value={data.ocupacion}
-              type="text"
-              onChange={handleSetData}
-              label="Ocupacion"
-			  className='text-black'
-             variant='flat'
-              name="ocupacion"
-              id="ocupacion"
-            />
-          </div>
-          <div className=" py-1 md:py-0 order-4">
-            <Input
-              value={data.lugardetrabajo}
-              type="text"
-              onChange={handleSetData}
-              label="Lugar de Trabajo"
-			  className='text-black'
-              variant='flat'
-              name="lugardetrabajo"
-              id="lugardetrabajo"
-            />
-          </div>
-          <div className=" py-1 md:py-0 order-4">
-            <Input
-              value={data.telefonodetrabajo}
-              type="text"
-              onChange={handleSetData}
-              label="Telefono de Trabajo"
-			  className='text-black'
-              variant='flat'
-              name="telefonodetrabajo"
-              id="telefonodetrabajo"
-            />
-          </div>
-         
+		<div className='md:grid md:gap-5 md:grid-cols-2 justify-items-center grid gap-2 '>
+       {lotes.map((item, index) => (
+        <Card shadow="sm" className="bg-slate-100 shadow-primary shadow-md p-0 md:w-52 h-20 text-center w-full " key={index} isPressable /* onPress={()=>handleOpenLote(item)} */>
+          <CardBody className=" flex h-auto">
+            {/* <CldImage
+            className='w-auto h-auto p-1 bg-gray-950/5'
+            alt=''
+            width="300"
+            height="300"
+            src={`Logos/${item.clave.slice(0,-4)}`}/> */}
+            <div className=" flex justify-between">
+             <h1 className='text-black drop-shadow-md shadow-red-900' > {item.clave} </h1>
+             {item.contratoId !== 0 ?
+              <Chip className="capitalize text-white cursor-pointer" color="success"  size="sm" variant="shadow" >
+              Vendido
+              </Chip>
+            : 
+              <Chip className="capitalize text-white cursor-pointer" color="secondary"  size="sm" variant="shadow" >
+              Disponible
+              </Chip>
+            }
+            </div>
+          <CardFooter className=" bg-slate-200/25 flex gap-3 text-small justify-between h-auto p-2">
+            m² : {item.m2}
+          </CardFooter>
+          </CardBody>
         
-          <div className=" py-1 md:py-0 order-4">
-            <Input
-              value={data.referencia}
-              type="text"
-              onChange={handleSetData}
-              label="Referencia"
-			  className='text-black'
-              variant='flat'
-              name="referencia"
-              id="referencia"
-            />
-          </div>
-		  <div className=" py-1 md:py-0 order-4">
-            <Input
-              value={data.telefonodereferencia}
-              type="text"
-              onChange={handleSetData}
-              label="Telefono de Referencia"
-			  className='text-black'
-             variant='flat'
-              name="telefonodereferencia"
-              id="telefonodereferencia"
-            />
-          </div>
-          <div className="form-group mb-2 w-auto py-1 md:py-0 order-5">
-			 <div className=" py-1 md:py-0 order-5 ">
-          {/*  <Select
-		   value={data.genero}
-			items={genero}
-			label="Genero"
-			placeholder="selecciona el genero"
-			onChange={handleSetData}
-			className="max-w-xs text-black"
-			id='genero'
-			name='genero'
-			>
-    		  {(genero) => <SelectItem className='text-black' key={genero.value}>{genero.label}</SelectItem>}
-    		</Select> */}
-          </div>
-          </div>
-			<div className=" py-1 md:py-0 order-4">
-            {/* <Select
-			value={data.estadocivil}
-			items={estadocivil}
-			label="Estado Civil"
-			placeholder="selecciona el estado civil"
-			className="max-w-xs text-black"
-			onChange={handleSetData}
-			id='estadocivil'
-			name='estadocivil'
-			>
-     		 {(estadocivil) => <SelectItem className='text-black' key={estadocivil.value}>{estadocivil.label}</SelectItem>}
-    		</Select> */}
-          	</div>
-        </div>  		
-        <div className="flex justify-between xl:justify-end xl:gap-10 w-auto p-6 md:pt-8 xl:pt-10">
-			
-		
-				<Button
-		  	color='success'
-            id="create-btn"
-			className='text-white bg-primary shadow-md shadow-primary '
-			/* onClick={handleRegisterCliente} */
-			/* isDisabled = {!isFormValid} */
-          > 
-		  Editar
-		  </Button>
-		
-			
-		
-		  <Button
-		  id="cancelar-btn"
-		  color='default'
-		  className='text-white bg-slate-600'
-		  /* onClick={()=>router.push("/cliente")} */
-		  >
-			Cancelar
-		  </Button>
+        </Card>
+        
+      ))}
+		</div>
+	</div>
+   ) 
+    
+case "Manzanas":
+     return ( 
 	
-		  
-        </div>
-      </form>
-    </main>
+				<div className='grid gap-2 md:gap-5 md:grid-cols-2 justify-items-center'>
+       {manzanas.map((item, index) => (
+        <Card shadow="sm" className="bg-slate-100 shadow-primary shadow-md p-0 md:w-52 w-full h-20 text-center" key={index} isPressable onClick={() => router.push(`/manzanas/${item.id}`)}>
+          <CardBody className=" flex h-auto">
+            <div className="justify-between">
+              <h1 className="text-primary text-large font-semibold">
+                Manzana : <span className="text-black font-normal text-base"> {item.numero}</span>
+              </h1>
+             <h1 className='text-primary text-large font-semibold'> 
+              Clave :
+              <span className="text-black font-normal text-base"> {item.clave} </span>
+             </h1>
+            </div>
+          </CardBody>
+          
+        
+        </Card>
+        
+      ))}
+		</div>
+	
+   ) 
+  
+case "fraccs":
+    
+    break;
+}
+},[selectedOption, lotes])
+
+
+
+
+return (
+    <main className='text-black bg-slate-200'>
+		<div className=' w-screen  md:block  '>
+	<NavbarInicio>
+ 	<Tabs
+      className="max-w-xs text-white pt-5"
+      disableSelectorIconRotation
+      onSelectionChange={setSelectedOption}
+      selectedKey={selectedOption}
+      color='primary'
+    >
+      {options?.map((option) => (
+        <Tab className='text-white'  key={option.value} value={option.value} title={option.value}>
+        </Tab>
+      ))}
+     </Tabs>
+		</NavbarInicio>
+	
+			</div>
+			
+		<section className=' w-full md:flex'>
+			<div className=' bg-slate-200 md:w-1/2 bg-slate-white md:grid  flex-col justify-center'>
+			<div className='bg-white/5 h-auto md:grid grid justify-items-center pt-4'>
+        <div className=' h-auto'>
+          <CldImage
+              alt={`${fracc.id}`}
+              className='w-60 h-60 rounded-md mx-auto shadow-black drop-shadow-md'
+              width={400}
+              height={400}
+              src={`Logos/${fracc.clave}`}/>
+				<div className='bg-white m-2 p-2 rounded-lg drop-shadow-md shadow-black '>
+          <div className="flex gap-5">
+          <h1 className="text-primary text-2xl font-semibold ">
+            {fracc.nombre}
+          </h1>
+         
+          {fracc.contratoFraccId !== 0 ?
+              <Tooltip color="success" className="text-white" content="Ver el estado de cuenta">
+                <Chip className="capitalize text-white cursor-pointer" color="success"  size="sm" variant="shadow" onClick={() => router.push(`/estadocuenta/fraccionamiento/${fracc.id}`)} >
+                Activo
+                </Chip>
+              </Tooltip>
+            : 
+            <Tooltip color="danger" className="text-white" content="Haga click para activarlo">
+              <Chip className="capitalize text-white cursor-pointer" color="danger"  size="sm" variant="shadow" onClick={onOpen}>
+              Inactivo
+              </Chip>
+            </Tooltip>
+              
+          }
+          </div>
+          <h2 className=" text-primary text-lg">
+            Propietario : <span className="text-black font-normal text-base"> {fracc.propietario} </span>
+          </h2>
+          <h2 className=" text-primary text-lg">
+            Teléfono : <span className="text-black font-normal text-base"> {fracc.telefono} </span>
+          </h2>
+          <h2 className=" text-primary text-lg">
+            Dirección : <span className="text-black font-normal text-base"> {fracc.direccion} </span>
+          </h2>
+          <h2 className=" text-primary text-lg">
+            Metros Cuadrados : <span className="text-black font-normal text-base"> {fracc.m2} m² </span>
+          </h2>
+				</div>
+			</div>
+			</div>
+			
+      
+			</div>
+					<div className='bg-slate-200 md:w-1/2 '>
+					<div className='bg-white m-2 p-2 rounded-lg drop-shadow-md shadow-black gap-3 '>
+						{Cards()}
+					</div>
+				</div>
+		</section>
+
+<>
+      <Modal isOpen={isOpen} onOpenChange={onOpenChange} isDismissable={false} isKeyboardDismissDisabled={true}>
+        <ModalContent className="text-black">
+          {(onClose) => (
+            <>
+              <ModalHeader className="flex flex-col gap-1"> <p className="text-primary">{fracc.nombre}</p></ModalHeader>
+              <ModalBody className="text-black " >
+				<Input
+						value={(data.preciom2).toString()}
+						type="text"
+						onChange={handleSetData}
+						className='text-black'
+						label="Precio por metro cuadrado"
+						variant='bordered'
+						description = "Escriba el precio por m²"
+						name="preciom2"
+						id="preciom2"
+						/>
+				<Input
+						value={(data.enganche).toString()}
+						type="text"
+						onChange={handleSetData}
+						className='text-black'
+						label="Añada el enganche"
+						description = "Escriba el enganche"
+						variant='bordered'
+						name="enganche"
+						id="enganche"
+						/>
+				<Input
+						value={(data.pagosafinanciar).toString()}
+						type="text"
+						onChange={handleSetData}
+						className='text-black'
+						label="Pagos a financiar"
+						description = "Escriba los pagos a financiar"
+						variant='bordered'
+						name="pagosafinanciar"
+						id="pagosafinanciar"
+						/>
+				<Input
+						value={(data.interesanual).toString()}
+						type="text"
+						onChange={handleSetData}
+						className='text-black'
+						label="Interes Anual"
+						description = "Escriba interes anual en decimales"
+						variant='bordered'
+						name="interesanual"
+						id="interesanual"
+						/>
+			
+				
+              </ModalBody>
+                <ModalFooter>
+                <Button className='text-white bg-primary shadow-md shadow-primary ' onClick={handleContrato}>
+                  Registrar
+                </Button>
+              </ModalFooter>
+            </>
+          )}
+        </ModalContent>
+      </Modal>
+    </>
+
+
+	</main>
   );
 };
 

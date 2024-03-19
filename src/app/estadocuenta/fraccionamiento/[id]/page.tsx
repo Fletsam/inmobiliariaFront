@@ -19,9 +19,9 @@ import {
   Button,
 } from "@nextui-org/react";
 import React, { useEffect } from "react";
-import { IoSearchOutline } from "react-icons/io5";
+import { IoBusiness, IoSearchOutline } from "react-icons/io5";
 import useGetEstadoCuenta from "../../hooks/useGetEstadoCuenta";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import useGetContratobyId from "../../hooks/useGetContrato";
 import useGetClientebyId from "@/app/cliente/hooks/useGetClientebyId";
 import useRegisterAbono from "../../hooks/useRegisterAbono";
@@ -36,6 +36,8 @@ import useLotes from "@/app/lotes/hooks/useGetLotes";
 export default function EstadoCuentaFraccionamiento ()  {
 	const params = useParams();
 const itemfind  = (parseInt(params.id));
+const router = useRouter()
+
 const {isOpen, onOpen, onOpenChange} = useDisclosure();
 const {startLoadingEstadoCuenta,estadoCuenta,dataEstadoCuenta,ingresosfracc,egresosfracc } = useGetEstadoCuenta()
 
@@ -216,6 +218,20 @@ const openModalFracc = (e:number) => {
            <h1 className="text-primary font-semibold pt-2 ">
             Costo Neto : <span className="text-black font-normal"> $ {numeral(contratoFracc.costo).format('0,0')} Mxn</span>
           </h1>
+          <div className="w-5 h-auto flex relative">
+            <span>
+             <Tooltip color="default" className="text-blue-600 w-auto" content="Ficha de Fraccionamiento" placement="right">
+              <span className="text-lg w-auto  cursor-pointer active:opacity-50 text-blue-600">
+                <IoBusiness onClick={() => router.push(`/fraccionamientos/${fracc.id}`) } />
+              </span>
+            </Tooltip>
+            </span>
+            
+          </div>
+           
+          
+            
+         
         </div>  
 </div>
    <div>

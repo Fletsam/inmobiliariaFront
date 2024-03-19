@@ -10,14 +10,12 @@ import moment from "moment";
 import es from "date-fns/locale/es";
 interface RegisterDataCliente {
   numero: string;
-  manzanaId: number
   costo:number
   m2:number
 }
 
 const defaultDataLogin: RegisterDataCliente = {
   numero: "",
-  manzanaId: 0,
   costo:0,
   m2:0
 };

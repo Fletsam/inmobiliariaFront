@@ -3,9 +3,9 @@ const nextConfig = {
 
 	
 
-	images: {
+	/* images: {
 		domains: ['res.cloudinary.com']
-				},
+				}, */
 
 	env: {
 		api: "http://localhost:3302/api"

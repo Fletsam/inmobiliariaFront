@@ -1,11 +1,11 @@
 "use client"
-import type { Metadata } from "next";
+
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { Provider } from "react-redux";
-import store, { persistor } from "@/store";
-import { PersistGate } from "redux-persist/integration/react";
+import store from "@/store";
 import AuthInitializer from "./protected.router";
+
 
 
 const inter = Inter({ subsets: ["latin"] });
@@ -23,9 +23,10 @@ export default function RootLayout({
   return (
     <Provider store={store}>
       <AuthInitializer>
-          <html lang="es">
+          <html className="" lang="es">
               <body className={inter.className}>{children}</body>
           </html>
+            
       </AuthInitializer>
           </Provider>
     

@@ -18,6 +18,7 @@ const useGetClientebyId = () => {
   useEffect(() => {
     if (statusCliente === "success") {
       const cliente = dataCliente;
+      console.log(cliente);
       
       const contratosbycliente = dataCliente.Contratos
       const clientes = dataCliente.clientes

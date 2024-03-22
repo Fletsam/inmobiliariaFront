@@ -10,10 +10,21 @@ interface RegisterDataInversion {
   testigo2: string;
   monto: number;
   comision: number;
+  montodeintereses:number
   pagosafinanciar: number;
+  utilidad:number
+  interesanual:number
+  montototal:number
+  pagomensual:number
+  nombre:string
   interesmensual: number;
+  estatus:number
+  pagado:number
+  fhcreacion:Date
   inicio:Date
   fecha:Date
+  usuarioId:number
+  clienteId:number
 }
 
 const defaultDataLogin: RegisterDataInversion = {
@@ -21,10 +32,21 @@ const defaultDataLogin: RegisterDataInversion = {
 	testigo2: "",
 	monto:0,
 	comision:0,
+  montodeintereses:0,
+  utilidad:0,
+  interesanual:0,
+  montototal:0,
+  pagomensual:0,
+  nombre:"",
+  estatus:0,
+  pagado:0,
+  fhcreacion: new Date(),
 	pagosafinanciar:0,
 	interesmensual:0,
 	inicio: new Date(),
-  fecha: new Date()
+  fecha: new Date(),
+  usuarioId:0,
+  clienteId:0
 };
 
 /* registerLocale("es", es); */

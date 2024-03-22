@@ -1,76 +1,103 @@
 "use client"
 import { useParams } from 'next/navigation'
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import useGetClientebyId from '../../hooks/useGetClientebyId'
 import { useSelector } from 'react-redux'
 import { RootState } from '@/store'
-import useFraccs from '@/app/fraccionamientos/hooks/useGetFracc'
-import useGetFraccbyId from '@/app/fraccionamientos/hooks/useGetFraccbyId'
-import { Button, Card, CardBody, CardFooter, Image, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, useDisclosure } from '@nextui-org/react'
+import { Button, Card, CardBody, CardFooter, Image, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, Tab, Tabs, useDisclosure } from '@nextui-org/react'
 import useLotes from '@/app/lotes/hooks/useGetLotes'
 import useRegisterContrato from './hooks/useRegisterContrato'
 import { CldImage } from 'next-cloudinary'
+import NavbarInicio from '@/components/navbar'
+import useFraccs from '@/app/fraccionamientos/hooks/useGetFracc'
 
 const Contrato = () => {
 const params = useParams()
 const itemfind = (parseInt(params.id))
-
+const [selectedOption , setSelectedOption]  = useState<string>("Lotes") 
 const {startLoadingClientes,dataCliente,cliente} = useGetClientebyId()
 const { isLogged, nombre , id } = useSelector((state: RootState) => state.users)
 const {lotesVendidos,startLoadingLotes,dataLotes} = useLotes()
-
+const {dataFracc,fraccs,startLoadingFraccs} = useFraccs()
 const lotes = lotesVendidos
 
 const {data, handleSetData,registerContratoApi} = useRegisterContrato()
 
-const {isOpen, onOpen, onOpenChange} = useDisclosure();
+const {isOpen, onOpen, onOpenChange,onClose} = useDisclosure();
 const param = `clientes/${itemfind}`
 
 useEffect(() => {
   startLoadingClientes(param)
 	
 }, [dataCliente])
-/* 
-if (cliente.usuarioId!==id) {
-	console.log("no tienes permiso");
-	
-}
-console.log(cliente); */
 useEffect(() => {
   const param = `lotes/disponibles`
   startLoadingLotes(param)
 	
 }, [dataLotes])
-const img = "/S_002.jpg"
+useEffect(() => {
+  const param = `lotes/disponibles`
+  startLoadingLotes(param)
+	
+}, [dataLotes])
+useEffect(() => {
+  const param = `fraccionamientos/usuario/${id}`
+  startLoadingFraccs(param)  
+  
+}, [dataFracc])
 
 const [lote , setLote] = useState({})
-
+const options = fraccs
 const handleRegisterContrato = async () => {
- 
- 
   const path = `contratos/lote/${lote.id}`
-await  registerContratoApi({...data, 
+  console.log(data);
+  
+  await  registerContratoApi({...data, 
+    enganche: Number(data.enganche),
+    comision : Number(data.comision),
+    preciom2 : Number(data.preciom2),
     inicio: (new Date()), 
     fecha: (new Date()),
-    pagado:0, 
-    estatus: 0, 
-    usuarioId: id, 
+    usuarioId: id,   
     clientesId: itemfind ,
     contratoId: lote.id ,
-    comision: 0,
     loteId: lote.id}
     ,path)
-}
+    onClose()
+    }
+
 const handleOpenLote = (loteid:number) => {
   onOpen()
   setLote(loteid)
- 
 }
 
 
-  return (
-    <div className="bg-white gap-3 grid grid-cols-2 sm:grid-cols-4 p-5">
-      {lotes.map((item, index) => (
+const filteredData = lotes.filter(item => item.clave.slice(0,-3).includes(selectedOption));
+
+ 
+ 
+return (
+    <main>
+      <NavbarInicio>
+      <Tabs
+      className="max-w-xs text-white pt-5"
+      disableSelectorIconRotation
+      onSelectionChange={setSelectedOption}
+      selectedKey={selectedOption}
+      color='primary'
+    >
+      {options?.map((option) => (
+        <Tab className='text-white'  key={option.clave} value={option.clave} title={option.nombre}>
+        </Tab>
+      ))}
+     </Tabs>
+      </NavbarInicio>
+      <div className="bg-white">
+      <Button>
+        Ver Lotificacion
+      </Button>
+	  <div className='bg-white gap-3 grid grid-cols-1 justify-items-center sm:grid-cols-4 p-5'>
+       {filteredData.map((item, index) => (
         <Card shadow="sm" className="bg-slate-100 shadow-primary shadow-md p-0 w-52 h-60" key={index} isPressable onPress={()=>handleOpenLote(item)}>
           <CardBody className=" p-0">
             <CldImage
@@ -78,52 +105,48 @@ const handleOpenLote = (loteid:number) => {
             alt=''
             width="300"
             height="300"
-            src={`Logos/${item.clave.slice(0,-4)}`}/>
+            src={`Logos/${item.clave.slice(0,-3)}`}/>
           <CardFooter className=" bg-slate-200/25 flex gap-3 text-small justify-between h-auto p-2">
             <h1 className='text-black drop-shadow-md shadow-red-900' > {item.clave} </h1>
             <h2> {item.m2} m²</h2>
           </CardFooter>
           </CardBody>
-        
         </Card>
-        
       ))}
-
+		</div>
+	
   <>
-      <Modal isOpen={isOpen} onOpenChange={onOpenChange} isDismissable={false} isKeyboardDismissDisabled={true} >
+      <Modal isOpen={isOpen} onOpenChange={onOpenChange} isDismissable={false} isKeyboardDismissDisabled={true} className='h-[80vh]' scrollBehavior='inside' >
         <ModalContent className="text-black">
           {(onClose) => (
             <>
-              <ModalHeader className="flex flex-col gap-1"> <p className="text-primary"></p></ModalHeader>
+              <ModalHeader className="flex flex-col gap-1"> <p className="text-primary">Contrato al Lote {lote.clave}</p></ModalHeader>
               <ModalBody className="text-black " >
-				
-				
-				<Input
-              value={lote.costo}
-              defaultValue={lote.costo}
+          <Input
+              value={(data.preciom2).toString()}
               type="text"
               onChange={handleSetData}
 			  className='text-black'
-              label="Costo de la propiedad"
-			  description = ""
-             variant='bordered'
-              name="costo"
-              id="costo"
+              label="Precio de cada metro cuadrado"
+			  description = "Precio unitario de metro cuadrado"
+             variant='flat'
+              name="preciom2"
+              id="preciom2"
             />
-				<Input
-              value={lote.m2}
-              defaultValue={lote.m2}
+			
+			
+        <Input
+              value={(data.enganche).toString()}
               type="text"
               onChange={handleSetData}
 			  className='text-black'
-              label="Metros Cuadrados de la propiedad"
-			  description = ""
-             variant='bordered'
-              name="m2"
-              id="m2"
+              label="Enganche"
+			  description = "Monto del enganche"
+             variant='flat'
+              name="enganche"
+              id="enganche"
             />
-				
-				<Input
+        <Input
               value={data.testigo1}
               type="text"
               onChange={handleSetData}
@@ -134,7 +157,6 @@ const handleOpenLote = (loteid:number) => {
               name="testigo1"
               id="testigo1"
             />
-			
 			<Input
               value={data.testigo2}
               type="text"
@@ -169,31 +191,18 @@ const handleOpenLote = (loteid:number) => {
               id="interesanual"
             />
 			<Input
-              value={(data.enganche).toString()}
+              value={(data.comision).toString()}
               type="text"
               onChange={handleSetData}
 			  className='text-black'
               label="Enganche"
 			  description = "Escriba el monto"
              variant='flat'
-              name="enganche"
-              id="enganche"
-            />
-			<Input
-              value={(data.preciom2).toString()}
-              type="text"
-              onChange={handleSetData}
-			  className='text-black'
-              label="Precio de cada metro cuadrado"
-			  description = "Precio unitario de metro cuadrado"
-             variant='flat'
-              name="preciom2"
-              id="preciom2"
+              name="comision"
+              id="comision"
             />
 			
-
-
-              </ModalBody>
+         </ModalBody>
                 <ModalFooter>
                 <Button className='text-white bg-primary shadow-md shadow-primary ' onPress={onClose}>
                   Close
@@ -210,6 +219,8 @@ const handleOpenLote = (loteid:number) => {
       
     
     </div>
+    </main>
+    
 
     
   );

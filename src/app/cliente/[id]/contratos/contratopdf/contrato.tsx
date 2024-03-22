@@ -14,20 +14,20 @@ export const ContratoPDF = ({cliente,contrato,lote}) => (
       
       <Text style={styles.title}>Tu Hogar Inmobiliaria</Text>
       
-      <Text style={styles.subtitle}>
+      <Text style={styles.title3}>
         CONTRATO CIVIL DE PRESTACION DE SERVICIOS PROFESIONALES  
       </Text>
-      <Text style={styles.subtitle}>
+      <Text style={styles.title2}>
         PROPIEDAD 
       </Text>
       <Text style={styles.text}>
-        Que celebran por una parte C.P. {cliente.nombre} quien para los efectos del presente contrato se le denominará “EL CLIENTE”, 
-		y por la otra parte la empresa denominada TU HOGAR INMOBILIARIA, 
-		representada en este acto por el L.A. MIGUEL ÁNGEL RODRÍGUEZ TORRES, 
-		representante legal y propietario de esta, quien a su vez se le denominará para efectos del presente contrato “LA INMOBILIARIA”, 
+        Que celebran por una parte C.P. <Text style={styles.bold}>{cliente.nombre}</Text> quien para los efectos del presente contrato se le denominará “EL CLIENTE”, 
+		y por la otra parte la empresa denominada <Text style={styles.bold}> TU HOGAR INMOBILIARIA</Text>, 
+		representada en este acto por el <Text style={styles.bold}> L.A. MIGUEL ÁNGEL RODRÍGUEZ TORRES</Text>, 
+		representante legal y propietario de esta, quien a su vez se le denominará para efectos del presente contrato <Text style={styles.bold}> “LA INMOBILIARIA”</Text> , 
 		al tenor de las siguientes:.
       </Text>
-	  <Text style={styles.title}>
+	  <Text style={styles.title2}>
 		DECLARACIONES
 	  </Text>
 		<Text style={styles.subtitle}>
@@ -36,39 +36,41 @@ export const ContratoPDF = ({cliente,contrato,lote}) => (
 		</Text>
 		<Text style={styles.text}>
 
-	 	a) C.P. {cliente.nombre} declara ser , 
-		mayor de edad, de estado civil ,
-		 de ocupación  y contar con {cliente.curp}.   
-		 así como tener domicilio para oír y recibir notificaciones en {cliente.colonia} {cliente.calle} {cliente.numeroext}   .
+	 	a) C.P. <Text style={styles.bold}>{cliente.nombre}</Text> declara ser , 
+		mayor de edad, de estado <Text style={styles.bold}>{cliente.estadocivil}</Text> ,
+		 de <Text style={styles.bold}>{cliente.ocupacion}</Text> y contar con <Text style={styles.bold}>{cliente.curp}</Text>.   
+		 así como tener domicilio para oír y recibir notificaciones en <Text style={styles.bold}>{cliente.colonia} {cliente.calle} {cliente.numeroext} </Text>   .
 		</Text>
 		<Text style={styles.text}>
-		b) Que acredita ser dueño de  ubicado(a) en (CALLE MASCAREÑAS NO.1103 ZONA CENTRO C.P.34000) 
+		b) Que acredita ser dueño de  ubicado(a) en <Text style={styles.bold}>CALLE MASCAREÑAS NO.1103 ZONA CENTRO C.P.34000 </Text>  
 		 lo cual comprueba presentando al momento de la firma del presente contrato copia de escrituras,
-		  información ratificada por el L.A. MIGUEL ÁNGEL RODRÍGUEZ TORRES en las instancias correspondientes, 
+		  información ratificada por el<Text style={styles.bold}> L.A. MIGUEL ÁNGEL RODRÍGUEZ TORRES</Text> en las instancias correspondientes, 
 		  razón por la cual demuestra y comprueba que está facultado ante las autoridades correspondientes 
 		  para realizar la venta del bien inmueble señalado con anterioridad.
 		</Text>
    		 <Text style={styles.text}>
 
-   		 c) Que tiene capacidad legal y personalidad jurídica para contratar y obligarse sin restricción alguna, 
-		 lo cual implica firmar escrituras frente a notario y realizar todos los trámites correspondientes y 
+   		 c) <Text style={styles.bold}>Que tiene capacidad legal y personalidad jurídica para contratar y obligarse sin restricción alguna,</Text> 
+		  lo cual implica firmar escrituras frente a notario y realizar todos los trámites correspondientes y 
 		 que sean necesarios para tal efecto y contar a su vez, con un modo honesto de vida, 
 		 lo que declara con fines de conocimiento hacia la inmobiliaria en relación con la seguridad de la prestación del servicio profesional.
 		</Text>
    
 		<Text style={styles.subtitle}>
+			
 		II.-	Declara la inmobiliaria:
 		</Text>
 
 		<Text style={styles.text}>
 		a) Ser empresa dedicada a la comercialización de bienes inmuebles, 
-		la cual tiene su domicilio en Boulevard José María Patoni #244 Col. José Revueltas C.P. 34219 de esta ciudad de Durango, Dgo. 
-		y se encuentra registrada ante la Secretaría de Hacienda con R.F.C. ROTM 780321RZ0 como persona física a nombre de 
-		Miguel Ángel Rodríguez Torres.
+		la cual tiene su domicilio en <Text style={styles.bold}>Boulevard José María Patoni #244 Col. José Revueltas C.P. 34219</Text> de esta ciudad de Durango, Dgo. 
+		y se encuentra registrada ante la Secretaría de Hacienda con <Text style={styles.bold}>R.F.C. ROTM 780321RZ0</Text> como persona física a nombre de 
+		
+		
 		</Text>
 		
 		<Text style={styles.text}>
-		b) Que el Sr. MIGUEL ÁNGEL RODRÍGUEZ TORRES, 
+		b) Que el <Text style={styles.bold}>Sr. MIGUEL ÁNGEL RODRÍGUEZ TORRES</Text>, 
 		es Gerente de la empresa Tu Hogar Inmobiliaria y 
 		cuenta con certificación por parte de infonavit y 
 		con certificación para la comercialización de bienes inmuebles, 
@@ -81,24 +83,24 @@ export const ContratoPDF = ({cliente,contrato,lote}) => (
 
 		<Text style={styles.text}>
 			Que se reconocen mutuamente la personalidad y la forma de acreditamiento manifestadas en las declaraciones que anteceden, 
-			razón por la cual las partes también reconocen recíprocamente la personalidad jurídica para suscribir el presente CONTRATO, 
+			razón por la cual las partes también reconocen recíprocamente la personalidad jurídica para suscribir el presente <Text style={styles.bold}>CONTRATO</Text>, 
 			no existiendo entre ellas incapacidad legal o vicio del consentimiento alguno y que, en tal virtud, 
-			se encuentran de manera libre y voluntaria y no tienen inconveniente alguno para celebrar y suscribir el presente CONTRATO. 
+			se encuentran de manera libre y voluntaria y no tienen inconveniente alguno para celebrar y suscribir el presente <Text style={styles.bold}>CONTRATO</Text>. 
 		</Text>
 		
 		<Text style={styles.text}>
-			Primera.- El cliente declara requerir los servicios de la Inmobiliaria, 
+			<Text style={styles.bold}>Primera.- El cliente declara requerir los servicios de la Inmobiliaria</Text>, 
 		por tal motivo suscriben las partes en realizar el presente contrato civil de prestación de servicios profesionales, 
 		mismo que se sujeta a las disposiciones el código fiscal federal vigente, y a la legislación equivalente en los estados,  
 		renunciando a cualquier otro fuero o ámbito de aplicación legal y 
-		concretamente le encomienda la venta de casa ubicada en (CALLE MASCAREÑAS NO.1103 ZONA CENTRO) C.P.34000,  
+		<Text style={styles.bold}> concretamente le encomienda la venta de casa ubicada en CALLE MASCAREÑAS NO.1103 ZONA CENTRO C.P.34000 </Text>,  
 		obligándose por su parte la inmobiliaria a realizar dichas encomiendas con toda diligencia y capacidad que se requiera,
 		 así como a prestar el servicio contratado con personal apto y capacitado para ello y bajo autorización del gerente para concretar el servicio.
 		</Text>	 
 		<Text style={styles.text}>
-			Segunda.- Las partes acuerdan y establecen como importe del valor del inmueble la cantidad de {numeral(contrato.montototal).format('$0,0')}mxn,
+			Segunda.- Las partes acuerdan y establecen como importe del valor del inmueble la cantidad de <Text style={styles.bold}> {numeral(contrato.montototal).format('$0,0')} mxn,
 		a reserva de la cantidad que arroje el avalúo, 
-		monto del cual el cliente pagará una comisión correspondiente a (COMISION) o en su defecto el  % del valor de la operación, 
+		monto del cual el cliente pagará una comisión correspondiente a {contrato.comision} o en su defecto el % del valor de la operación </Text>, 
 		una vez realizada, 
 		formalizada y liquidada la operación inmobiliaria. 
 		El cliente se compromete a liquidar los honorarios correspondientes a la inmobiliaria 
@@ -108,25 +110,28 @@ export const ContratoPDF = ({cliente,contrato,lote}) => (
 		<Text style={styles.text} >
 			Tercera.- Manifiestan las partes que el contrato lo celebran por un periodo de ,
 		el contrato comienza  a partir de la fecha en que se firme el presente, 
-		siendo esta el día de hoy {moment(contrato.fhcreacion).format("dddd, Do [de] MMMM [de] YYYY")}.
+		siendo esta el día de hoy 
+		<Text style={styles.bold}> {moment(contrato.fhcreacion).format("dddd, Do [de] MMMM [de] YYYY")}</Text> .
 		</Text>
-		<Text style={styles.text} break>
+
+
+		<Text style={styles.text} >
 		Cuarta.- La Inmobiliaria se obliga a realizar la promoción respectiva para lograr la venta del bien inmueble propiedad del cliente,
 		utilizando todos los medios y servicios con los que cuenta actualmente, tales como medios de internet, 
 		periódico, lonas y carteles de publicidad. Así mismo, 
 		la inmobiliaria se obliga a cubrir los gastos de promoción y publicidad derivados del presente contrato.
 		</Text>
 			 
-      <Text style={styles.text}>
-        Quinta.- El cliente se obliga a liquidar al momento de la venta del bien inmueble, 
-		el pago de las contribuciones e impuestos que le correspondan por ley originados por dicho evento,
+      <Text style={styles.text} >
+        <Text style={styles.bold}>Quinta.- El cliente se obliga a liquidar al momento de la venta del bien inmueble, 
+		el pago de las contribuciones e impuestos que le correspondan por ley originados por dicho evento,</Text>
 		tales como el certificado de  libertad de gravamen expedida por el registro público de la propiedad del estado,
 		el pago del impuesto predial estatal y pago del impuesto sobre la renta, y en su caso, 
 		el plano del lote de terreno y los respectivos documentos que fueren requeridos por el notario que solicite la parte compradora.
       </Text>
     
 
-      <Text style={styles.text}>
+      <Text style={styles.text} break>
         Sexta.- La inmobiliaria manejará un término de exclusividad a nombre de Tú Hogar Inmobiliaria, 
 		esto frente a las empresas del medio inmobiliario para respaldar el presente contrato, 
 		o en su caso las instituciones, personas físicas o morales las cuales le soliciten acreditarse a la empresa Inmobiliaria, 
@@ -151,8 +156,8 @@ export const ContratoPDF = ({cliente,contrato,lote}) => (
       </Text>
 
       <Text style={styles.text}>
-       A) Por la venta de la propiedad por medio de “LA INMOBILIARIA”, 
-		lo cual obliga a EL CLIENTE al pago de honorarios de acuerdo con lo declarado en el presente CONTRATO.
+       A) Por la venta de la propiedad por medio de  <Text style={styles.bold}>“LA INMOBILIARIA”</Text>, 
+		lo cual obliga a <Text style={styles.bold}>EL CLIENTE</Text> al pago de honorarios de acuerdo con lo declarado en el presente <Text style={styles.bold}>CONTRATO</Text>.
       </Text>
 
       <Text style={styles.text}>
@@ -160,17 +165,17 @@ export const ContratoPDF = ({cliente,contrato,lote}) => (
       </Text>
 
 		<Text style={styles.text}>
-		C)	Por la venta de manera directa la propiedad objeto de este CONTRATO por parte de “EL CLIENTE” lo 
-			cual obligara a este a cubrir de manera íntegra el pago de honorarios estipulados en el presente CONTRATO.
+		C)	Por la venta de manera directa la propiedad objeto de este <Text style={styles.bold}>CONTRATO</Text> por parte de <Text style={styles.bold}>“EL CLIENTE”</Text> lo 
+			cual obligara a este a cubrir de manera íntegra el pago de honorarios estipulados en el presente <Text style={styles.bold}>CONTRATO.</Text>
 		</Text>
 	
 	<Text style={styles.text}>
-		Novena.- En caso de surgir algún litigio con motivo de la aplicación o incumplimiento del presente contrato, 
-		las partes se someterán a la competencia  tribunales civiles del estado de Durango.
+		<Text style={styles.bold}>Novena.- </Text> En caso de surgir algún litigio con motivo de la aplicación o incumplimiento del presente contrato, 
+		<Text style={styles.bold}>las partes se someterán a la competencia  tribunales civiles del estado de Durango.</Text>
 	</Text>
 
 	<Text style={styles.text}>
-		Décima.- La inmobiliaria deberá guardar el secreto profesional sobre los  asuntos que se le confíen,
+		<Text style={styles.bold}>Décima.-  La inmobiliaria deberá guardar el secreto profesional</Text> sobre los  asuntos que se le confíen,
 		respondiendo por daños y perjuicios en caso de violación. Así mismo se deberá manejar con sinceridad,
 		integridad y profesionalismo y mostrar absoluta confianza en el cliente. de la misma manera,
 		el cliente para contar con el servicio de garantía por parte de la inmobiliaria se deberá manejar bajo los mismos criterios y
@@ -179,28 +184,32 @@ export const ContratoPDF = ({cliente,contrato,lote}) => (
 	</Text>
 
 	<Text style={styles.text}>
-		Undécima.- La inmobiliaria se compromete a realizar todos los trámites de documentación a reserva del cliente. 
+		<Text style={styles.bold}>Undécima.- La inmobiliaria se compromete a realizar todos los trámites de documentación a reserva del cliente. </Text>
 		 En caso de requerirse el cliente se compromete a firmar una carta poder para que la inmobiliaria pueda llevar 
 		 a cabo la gestión de los documentos que en su caso se requieran tramitar, así como para realizar las acciones 
 		 que se requieran para darle agilidad al expediente crediticio en cualquier tipo de institución gubernamental.
 	</Text>
 
 	<Text style={styles.text}>
-		Duodécima. - En caso de llegar a requerirse, ambas partes manifiestan que se someterán a las leyes y 
-		disposiciones civiles que regulan los Tribunales del Estado de Durango.
+		<Text style={styles.bold}>Duodécima. -</Text> En caso de llegar a requerirse, ambas partes manifiestan que se someterán a las leyes y 
+		disposiciones civiles que regulan los <Text style={styles.bold}>Tribunales del Estado de Durango.</Text>
 	</Text>
 
-	<Text  style={styles.text}>
+	<Text  style={styles.title3}>
 	Leído el presente contrato las partes, lo ratifican en todo.
 	</Text>
 	
-	<Text  style={styles.text}>
-	Durango, Dgo. a {moment(contrato.fhcreacion).format("dddd, Do [de] MMMM [de] YYYY")}
+	<Text  style={styles.title2}>
+	Durango, Dgo. a <Text style={styles.bold}>{moment(contrato.fhcreacion).format("dddd, Do [de] MMMM [de] YYYY")}</Text> 
 	</Text>
 	 
+	<Text  style={styles.title4}> _______________________________	</Text>         <Text style={styles.title5}>_______________________________ </Text>               
+	<Text style={styles.title4}>L.A MIGUEL ÁNGEL RORIGUEZ TORRES</Text>			<Text style={styles.title5}>C.P {cliente.nombre}</Text>
+	<Text style={styles.title4}>Gerente Tu Hogar inmobiliaria	</Text>			<Text style={styles.title5}>El Cliente</Text>			
+	<Text style={styles.title4}>6182104980                      </Text>         <Text style={styles.title5}>{cliente.numero}</Text>         
+	
 
-
-      <Text style={styles.pageNumber} render={({ pageNumber, totalPages }) => (
+5    <Text style={styles.pageNumber} render={({ pageNumber, totalPages }) => (
         `${pageNumber} / ${totalPages}`
       )} fixed />
     </Page>
@@ -213,14 +222,49 @@ Font.register({
 });
 
 const styles = StyleSheet.create({
+  bold:{
+ 	margin: 12,
+    fontSize: 11,
+    textAlign: 'justify',
+	fontStyle : "bold",
+    fontFamily: 'Times-Bold'
+  },
+
   body: {
-    paddingTop: 35,
+    paddingTop: 60,
     paddingBottom: 65,
-    paddingHorizontal: 35,
+    paddingHorizontal: 60,
   },
   title: {
-    fontSize: 24,
+    fontSize: 20,
     textAlign: 'center',
+    fontFamily: 'Times-Bold',
+	fontStyle : "bold"
+  },
+  title2:{
+	 fontSize: 12,
+    textAlign: 'center',
+    fontFamily: 'Times-Bold',
+	fontStyle : "bold"
+  },
+  title3:{
+	 fontSize: 14,
+	 margin:20,
+    textAlign: 'center',
+    fontFamily: 'Times-Bold',
+	fontStyle : "bold"
+  },
+  title4:{
+	 fontSize: 12,
+	 marginLeft:5,
+    textAlign: 'left',
+    fontFamily: 'Times-Bold',
+	fontStyle : "bold"
+  },
+  title5:{
+	 fontSize: 12,
+	 marginRight:5,
+    textAlign: 'right',
     fontFamily: 'Times-Bold',
 	fontStyle : "bold"
   },
@@ -230,13 +274,13 @@ const styles = StyleSheet.create({
     marginBottom: 40,
   },
   subtitle: {
-    fontSize: 18,
+    fontSize: 12,
     margin: 12,
     fontFamily: 'Times-Bold'
   },
   text: {
     margin: 12,
-    fontSize: 14,
+    fontSize: 12,
     textAlign: 'justify',
     fontFamily: 'Times-Roman'
   },

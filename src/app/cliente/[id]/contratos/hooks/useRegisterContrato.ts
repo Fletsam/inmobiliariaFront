@@ -13,8 +13,18 @@ interface RegisterDataCliente {
   costo: number;
   descuento: number;
   enganche: number;
+  
   pagosafinanciar: number;
   interesanual: number;
+  inicio: Date
+  fecha : Date
+  pagado:number
+  usuarioId:number
+  estatus:number
+  clientesId:number
+  contratoId:number
+  comision:number
+  loteId:number
 }
 
 const defaultDataLogin: RegisterDataCliente = {
@@ -27,6 +37,15 @@ const defaultDataLogin: RegisterDataCliente = {
 	enganche:0,
 	pagosafinanciar:0,
 	interesanual:0,
+  inicio: (new Date()), 
+    fecha: (new Date()),
+    pagado:0, 
+    estatus: 0, 
+    usuarioId: 0, 
+    clientesId: 0 ,
+    contratoId: 0 ,
+    comision: 0,
+    loteId: 0
 
 };
 

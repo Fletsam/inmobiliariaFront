@@ -50,7 +50,7 @@ const defaultDataLogin: RegisterDataCliente = {
 };
 
 /* registerLocale("es", es); */
-
+const Swal = require('sweetalert2')
 const useRegisterContrato = () => {
   const {
     execute: registerContratoApi,
@@ -64,16 +64,20 @@ const useRegisterContrato = () => {
   useEffect(() => {
     if (statusRegisterContrato === "success") {
     
-      const Cliente = {
-        ...dataRegisterContrato,
-
-      };
-      console.log(Cliente);
-
-      console.log(statusRegisterContrato);
+       Swal.fire({
+        title: 'Se ha añadido Correctamente!',
+        text: 'Refresca la pagina para ver los cambios',
+        icon: 'success',
+        confirmButtonText: 'Hecho'
+      })
+  
     } else if (statusRegisterContrato === "error") {
-      console.log(dataRegisterContrato);
-      console.log(statusRegisterContrato);
+       Swal.fire({
+        title: 'No tienes permisos!...',
+        text: 'No tienes los permisos para editar este apartado',
+        icon: 'error',
+        confirmButtonText: 'Hecho'
+      })
     }
   }, [statusRegisterContrato]);
 

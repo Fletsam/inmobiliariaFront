@@ -97,7 +97,7 @@ const renderCell = React.useCallback((lotes: Lotes, columnKey: React.Key) => {
           <>
             {lotes.contratoId === 0 ?
 
-               <Chip className="capitalize text-white cursor-pointer" color="secondary"  size="sm" variant="shadow">
+               <Chip className="capitalize text-white cursor-pointer" color="secondary"  size="sm" variant="shadow" onClick={()=> router.push(`/cliente`)}>
               Disponible
               </Chip>
   

@@ -64,6 +64,7 @@ const handleContrato = () => {
 }
 
 
+console.log(lotes);
 
 
 const Cards = useCallback(() =>{  
@@ -87,11 +88,11 @@ switch (selectedOption) {
             <div className=" flex justify-between">
              <h1 className='text-black drop-shadow-md shadow-red-900' > {item.clave} </h1>
              {item.contratoId !== 0 ?
-              <Chip className="capitalize text-white cursor-pointer" color="success"  size="sm" variant="shadow" >
+              <Chip className="capitalize text-white cursor-pointer" color="success"  size="sm" variant="shadow" onClick={()=> router.push(`/estadocuenta/cliente/${item.contratoId}`)} >
               Vendido
               </Chip>
             : 
-              <Chip className="capitalize text-white cursor-pointer" color="secondary"  size="sm" variant="shadow" >
+              <Chip className="capitalize text-white cursor-pointer" color="secondary"  size="sm" variant="shadow" onClick={()=> router.push(`/cliente`)} >
               Disponible
               </Chip>
             }

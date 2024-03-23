@@ -10,6 +10,8 @@ import useRegisterContrato from './hooks/useRegisterContrato'
 import { CldImage } from 'next-cloudinary'
 import NavbarInicio from '@/components/navbar'
 import useFraccs from '@/app/fraccionamientos/hooks/useGetFracc'
+import ReactPDF, { PDFDownloadLink, PDFViewer } from '@react-pdf/renderer'
+import { ContratoPDF } from './contratopdf/contrato'
 
 const Contrato = () => {
 const params = useParams()
@@ -64,6 +66,7 @@ const handleRegisterContrato = async () => {
     loteId: lote.id}
     ,path)
     onClose()
+
     }
 
 const handleOpenLote = (loteid:number) => {

@@ -93,7 +93,7 @@ switch (selectedOption) {
     <div >
         <div className='md:grid md:gap-5 md:grid-cols-2 justify-items-center grid gap-2 '>
       {Lotes?.map((item, index) => (
-                        <Card shadow="sm" className="bg-slate-100 shadow-primary shadow-md grid justify-items-center" key={index} isPressable onPress={()=>handleToEstadoCuenta(item.id)} >
+                        <Card shadow="sm" className="bg-slate-100 shadow-primary shadow-md grid justify-items-center" key={index} isPressable onPress={()=>handleToEstadoCuentaLote(item.id)} >
                         
                         <CardBody className="overflow-visible p-0 grid justify-items-center">
                         <CldImage

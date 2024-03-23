@@ -22,13 +22,12 @@ useEffect(() => {
 
 
 }, [dataContrato])
-console.log(cliente);
-console.log(contrato);
-console.log(lote);
+
 const handleSaveContrato = () =>{
   ReactPDF.render(<PDFViewer />, `${__dirname}/example.pdf`);
 }
 
+const filename = `${cliente.nombre}_Contrato.pdf`
 
   return (
     <>
@@ -38,7 +37,7 @@ const handleSaveContrato = () =>{
 	<PDFViewer>
     <ContratoPDF cliente={cliente} contrato={contrato} lote={lote} />
   </PDFViewer>
-<PDFDownloadLink document={<ContratoPDF cliente={cliente} contrato={contrato} lote={lote} />} fileName="Contrato.pdf">
+<PDFDownloadLink document={<ContratoPDF cliente={cliente} contrato={contrato} lote={lote} />} fileName={filename}>
   {({ blob, url, loading, error }) => (loading ? 'Loading document...' : 'Download now!')}
 </PDFDownloadLink>
     </>

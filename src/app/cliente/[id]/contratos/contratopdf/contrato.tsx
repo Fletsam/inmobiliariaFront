@@ -1,6 +1,6 @@
 "use client"
 
-import { Document, Font, Image, Page, StyleSheet, Text } from "@react-pdf/renderer";
+import { Document, Font, Image, Page, StyleSheet, Text, View } from "@react-pdf/renderer";
 
 import moment from "moment";
 import 'moment/locale/es';
@@ -10,8 +10,12 @@ let numeral = require('numeral');
 export const ContratoPDF = ({cliente,contrato,lote}) => (
 	
   <Document>
-    <Page style={styles.body} >
-      
+    <Page style={styles.body}  >
+      <View>
+		<Image style={styles.image} src={"/descarga.jpg"}>
+
+		</Image>
+	  </View>
       <Text style={styles.title}>Tu Hogar Inmobiliaria</Text>
       
       <Text style={styles.title3}>
@@ -203,13 +207,31 @@ export const ContratoPDF = ({cliente,contrato,lote}) => (
 	Durango, Dgo. a <Text style={styles.bold}>{moment(contrato.fhcreacion).format("dddd, Do [de] MMMM [de] YYYY")}</Text> 
 	</Text>
 	 
-	<Text  style={styles.title4}> _______________________________	</Text>         <Text style={styles.title5}>_______________________________ </Text>               
-	<Text style={styles.title4}>L.A MIGUEL ÁNGEL RORIGUEZ TORRES</Text>			<Text style={styles.title5}>C.P {cliente.nombre}</Text>
-	<Text style={styles.title4}>Gerente Tu Hogar inmobiliaria	</Text>			<Text style={styles.title5}>El Cliente</Text>			
-	<Text style={styles.title4}>6182104980                      </Text>         <Text style={styles.title5}>{cliente.numero}</Text>         
 	
+	
+				
 
-5    <Text style={styles.pageNumber} render={({ pageNumber, totalPages }) => (
+			
+				
+	<Text style={styles.title5}> _____________________________________                                   ________________________________</Text>
+	<Text style={styles.title6}>L.A MIGUEL ÁNGEL RORIGUEZ TORRES.                C.P. {contrato.testigo2}</Text>
+	<Text style={styles.title9}>       Gerente Tu Hogar inmobiliaria.                                                                       El Cliente.</Text>
+	<Text style={styles.title6}>         6182104980.                                                                                          					       6181125074.</Text> 
+		
+	<Text style={styles.title5}> _____________________________________                                   ________________________________</Text>
+	<Text style={styles.title7}>Testigo                                                                                                 Testigo </Text>
+	<Text style={styles.title8}>{contrato.testigo1}                                  {contrato.testigo2}</Text>
+		
+				
+		
+				
+			
+	
+	
+		
+      
+
+ <Text style={styles.pageNumber} render={({ pageNumber, totalPages }) => (
         `${pageNumber} / ${totalPages}`
       )} fixed />
     </Page>
@@ -231,6 +253,7 @@ const styles = StyleSheet.create({
   },
 
   body: {
+	backgroundColor: "",
     paddingTop: 60,
     paddingBottom: 65,
     paddingHorizontal: 60,
@@ -241,6 +264,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Times-Bold',
 	fontStyle : "bold"
   },
+  
   title2:{
 	 fontSize: 12,
     textAlign: 'center',
@@ -248,7 +272,7 @@ const styles = StyleSheet.create({
 	fontStyle : "bold"
   },
   title3:{
-	 fontSize: 14,
+	 fontSize: 13,
 	 margin:20,
     textAlign: 'center',
     fontFamily: 'Times-Bold',
@@ -262,9 +286,40 @@ const styles = StyleSheet.create({
 	fontStyle : "bold"
   },
   title5:{
-	 fontSize: 12,
-	 marginRight:5,
-    textAlign: 'right',
+	 fontSize: 10,
+	 marginTop: 60,
+	 marginBottom: 20,
+    textAlign: 'justify',
+    fontFamily: 'Times-Bold',
+	fontStyle : "bold"
+  },
+  title6:{
+	 fontSize: 10,
+	 marginLeft: 5,
+	 textTransform: "uppercase",
+    textAlign: 'justify',
+    fontFamily: 'Times-Bold',
+	fontStyle : "bold"
+  },
+  title9:{
+	 fontSize: 10,
+	 marginLeft: 5,
+    textAlign: 'justify',
+    fontFamily: 'Times-Bold',
+	fontStyle : "bold"
+  },
+  title7:{
+	 fontSize: 10,
+	 marginLeft: 40,
+    textAlign: 'justify',
+    fontFamily: 'Times-Bold',
+	fontStyle : "bold"
+  },
+  title8:{
+	 fontSize: 10,
+	 marginLeft: 0,
+    textAlign: 'justify',
+	textTransform: 'uppercase',
     fontFamily: 'Times-Bold',
 	fontStyle : "bold"
   },
@@ -272,6 +327,23 @@ const styles = StyleSheet.create({
     fontSize: 12,
     textAlign: 'center',
     marginBottom: 40,
+  },
+  div: {
+	flexFlow:20
+  },
+  
+  div2: {
+	flex: "true",
+	alignItems: "center",
+	columnGap:40
+  },
+  
+
+  linea: {
+    fontSize: 20,
+	marginVertical: 40,
+    fontFamily: 'Times-Bold',
+	fontStyle : "bold"
   },
   subtitle: {
     fontSize: 12,
@@ -284,9 +356,31 @@ const styles = StyleSheet.create({
     textAlign: 'justify',
     fontFamily: 'Times-Roman'
   },
+
+  textFlex: {
+	flex: 20,
+	flexFlow: 1 
+  },
+  textLeft: {
+    marginTop: 40,
+    fontSize: 12,
+    alignItems: 'flex-end',
+	flex: 1,
+    fontFamily: 'Times-Roman'
+  },
+  textRight: {
+    marginTop: 40,
+    fontSize: 12,
+    alignItems: 'flex-start',
+	flex:1,
+	objectPosition: 60,
+    fontFamily: 'Times-Roman'
+  },
   image: {
+	width:200,
+	height:200,
     marginVertical: 15,
-    marginHorizontal: 100,
+    marginHorizontal: 150,
   },
   header: {
     fontSize: 12,

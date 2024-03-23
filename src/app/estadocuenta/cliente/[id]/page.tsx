@@ -34,15 +34,18 @@ import XLSX from "xlsx"
 import Link from "next/link";
 import { TbEditCircle } from "react-icons/tb";
 import { EyeFilledIcon } from "@/helpers";
+import { PDFDownloadLink } from "@react-pdf/renderer";
+import { ContratoPDF } from "@/app/cliente/[id]/contratos/contratopdf/contrato";
 
 
 
 export default function EstadoCuentaCliente ()  {
 	const params = useParams();
-const itemfind  = (parseInt(params.id));
+  const itemfind  = (parseInt(params.id));
+  moment.locale("es")
+  var numeral = require('numeral');
 const {isOpen, onOpen, onOpenChange} = useDisclosure();
 const {startLoadingEstadoCuenta,estadoCuenta,dataEstadoCuenta,ingresos,egresos } = useGetEstadoCuenta()
-
 const {contrato,dataContrato,startLoadingContrato,cliente,lote} = useGetContratobyId()
 const {data,handleSetData,registerAbonoApi} = useRegisterAbono()
 const { isLogged, nombre , id } = useSelector((state: RootState) => state.users)
@@ -50,26 +53,19 @@ const { isLogged, nombre , id } = useSelector((state: RootState) => state.users)
 useEffect(() => {
   const param = `estadocuenta/contrato/${itemfind}`
   startLoadingEstadoCuenta(param)  
-  
 }, [dataEstadoCuenta])
 
 useEffect(() => {
   const param = `contratos/${itemfind}`
   startLoadingContrato(param)
-
-
 }, [dataContrato])
 
   const paramAbono = `abonos/contrato/${itemfind}`
+  
 const handleAddAbono = (e) => {
 	e.preventDefault()
 	registerAbonoApi({...data , usuarioId: id, contratoId: itemfind}, paramAbono)
-	
-
 }
-
-moment.locale("es")
-
 
 const estadocuentaIngresos = [estadoCuenta].concat(ingresos).concat(egresos)
 
@@ -82,28 +78,21 @@ const columns = [
   {name: "Fecha de Creacion", uid: "fhcreacion"},
 ];
 
-var numeral = require('numeral');
-/* 
-const openModalFracc = (e:number) => {  
-      setFracc(e)    
-  } */
 
 const handleExport = () => {
 
   var wb = XLSX.utils.book_new()
   const ws = XLSX.utils.json_to_sheet(estadocuentaIngresos)
-
   XLSX.utils.book_append_sheet(wb ,ws ,"estadocuentaingresos")
-
   XLSX.writeFile(wb, `EstadoCuenta ${cliente.nombre}.xlsx`)
+
 }
 
+const filename = `${cliente.nombre}_${lote.clave}_Contrato.pdf`
 
 
  const renderCell = React.useCallback((estadocuentaIngresos: EstadoCuenta, columnKey: React.Key) => {
     const cellValue = estadocuentaIngresos[columnKey as keyof EstadoCuenta];
-	
-
  switch (columnKey) {
       case "name":
         return (
@@ -275,10 +264,10 @@ const handleExport = () => {
               value={(data.montoingreso).toString()}
               type="text"
               onChange={handleSetData}
-			  className='text-black'
+              className='text-black'
               label="Añadir un Abono"
-			  description = "Escriba el monto del Abono"
-             variant='flat'
+              description = "Escriba el monto del Abono"
+              variant='flat'
               name="montoingreso"
               id="montoingreso"
             /></form>	
@@ -290,9 +279,12 @@ const handleExport = () => {
       <h1 className="text-primary font-bold text-xl">
         Fecha de inicio:  <span className=" text-black font-semibold capitalize">{moment(contrato.inicio).format('dddd, Do [de] MMMM [de] YYYY')} </span>
       </h1>
-                <Button className='text-white bg-primary shadow-md shadow-primary w-auto h-5 ' onClick={handleExport}>
-                  Exportar Excel
-                </Button>
+          <Button className='text-white bg-primary shadow-md shadow-primary w-auto h-5 ' onClick={handleExport}>
+            Exportar Excel
+          </Button>
+          <PDFDownloadLink className="text-white bg-primary shadow-md shadow-primary w-auto h-7 rounded-lg" document={<ContratoPDF cliente={cliente} contrato={contrato} lote={lote} />} fileName={filename}>
+          {({ blob, url, loading, error }) => (loading ? 'Loading document...' : 'Descarga el Contrato')}
+          </PDFDownloadLink>
   </div>         
 
       <Table 

@@ -176,20 +176,24 @@ const columns = [
     }
   }, []);
 
+ const [filter, setFilter] = useState('');
 
+  const filteredData = clientes.filter(item => item.nombre.toLowerCase().includes(filter.toLocaleLowerCase()));
 
   return (
     <main className="bg-slate-200 p-5">
       
           <div className="flex flex-1 justify-between">
-            <Input
+             <Input
             isClearable
+            type="text"
             className="w-full sm:max-w-[44%] text-black"
-            placeholder="Search by name..."
+            placeholder="Busca por nombre del Cliente"
             startContent={<IoSearchOutline className=" text-black"/>}
-  /*                       value={filterValue}
-                         onValueChange={onSearchChange}
- */
+            value={filter}
+            onChange={e => setFilter(e.target.value)}
+            id="search"
+            name="search"
           />
 
             <Button
@@ -220,7 +224,7 @@ const columns = [
           )}
         </TableHeader>
 
-        <TableBody className="text-black  font-semibold" items={clientes}>
+        <TableBody className="text-black  font-semibold" items={filteredData}>
           {(item) => (
             <TableRow
               className="shadow-slate-200 border text-black"

@@ -19,7 +19,7 @@ const menuItems = [
     subtitle: "Apartado de contabilidad",
   },
     {
-    path: "/usuario/inventario",
+    path: "/fraccionamientos",
     icon: <IoBusinessOutline size={50} />,
     title: "Inventario",
     subtitle: "Apartado de inventario",

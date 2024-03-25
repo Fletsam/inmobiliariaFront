@@ -55,9 +55,9 @@ const router = useRouter()
 
 
   return (
-    <main className=" bg-slate-100  p-3 ">
+    <main className=" w-full block">
       
-      <form action="submit" className=" p-2 bg-slate-200/90 w-full  lg:h-[100vh] rounded-xl shadow-2xl ">
+      <form action="submit" className=" p-2 bg-slate-200/90 rounded-xl shadow-2xl w-auto block ">
 			<h2 className="p-3 font-bold text-2xl  text-primary/100">
 			Edita a {cliente.nombre}
 			</h2>

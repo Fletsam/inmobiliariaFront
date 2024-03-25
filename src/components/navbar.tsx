@@ -5,7 +5,9 @@ import { Button, Image, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { useEffect } from 'react'
+import { IoPersonCircle } from 'react-icons/io5';
 import { useSelector } from 'react-redux';
+import { Sidebar } from './Sidebar';
 
 const NavbarInicio = ({children}) => {
 	
@@ -13,49 +15,60 @@ const NavbarInicio = ({children}) => {
 	 	const {isOpen, onOpen, onOpenChange} = useDisclosure();
 		
 		const router = useRouter()
-
+const links = [
+	{
+		path: "/usuario" ,
+		icon:  <IoPersonCircle size={30}/>,
+		title: "Usuario",
+		subtitle:`${nombre}`
+	},
+	{
+		path: "/usuario" ,
+		icon:  <IoPersonCircle size={30}/>,
+		title: "Usuario",
+	},
+	{
+		path: "/usuario" ,
+		icon:  <IoPersonCircle size={30}/>,
+		title: "Estadistica",
+	}
+]
 
   return (
-	<section className='bg-red-800 h-1/4 border-white border-b-1 p-5  '>
 
-	<div className=' grid sm:flex justify-center gap-10 '>
-		<div>
-	<Image className='rounded-full shadow-white shadow-lg  ' width={100} height={100} src={"/logo2.webp"} alt="logo" onClick={()=>router.push("/usuario")} />
-		</div>
-		<div className=' hidden sm:block px-6 text-white '>
-			<h1 className=' p-2 text-4xl  ' >
-			Tu Hogar Inmobiliaria 
-			</h1>
-			<h3 className=' px-9 text-2xl'>
+	<div className=' grid w-full h-full bg-slate-200 absolute'  >
+		<div className='grid sm:flex  text-black bg-slate-200 shadow-small shadow-primary w-full sm:h-40 py-5 justify-center static pt-2 '>
+		<Image className=' rounded-full shadow-white w-auto h-auto shadow-sm cursor-pointer sm:flex justify-items-center'   width={100} height={100} src={"/logo2.webp"} alt="logo" onClick={()=>router.push("/usuario")} />	
+			<div className='sm:flex flex-col text-left bg-slate-200  p-5 hidden'>
+				<h1 className='text-2xl text-primary '>
+					Tu Hogar Inmobiliaria
+					
+				</h1>
+				<h3 className='text-2xl px-5 text-left  text-primary '>
 				SIATHI
 			</h3>
-				<h4 className='px-20 text-xl font-thin'>
-					Sistema Informacion Administrativo Tu Hogar Inmobiliaria 
-				</h4>
-				<div className=' sm:flex justify-self-start'>
-			<div className='pt-2'>
-				<Link href="/usuario" onClick={onOpen} className="  text-white font-normal text-xl p-1 bg-primary hover:bg-white/5 ">
-				Perfil
-          </Link>
-			</div>
-			 <div className='pt-2'>
-				<Link href="/usuario" onClick={onOpen} className="h-auto text-white font-normal text-xl p-1 bg-primary hover:bg-white/5   ">
-				Capacitacion
-          		</Link>
-			 </div>
-			<div className='pt-2'>
-				<Link href="/usuario" onClick={onOpen} className="h-auto text-white font-normal text-xl p-1 bg-primary hover:bg-white/5 ">
-				Estadistica
-          		</Link>
-			 </div>
+		<div className=' sm:flex justify-between '>
+		<div className='pt-2 flex justify-self-center gap-5 '>
+			{links.map ( (item)=>( 
+				<div key={item.title} className='flex flex-col justify-evenly '>
+					<Link className=' gap-2 flex justify-evenly text-black font-semibold'  href={item.path}>  <p className='flex'> {item.icon}  {item.title}</p> </Link>
+						
+				</div>
+				
+				
+				)
+			)
+			}
 		</div>
+		</div>
+			</div>
+		</div>
+		<div className=' w-full relative flex '>
+			{children}
 		</div>
 		
-	</div>
-	{children}
-
-	
-   <>
+		
+	<>
       <Modal isOpen={isOpen} onOpenChange={onOpenChange} isDismissable={false} isKeyboardDismissDisabled={true}>
         <ModalContent className="text-black">
           {(onClose) => (
@@ -77,9 +90,13 @@ const NavbarInicio = ({children}) => {
         </ModalContent>
       </Modal>
     </>
+		
+</div>
+	
+	
 
 	
-	</section>
+   
 	
   )
 }

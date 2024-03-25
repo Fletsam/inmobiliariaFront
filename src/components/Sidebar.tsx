@@ -14,45 +14,40 @@ import { FiDollarSign } from "react-icons/fi";
 const menuItems = [
   {
     path: "/login",
-    icon: <FiDollarSign size={50} />,
+    icon: <FiDollarSign size={30} />,
     title: "Contabilidad",
-    subtitle: "Apartado de contabilidad",
+
   },
     {
     path: "/fraccionamientos",
-    icon: <IoBusinessOutline size={50} />,
+    icon: <IoBusinessOutline size={30} />,
     title: "Inventario",
-    subtitle: "Apartado de inventario",
   },
   {
     path: "/cliente",
-    icon: <BsFileEarmarkPerson size={50} />,
+    icon: <BsFileEarmarkPerson size={30} />,
     title: "Clientes",
-    subtitle: "Apartado de clientes",
   },
   {
     path: "/ventas",
-    icon: <IoBriefcaseOutline size={50} />,
+    icon: <IoBriefcaseOutline size={30} />,
     title: "Ventas",
-    subtitle: "Apartado de Ventas",
   },
   {
     path: "/rh",
-    icon: <IoPersonAdd size={50} />,
+    icon: <IoPersonAdd size={30} />,
     title: "Recursos Humanos",
-    subtitle: "Apartado de Recursos Humanos",
+
   },
   {
     path: "/marketing",
-    icon: <BsMegaphoneFill size={50} />,
+    icon: <BsMegaphoneFill size={30} />,
     title: "Marketing",
-    subtitle: "Apartado de publicidad",
   },
   {
     path: "/produccion",
-    icon: <IoDocumentAttachOutline size={50} />,
+    icon: <IoDocumentAttachOutline size={30} />,
     title: "Producción",
-    subtitle: "Apartado de producción",
   },
 
 ];
@@ -64,10 +59,12 @@ export const Sidebar = () => {
   return (
     <nav
       id="menu"
-      style={{ width: "300px" }}
-      className="bg-primary min-h-screen z-10 text-white w-64 left-0 relative pt-10 border-r-1 border-white "
+      className="bg-primary w-[25vh] left-0 text-white border-r-1 border-white hidden  sm:inline-block static"
     >
-      <div id="nav" className="w-full px-6 text-xs">
+      <div id="nav" className="w-full px-6 text-xs pt-6 ">
+        {/* <div className="p-5  border-b-1 border-white hover:bg-white/5">
+        <Image className='rounded-full shadow-white w-auto h-auto shadow-sm cursor-pointer flex justify-items-center'   width={100} height={100} src={"/logo2.webp"} alt="logo" onClick={()=>router.push("/usuario")} />
+        </div> */}
         {menuItems.map((item) => (
           <SidebarMenuitem  key={item.path} {...item} />
         ))}

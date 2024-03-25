@@ -22,7 +22,7 @@ useEffect(() => {
   return (
     
 
-      <section className="w-full h-[100vh] p-2 bg-red-600 opacity-80 inline-block">
+      <section className="w-full h-full p-2 bg-red-600 opacity-80">
         <div className="flex place-content-center ">
 
         <div className=" mt-10 bg-gray-800 rounded-lg ">

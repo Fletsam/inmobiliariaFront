@@ -148,8 +148,8 @@ switch (selectedOption) {
 
 
   return (
-    <main className='text-black '>
-        <div className=' w-screen  md:block  '><NavbarInicio>
+    <main className='text-black block'>
+        <div className=' w-auto  md:block  '>
             <Tabs
       className="max-w-xs text-white pt-5"
       disableSelectorIconRotation
@@ -162,7 +162,7 @@ switch (selectedOption) {
         </Tab>
       ))}
      </Tabs>
-        </NavbarInicio>
+
             </div>
         <section className='bg-slate-200 w-full md:flex md:gap-5'>
             <div className=' bg-slate-200 md:w-1/2 bg-slate-white md:grid  flex-col justify-center'>

@@ -7,27 +7,26 @@ interface Props {
   path: string;
   icon: JSX.Element;
   title: string;
-  subtitle: string;
+
 }
 
-export const SidebarMenuitem = ({ path, icon, title, subtitle }: Props) => {
+export const SidebarMenuitem = ({ path, icon, title }: Props) => {
   const pathname = usePathname();
 
   return (
-    <Link
+   <div className="w-auto h-auto py-3 border-b-1 border-white hover:bg-white/5">
+     <Link
       href={path}
-      className={`w-full px-2 inline-flex space-x-2 items-center border-b border-white py-3  hover:bg-white/5 transition ease-linear duration-150 ${
-        pathname === path ? "bg-white/10" : ""
-      }`}
     >
-      {icon}
-
-      <div className="flex flex-col">
-        <span className="text-lg font-bold leading-5 text-white">{title}</span>
-        <span className="text-sm text-white/50 hidden md:block">
-          {subtitle}
-        </span>
+      <div className="flex flex-col justify-around gap-2 m-0 w-full">
+      <span className="text-sm font-bold text-white flex justify-evenly "> {icon} </span>
+      
+       <span className="text-sm font-bold  text-white  text-center ">{title}</span>
       </div>
     </Link>
+   </div>
+   
+   
+      
   );
 };

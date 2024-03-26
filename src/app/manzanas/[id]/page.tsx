@@ -135,7 +135,7 @@ const renderCell = React.useCallback((lotes: Lotes, columnKey: React.Key) => {
 
 return(
   <main className="bg-slate-200 p-5 text-black ">
-  <div className=" flex justify-between">
+  <div className=" flex justify-between px-5">
     <div>
     <h1 className="text-primary text-2xl font-semibold  justify-between">
       {fracc.nombre} 
@@ -164,7 +164,7 @@ return(
             </span>
     </div>
   
-    <div className="grid items-end">
+    <div className="grid justify-items-end">
       <Input
             isClearable
             type="text"

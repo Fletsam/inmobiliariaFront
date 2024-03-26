@@ -19,7 +19,7 @@ import {
   Button,
 } from "@nextui-org/react";
 import React, { useEffect } from "react";
-import { IoPersonCircle, IoSearchOutline } from "react-icons/io5";
+import { IoDocumentTextOutline, IoPersonCircle, IoSearchOutline } from "react-icons/io5";
 import useGetEstadoCuenta from "../../hooks/useGetEstadoCuenta";
 import { useParams } from "next/navigation";
 import useGetContratobyId from "../../hooks/useGetContrato";
@@ -84,7 +84,7 @@ const handleExport = () => {
   var wb = XLSX.utils.book_new()
   const ws = XLSX.utils.json_to_sheet(estadocuentaIngresos)
   XLSX.utils.book_append_sheet(wb ,ws ,"estadocuentaingresos")
-  XLSX.writeFile(wb, `EstadoCuenta ${cliente.nombre}.xlsx`)
+  XLSX.writeFile(wb, `EstadoCuenta ${cliente.nombre}_${lote.clave}.xlsx`)
 
 }
 
@@ -173,18 +173,18 @@ const filename = `${cliente.nombre}_${lote.clave}_Contrato.pdf`
     }
   }, []);
   return (
-    <main className="bg-slate-200 p-5">
+    <main className="bg-slate-200 p-10 ">
       
-       <section className=" text-black flex justify-between p-3">
+       <section className=" text-black flex justify-between">
       <div className="">
         <h1 className="text-primary font-bold text-xl border-white border-b-3">
           Cliente
         </h1>
         <div>
-          <h1 className="text-primary font-semibold pt-2 ">
+          <h1 className="text-black font-semibold pt-2 ">
             Nombre: <span className="text-black font-normal">{cliente.nombre} </span> 
           </h1>
-          <h1 className="text-primary font-semibold pt-2 ">
+          <h1 className="text-black font-semibold pt-2 ">
             Telefono : <span className="text-black font-normal"> {cliente.telefono}</span>
           </h1>
         </div>
@@ -218,13 +218,13 @@ const filename = `${cliente.nombre}_${lote.clave}_Contrato.pdf`
           Lote
         </h1>
         <div className="">
-           <h1 className="text-primary font-semibold pt-2 ">
+           <h1 className="text-black font-semibold pt-2 ">
             Clave: <span className="text-black font-normal">{lote.clave} </span> 
           </h1>
-          <h1 className="text-primary font-semibold pt-2 ">
+          <h1 className="text-black font-semibold pt-2 ">
             Metros Cuadrados : <span className="text-black font-normal"> {lote.m2}m²</span>
           </h1>
-            <h1 className="text-primary font-semibold pt-2 ">
+            <h1 className="text-black font-semibold pt-2 ">
             Costo Neto : <span className="text-black font-normal"> $ {numeral(contrato.costo).format('0,0')} Mxn</span>
           </h1>
          
@@ -235,23 +235,23 @@ const filename = `${cliente.nombre}_${lote.clave}_Contrato.pdf`
           Contrato
         </h1>
         <div className="">
-           <h1 className="text-primary font-semibold pt-2 ">
+           <h1 className="text-black font-semibold pt-2 ">
             Pagos a Financiar: <span className="text-black font-normal">{contrato.pagosafinanciar} </span> 
           </h1>
-          <h1 className="text-primary font-semibold pt-2 ">
+          <h1 className="text-black font-semibold pt-2 ">
             Interesanual : <span className="text-black font-normal"> {numeral(contrato.interesanual).format('0%')} </span>
           </h1>
-          <h1 className="text-primary font-semibold pt-2 ">
+          <h1 className="text-black font-semibold pt-2 ">
             Pago Mensual : <span className="text-black font-normal"> $ {numeral(contrato.pagomensual).format('0,0')} Mxn</span>
           </h1>
-          <h1 className="text-primary font-semibold pt-2 ">
+          <h1 className="text-black font-semibold pt-2 ">
             Descuento : <span className="text-black font-normal"> $ {numeral(contrato.descuento).format('0,0')} Mxn</span>
           </h1>
          
-          <h3 className="text-primary font-semibold pt-2 ">
+          <h3 className="text-black font-semibold pt-2 ">
             1°Testigo : <span className="text-black font-normal"> Luis Eduardo Amador Cervantes</span>
           </h3> 
-          <h3 className="text-primary font-semibold pt-2 ">
+          <h3 className="text-black font-semibold pt-2 ">
             2°Testigo : <span className="text-black font-normal"> {contrato.testigo2}</span>
           </h3> 
 
@@ -275,20 +275,30 @@ const filename = `${cliente.nombre}_${lote.clave}_Contrato.pdf`
       
       
 
-  <div className="flex justify-between text-black">
+  <div className="flex justify-between text-black pt-5">
       <h1 className="text-primary font-bold text-xl">
         Fecha de inicio:  <span className=" text-black font-semibold capitalize">{moment(contrato.inicio).format('dddd, Do [de] MMMM [de] YYYY')} </span>
       </h1>
-          <Button className='text-white bg-primary shadow-md shadow-primary w-auto h-5 ' onClick={handleExport}>
-            Exportar Excel
-          </Button>
-          <PDFDownloadLink className="text-white bg-primary shadow-md shadow-primary w-auto h-7 rounded-lg" document={<ContratoPDF cliente={cliente} contrato={contrato} lote={lote} />} fileName={filename}>
-          {({ blob, url, loading, error }) => (loading ? 'Loading document...' : 'Descarga el Contrato')}
-          </PDFDownloadLink>
+      <div className="flex gap-20"> 
+      <Tooltip content="Descarga el Excel"  color={"success"} className="text-white cursor-pointer"  > 
+        <p> <IoDocumentTextOutline onClick={handleExport} className="text-green-500 text-3xl cursor-pointer" width={40}/> </p>  
+      </Tooltip>
+      <PDFDownloadLink className=" h-auto" 
+      document={<ContratoPDF cliente={cliente} contrato={contrato} lote={lote} />} fileName={filename}>
+      {({ blob, url, loading, error }) => (loading ? 'Loading document...' :  
+      <Tooltip content="Descarga el contrato"  color={"default"} className="text-blue-500"  > 
+        <p> <IoDocumentTextOutline className="text-blue-500 text-3xl cursor-pointer" width={40}/> </p>  
+      </Tooltip> 
+       )}
+      </PDFDownloadLink>
+      </div>
+     
+                  
   </div>         
-
+   
+        
       <Table 
-      className="h-[90vh] w-[auto] p-5"
+      className="h-[90vh] w-[auto] pt-5"
       >   
         <TableHeader className=" " columns={columns}>
           {(columns) => (

@@ -5,7 +5,7 @@ import { Button, Image, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { useEffect } from 'react'
-import { IoPersonCircle } from 'react-icons/io5';
+import { IoBarChartOutline, IoChatbubbleEllipsesOutline, IoChatbubbleOutline, IoPersonCircle } from 'react-icons/io5';
 import { useSelector } from 'react-redux';
 import { Sidebar } from './Sidebar';
 
@@ -24,34 +24,38 @@ const links = [
 	},
 	{
 		path: "/usuario" ,
-		icon:  <IoPersonCircle size={30}/>,
-		title: "Usuario",
+		icon:  <IoChatbubbleEllipsesOutline size={30}/>,
+		title: "Capacitacion",
 	},
 	{
 		path: "/usuario" ,
-		icon:  <IoPersonCircle size={30}/>,
+		icon:  <IoBarChartOutline size={30}/>,
 		title: "Estadistica",
 	}
 ]
 
   return (
 
-	<div className=' grid w-full h-full bg-slate-200 absolute'  >
-		<div className='grid sm:flex  text-black bg-slate-200 shadow-small shadow-primary w-full sm:h-40 py-5 justify-center static pt-2 '>
-		<Image className=' rounded-full shadow-white w-auto h-auto shadow-sm cursor-pointer sm:flex justify-items-center'   width={100} height={100} src={"/logo2.webp"} alt="logo" onClick={()=>router.push("/usuario")} />	
-			<div className='sm:flex flex-col text-left bg-slate-200  p-5 hidden'>
-				<h1 className='text-2xl text-primary '>
+	<div className=' grid w-full h-5 bg-red-700 absolute'  >
+		<div className='grid sm:flex  text-black bg-primary shadow-small shadow-primary w-full sm:h-20 py-5 justify-items-center sm:justify-start relative pt-2 '>
+		<div className=' grid px-5 w-[21vh] sm:flex justify-center '>
+			<Image className=' rounded-full shadow-white w-auto h-auto shadow-sm cursor-pointer sm:flex justify-items-center'   width={60} height={60} src={"/logo2.webp"} alt="logo" onClick={()=>router.push("/usuario")} />	
+		</div>
+			<div className='sm:flex text-center  relative'>
+				<div className='hidden sm:flex'>
+					<h1 className='text-2xl text-white '>
 					Tu Hogar Inmobiliaria
-					
 				</h1>
-				<h3 className='text-2xl px-5 text-left  text-primary '>
+				<h3 className='text-2xl px-5 text-center  text-white '>
 				SIATHI
-			</h3>
-		<div className=' sm:flex justify-between '>
-		<div className='pt-2 flex justify-self-center gap-5 '>
+				</h3>
+				</div>
+				
+		<div className=' sm:flex justify-between relative '>
+		<div className='pt-2 flex justify-self-center gap-16 px-5'>
 			{links.map ( (item)=>( 
-				<div key={item.title} className='flex flex-col justify-evenly '>
-					<Link className=' gap-2 flex justify-evenly text-black font-semibold'  href={item.path}>  <p className='flex'> {item.icon}  {item.title}</p> </Link>
+				<div key={item.title} className='flex flex-col justify-evenly'>
+					<Link className=' gap-4 flex justify-evenly text-white font-semibold'  href={item.path}>  <p className='flex gap-2'> {item.icon}  {item.title}</p> </Link>
 						
 				</div>
 				

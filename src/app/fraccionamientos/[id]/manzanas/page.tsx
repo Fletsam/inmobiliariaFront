@@ -170,7 +170,7 @@ const [manzana, setManzana] = useState({})
   return (
     <main className="bg-slate-200 p-5 text-black">
     
-		  <div className="flex flex-1 justify-between">
+		  <div className="flex flex-1 justify-between px-5">
 		  <h1 className="text-primary font-semibold text-2xl pt-2"> {fracc.nombre} </h1>
 		  
 

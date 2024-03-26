@@ -147,8 +147,7 @@ case "fraccs":
 return (
     <main className='text-black bg-slate-200'>
 		<div className='md:block'>
-	{/* <NavbarInicio>
- 	<Tabs
+	  <Tabs
       className="max-w-xs text-white pt-5"
       disableSelectorIconRotation
       onSelectionChange={setSelectedOption}
@@ -160,8 +159,6 @@ return (
         </Tab>
       ))}
      </Tabs>
-		</NavbarInicio> */}
-	
 			</div>
 			
 		<section className=' w-full md:flex'>

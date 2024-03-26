@@ -156,7 +156,7 @@ const handleExport = () => {
   return (
     <main className="bg-slate-200 p-5">
       
-       <section className=" text-black flex justify-between p-3">
+       <section className=" text-black flex justify-between p-5">
       <div className="">
         <h1 className="text-primary font-bold text-xl border-white border-b-3">
           Inversionista
@@ -233,7 +233,7 @@ const handleExport = () => {
       
       
 
-  		<div className="flex justify-between text-black">
+  		<div className="flex justify-between text-black px-5">
     		  <h1 className="text-primary font-bold text-xl">
 				Fecha de inicio:  <span className=" text-black font-semibold capitalize">{moment(contratoInv.inicio).format('dddd, Do [de] MMMM [de] YYYY')} </span>
 				</h1>

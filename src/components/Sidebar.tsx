@@ -59,9 +59,9 @@ export const Sidebar = () => {
   return (
     <nav
       id="menu"
-      className="bg-primary w-[25vh] left-0 text-white border-r-1 border-white hidden  sm:inline-block static"
+      className="bg-primary w-[25vh] left-0 text-white border-r-1 hidden border-white sm:inline-block static"
     >
-      <div id="nav" className="w-full px-6 text-xs pt-6 ">
+      <div id="nav" className={`w-full px-6 text-xs pt-6 sm:block `}>
         {/* <div className="p-5  border-b-1 border-white hover:bg-white/5">
         <Image className='rounded-full shadow-white w-auto h-auto shadow-sm cursor-pointer flex justify-items-center'   width={100} height={100} src={"/logo2.webp"} alt="logo" onClick={()=>router.push("/usuario")} />
         </div> */}

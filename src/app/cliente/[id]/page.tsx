@@ -148,113 +148,126 @@ switch (selectedOption) {
 
 
   return (
-    <main className='text-black block'>
-        <div className=' w-auto  md:block  '>
+    <main className='text-black block w-auto '>
+        <div className=' w-auto  md:grid px-7 justify-items-end '>
             <Tabs
-      className="max-w-xs text-white pt-5"
+      className="max-w-xs text-white pt-5 "
       disableSelectorIconRotation
       onSelectionChange={setSelectedOption}
       selectedKey={selectedOption}
       color='primary'
     >
       {options?.map((option) => (
-        <Tab className='text-white'  key={option.value} value={option.value} title={option.value}>
+        <Tab className='text-white '  key={option.value} value={option.value} title={option.value}>
         </Tab>
       ))}
      </Tabs>
 
             </div>
-        <section className='bg-slate-200 w-full md:flex md:gap-5'>
-            <div className=' bg-slate-200 md:w-1/2 bg-slate-white md:grid  flex-col justify-center'>
-            <div className='bg-white/5 h-1/3 grid justify-items-center'>
-            <div className='md:w-1/2 h-auto grid-cols-1 justify-items-center'>
-                <div className='flex justify-items-center'>
+        <section className='bg-slate-200 w-full md:flex md:gap-5 px-5 pt-5'>
+            <div className=' bg-slate-200 md:w-1/2 md:grid justify-center'>
+            <div className='bg-white/5 h-1/3 grid justify-items-center justify-center'>
+            <div className='md:w-1/2 h-auto grid justify-items-center px-2'>
+                <div className='grid justify-items-center'>
                 <CldImage
             alt={`${cliente.id}`}
             className='w-60 h-60 rounded-full mx-auto shadow-black drop-shadow-md'
             width={400}
             height={400}
             src={`Clientes/cliente`}/>
-            <div className='bg-white m-2 p-2 rounded-lg drop-shadow-md shadow-black '>
-                <h1 className='text-primary font-bold'>
-                    Nombre : <span className='text-black font-normal'> {cliente.nombre} </span>
-                </h1>
-                <h1 className='text-primary font-bold'>
-                    Telefono : <span className='text-black font-normal'> {cliente.telefono} </span>
-                </h1>
-                <h1 className='text-primary font-bold'>
-                    CURP : <span className='text-black font-normal'> {cliente.curp} </span>
-                </h1>
-                <h1 className='text-primary font-bold'>
-                    Estado Civil : <span className='text-black font-normal'> {cliente.estadocivil} </span>
-                </h1>
-                    
+                <div className='flex pt-4 justify-between gap-5'>
+                  <Link href={`${cliente.id}/editar`}>
+                    <Button className='text-white bg-primary shadow-md shadow-primary'>
+                      Editar
+                    </Button>
+                  </Link>
+                  <Link href={`${cliente.id}/contratos`}>
+                    <Button className='text-white bg-primary shadow-md shadow-primary'>
+                      Contrato
+                    </Button>
+                  </Link>
+                    <Button className='text-white bg-primary shadow-md shadow-primary' onClick={onOpen}>
+                      Invertir
+                    </Button>
                 </div>
                 </div>
-            <div className='flex pt-4 justify-between gap-5'>
-                <Link href={`${cliente.id}/editar`}>
-                <Button className='text-white bg-primary shadow-md shadow-primary'>
-                  Editar
-                </Button>
-                </Link>
-                <Link href={`${cliente.id}/contratos`}>
-                <Button className='text-white bg-primary shadow-md shadow-primary'>
-                  Contrato
-                </Button>
-                </Link>
-                <Button className='text-white bg-primary shadow-md shadow-primary' onClick={onOpen}>
-                  Invertir
-                </Button>
-            </div>
+            
             </div>
             <div className=' h-auto w-auto pt-10 justify-items-center'>
                 <div className='bg-white m-2 p-2 rounded-lg drop-shadow-md shadow-black w-auto '>
+                <div className='p-2 w-auto '>
+                <h1 className='text-primary text-2xl font-bold'>
+                    Informacion Personal
+                </h1>
+                <div className='px-3 capitalize '>
+                  <h1 className='text-black font-bold  '>
+                    Nombre : <span className='text-black font-normal '> {cliente.nombre} </span>
+                </h1>
+                <h1 className='text-black font-bold '>
+                    Telefono : <span className='text-black font-normal'> {cliente.telefono} </span>
+                </h1>
+                <h1 className='text-black font-bold '>
+                    CURP : <span className='text-black font-normal'> {cliente.curp} </span>
+                </h1>
+                <h1 className='text-black font-bold '>
+                    Estado Civil : <span className='text-black font-normal'> {cliente.estadocivil} </span>
+                </h1>
+                </div>
+                
+                </div>
                 <div className='p-2 w-auto'>
                 <h1 className='text-primary text-2xl font-bold'>
-                    Direccion
-    
+                    Dirección
                 </h1>
-                <h1 className='text-primary font-bold'>
+                <div className=' px-3'>
+                <h1 className=' font-bold'>
                     Colonia : <span className='text-black font-normal'> {cliente.colonia}  </span>
                 </h1>
-                <h1 className='text-primary font-bold'>
+                <h1 className=' font-bold '>
                     Calle :  <span className=' text-black font-normal'> {cliente.calle} </span>
                 </h1>
-                <h1 className='text-primary font-bold flex justify-between'>
+                <h1 className=' font-bold flex justify-between'>
                     Numero Exterior : <span className='text-black font-normal'>{cliente.numeroext}° </span>
                     Numero Interior : <span className='text-black font-normal'>{cliente.numeroint}° </span>
                 </h1>
-                <h1 className='text-primary font-bold'>
+                <h1 className=' font-bold'>
                     Codigo Postal : <span className='text-black font-normal'> {cliente.cp} </span>
                 </h1>
+                </div>
+               
                 </div>
                 <div className='p-2'>
                     <h1 className='text-primary font-bold text-2xl'>
                         Trabajo
                     </h1>
-                    <h1 className='text-primary font-bold'>
+                    <div className='px-3'>
+                     <h1 className=' font-bold'>
                     Ocupación : <span className='text-black font-normal'> {cliente.ocupacion} </span>
                     </h1>
-                    <h1 className='text-primary font-bold'>
+                    <h1 className=' font-bold'>
                     Lugar de Trabajo : <span className='text-black font-normal'> {cliente.lugardetrabajo} </span>
                     </h1>
-                    <h1 className='text-primary font-bold'>
+                    <h1 className=' font-bold'>
                     Telefono de Trabajo : <span className='text-black font-normal'> {cliente.telefonodetrabajo} </span>
                     </h1>
+                    </div>
+                   
                 </div>
                 <div className='p-2'>
                     <h1 className='text-primary font-bold text-2xl'>
                     Contacto
                     </h1>
-                    <h1 className='text-primary font-bold'>
+                    <div className='px-3'>
+                      <h1 className=' font-bold'>
                     Correo Electronico : <span className='text-black font-normal'> {cliente.correo} </span>
                     </h1>
-                    <h1 className='text-primary font-bold'>
+                    <h1 className=' font-bold'>
                     Referencia : <span className='text-black font-normal'> {cliente.referencia} </span>
                     </h1>
-                    <h1 className='text-primary font-bold'>
+                    <h1 className=' font-bold'>
                     Telefono de Referencia : <span className='text-black font-normal'> {cliente.telefonodereferencia} </span>
                     </h1>	
+                    </div>
                 </div>
                 </div>
             </div>

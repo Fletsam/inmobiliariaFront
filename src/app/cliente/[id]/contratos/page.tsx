@@ -1,5 +1,5 @@
 "use client"
-import { useParams } from 'next/navigation'
+import { useParams, useRouter } from 'next/navigation'
 import React, { useCallback, useEffect, useState } from 'react'
 import useGetClientebyId from '../../hooks/useGetClientebyId'
 import { useSelector } from 'react-redux'
@@ -16,6 +16,7 @@ import { ContratoPDF } from './contratopdf/contrato'
 const Contrato = () => {
 const params = useParams()
 const itemfind = (parseInt(params.id))
+const router = useRouter()
 const [selectedOption , setSelectedOption]  = useState<string>("Lotes") 
 const {startLoadingClientes,dataCliente,cliente} = useGetClientebyId()
 const { isLogged, nombre , id } = useSelector((state: RootState) => state.users)
@@ -66,7 +67,7 @@ const handleRegisterContrato = async () => {
     loteId: lote.id}
     ,path)
     onClose()
-
+    router.push(`/estadocuenta/cliente/${lote.id}`)
     }
 
 const handleOpenLote = (loteid:number) => {
@@ -80,10 +81,10 @@ const filteredData = lotes.filter(item => item.clave.slice(0,-3).includes(select
  
  
 return (
-    <main>
-      <NavbarInicio>
+    <main className='p-5'>
+   
       <Tabs
-      className="max-w-xs text-white pt-5"
+      className="max-w-xs text-white pt-5 px-5"
       disableSelectorIconRotation
       onSelectionChange={setSelectedOption}
       selectedKey={selectedOption}
@@ -94,14 +95,11 @@ return (
         </Tab>
       ))}
      </Tabs>
-      </NavbarInicio>
-      <div className="bg-white">
-      <Button>
-        Ver Lotificacion
-      </Button>
-	  <div className='bg-white gap-3 grid grid-cols-1 justify-items-center sm:grid-cols-4 p-5'>
+   
+      <div className="bg-slate p-5 w-max">
+	  <div className='bg-white gap-5 grid grid-cols-1 justify-items-center sm:grid-cols-4 p-5 shadow-lg shadow-slate rounded-md w-max'>
        {filteredData.map((item, index) => (
-        <Card shadow="sm" className="bg-slate-100 shadow-primary shadow-md p-0 w-52 h-60" key={index} isPressable onPress={()=>handleOpenLote(item)}>
+        <Card shadow="sm" className="bg-slate-100 shadow-primary shadow-md  w-52 h-60" key={index} isPressable onPress={()=>handleOpenLote(item)}>
           <CardBody className=" p-0">
             <CldImage
             className='w-auto h-auto p-1 bg-gray-950/5'
@@ -208,7 +206,7 @@ return (
          </ModalBody>
                 <ModalFooter>
                 <Button className='text-white bg-primary shadow-md shadow-primary ' onPress={onClose}>
-                  Close
+                  Cerrar
                 </Button>
                 <Button className='text-white bg-primary shadow-md shadow-primary ' onPress={handleRegisterContrato}>
                   Registrar Contrato

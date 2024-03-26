@@ -161,7 +161,7 @@ const toFracc = (e:number) => {
 
   return (
     <main className="bg-slate-200 p-5">
-     
+          <div className="sm:flex grid gap-2 justify-between sm:p-5">
             <Input
             isClearable
             type="text"
@@ -173,7 +173,6 @@ const toFracc = (e:number) => {
             id="search"
             name="search"
           />
-          <div className="flex justify-end">
              <Button className='text-white bg-primary shadow-md shadow-primary ' onPress={onOpen}>
                   Agregar Fraccionamiento
                 </Button>

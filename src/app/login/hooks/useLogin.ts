@@ -2,7 +2,7 @@
 /* eslint-disable no-useless-catch */
 import { useMemo, useState, useEffect } from "react";
 
-import { useApiRequest } from "../../../hooks/useApiRequest";
+import { useApiRequest } from "../../hooks/useApiRequest";
 import { useDispatch } from "react-redux";
 
 import { jwtDecode } from "jwt-decode";

@@ -183,7 +183,7 @@ const columns = [
   return (
     <main className="bg-slate-200 p-5">
       
-          <div className="flex flex-1 justify-between">
+          <div className="sm:flex grid gap-2 flex-1 justify-between p-5">
              <Input
             isClearable
             type="text"
@@ -243,18 +243,18 @@ const columns = [
 
 
       <>
-      <Modal isOpen={isOpen} onOpenChange={onOpenChange} isDismissable={false} isKeyboardDismissDisabled={true}>
+      <Modal size="2xl" isOpen={isOpen} onOpenChange={onOpenChange} isDismissable={false} isKeyboardDismissDisabled={true}>
         <ModalContent className="text-black">
           {(onClose) => (
             <>
               <ModalHeader className="flex flex-col gap-1"> <p className="text-primary">Cliente</p></ModalHeader>
-              <ModalBody className="text-black " >
-					     <section className="grid grid-rows">
+              <ModalBody className="text-black p-5" >
+					     <section className="grid grid-rows w-full ">
                 <h1 className="text-primary font-bold">Informacion Personal</h1>
                  <div className="flex row-span-1 p-1">
                   
                      
-                    <div>
+                    <div className="w-full">
                        <h3 className="text-primary pt-1">
                         Nombre : <span className="text-black">{cliente.nombre}</span>
                       </h3>
@@ -319,7 +319,7 @@ const columns = [
               </ModalBody>
                 <ModalFooter>
                 <Button className='text-white bg-primary shadow-md shadow-primary ' onPress={onClose}>
-                  Close
+                  Cerrar
                 </Button>
               </ModalFooter>
             </>

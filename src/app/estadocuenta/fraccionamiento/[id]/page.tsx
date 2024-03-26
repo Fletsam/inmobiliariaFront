@@ -194,7 +194,7 @@ const openModalFracc = (e:number) => {
   return (
     <main className="bg-slate-200 p-5">
       
-       <section className=" text-black flex justify-between p-3">
+       <section className=" text-black flex justify-between p-5">
       <div className="">
         <h1 className="text-primary font-bold text-xl border-white border-b-3">
           Fraccionamiento
@@ -318,7 +318,7 @@ const openModalFracc = (e:number) => {
   </div>      */}    
 
       <Table 
-      className="h-[90vh] w-[auto] p-5"
+      className="h-[90vh] w-[auto]"
       >   
         <TableHeader className=" " columns={columns}>
           {(columns) => (

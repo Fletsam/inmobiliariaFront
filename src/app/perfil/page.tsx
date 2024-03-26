@@ -101,7 +101,7 @@ switch (selectedOption) {
                   Crear Tarea
             </Button>
 		</div>
-		<div className='grid gap-5 grid-cols-2 justify-center'>
+		<div className='grid gap-5'>
 {
 		funciones?.map((item, index) => (
         <Card shadow="sm" className="bg-slate-100 shadow-primary shadow-md" key={index} isPressable onPress={()=>handleChangeEstado(item.id)}>
@@ -112,7 +112,7 @@ switch (selectedOption) {
               <span className="text-4xl  cursor-pointer text-success active:opacity-50 p-5" >
                 <IoCheckmarkCircle    />
               </span>
-          : <span className="text-4xl  cursor-pointer text-warning active:opacity-50" >
+          : <span className="text-4xl  cursor-pointer text-warning active:opacity-50 p-5" >
                 <AlertCircleIcon    />
               </span>}</p>
 			</div>
@@ -134,7 +134,7 @@ switch (selectedOption) {
     
 case "Cliente":
      return ( 
-		<div className='grid justify-cente md:grid-cols-2'>
+		<div className='grid justify-evenly gap-5 md:grid-cols-2'>
 				{
 					clientes.map((item, index) => (
         <Card shadow="sm" className="bg-slate-100 shadow-primary shadow-md w-60" key={index} isPressable onPress={()=> router.push(`/cliente/${item.id}`)}>
@@ -168,53 +168,37 @@ case "fraccs":
 
 
   return (
-	<main className='text-black '>
-		<div className=' w-screen  md:block  '>
-	<NavbarInicio>
- 	<Tabs
-      className="max-w-xs text-white pt-5"
+	<main className='text-black w-auto'>
+		
+	
+ 	<div className=' w-full  md:grid px-7 justify-items-end '>
+            <Tabs
+      className="max-w-xs text-white pt-5 "
       disableSelectorIconRotation
       onSelectionChange={setSelectedOption}
       selectedKey={selectedOption}
       color='primary'
     >
       {options?.map((option) => (
-        <Tab className='text-white'  key={option.value} value={option.value} title={option.value}>
+        <Tab className='text-white '  key={option.value} value={option.value} title={option.value}>
         </Tab>
       ))}
      </Tabs>
-		</NavbarInicio>
-	
+
 			</div>
 			
-		<section className='bg-white w-full md:flex'>
+		<section className='bg-slate-200 w-full md:flex md:gap-5 px-5 pt-5'>
 			
-			<div className=' bg-slate-200 md:w-1/2 bg-slate-white md:grid  flex-col justify-center capitalize'>
-			<div className='bg-white/5 h-1/3 md:flex grid justify-items-center'>
-			<div className='bg-slate-200 w-1/2 h-min p-2 flex md:justify-center'>
+			<div className=' bg-slate-200 md:w-1/2 md:grid flex-col justify-center'>
+			<div className='bg-white/5 h-1/3  grid justify-items-center'>
+			<div className='bg-slate-200 w-1/2 h-min p-2 grid justify-items-center md:justify-center'>
 			<CldImage
             alt={`${usuario.id}`}
             className='w-60 h-60 rounded-full mx-auto shadow-black drop-shadow-md'
             width={400}
             height={400}
             src={`Clientes/cliente`}/>
-			</div>
-			<div className='md:w-1/2 h-auto pt-10'>
-				<div className='bg-white m-2 p-2 rounded-lg drop-shadow-md shadow-black '>
-				<h1 className='text-primary font-bold  '>
-					Nombre : <span className='text-black font-normal '> {usuario.nombre} </span>
-				</h1>
-				<h1 className='text-primary font-bold  '>
-					Telefono : <span className='text-black font-normal '> {usuario.telefono} </span>
-				</h1>
-				<h1 className='text-primary font-bold  '>
-					Cargo : <span className='text-black font-normal '> {usuario.cargo} </span>
-				</h1>
-				<h1 className='text-primary font-bold  '>
-					Area : <span className='text-black font-normal '> {area.nombre} </span>
-				</h1>
-				</div>
-			<div className='flex pt-4 justify-center'>
+				<div className='flex pt-4 justify-center'>
 				<Link href={`${usuario.id}/editar`}>
 				<Button className='text-white bg-primary shadow-md shadow-primary'>
                   Editar
@@ -223,63 +207,89 @@ case "fraccs":
 				
 			</div>
 			</div>
+		
+		
+		
+	
 			</div>
 			<div className=' h-auto pt-10'>
 				<div className='bg-white m-2 p-2 rounded-lg drop-shadow-md shadow-black '>
-					<div className='p-2'>
+				<div className='p-2'>
+					<h1 className=' text-primary font-bold text-2xl  '>
+						Información : 
+						</h1>
+					<div className='px-3'>
+					<h1 className=' font-bold  '>
+						Nombre : <span className='text-black font-normal '> {usuario.nombre} </span>
+					</h1>
+					<h1 className=' font-bold  '>
+						Telefono : <span className='text-black font-normal '> {usuario.telefono} </span>
+					</h1>
+					<h1 className=' font-bold  '>
+						Cargo : <span className='text-black font-normal '> {usuario.cargo} </span>
+					</h1>
+					<h1 className=' font-bold  '>
+						Area : <span className='text-black font-normal '> {area.nombre} </span>
+					</h1>						
+					</div>
 					<h1 className='text-primary font-bold   text-2xl'>
 						Trabajo
 					</h1>
-					<h1 className='text-primary font-bold  '>
-					Area : <span className='text-black font-normal '> {area.nombre} </span>
-					</h1>
-					<h1 className='text-primary font-bold  '>
-					Cargo : <span className='text-black font-normal '> {usuario.cargo} </span>
-					</h1>
-					<h1 className='text-primary font-bold  '>
-					Salario : <span className='text-black font-normal '> {numeral(usuario.salario).format('$0,0')}mxn </span>
-					</h1>
-				</div>
-				<div className='p-2'>
+					<div className='px-3'>
+						<h1 className=' font-bold  '>
+						Area : <span className='text-black font-normal '> {area.nombre} </span>
+						</h1>
+						<h1 className=' font-bold  '>
+						Cargo : <span className='text-black font-normal '> {usuario.cargo} </span>
+						</h1>
+						<h1 className=' font-bold  '>
+						Salario : <span className='text-black font-normal '> {numeral(usuario.salario).format('$0,0')}mxn </span>
+						</h1>
+					</div>
+					
+			
 				<h1 className='text-primary text-2xl font-bold'>
 					Direccion
 				</h1>
-				<h1 className='text-primary font-bold  '>
+				<div className='px-3'>
+				
+				<h1 className=' font-bold  '>
 					Colonia : <span className='text-black font-normal '> {usuario.colonia}  </span>
 				</h1>
-				<h1 className='text-primary font-bold  '>
+				<h1 className=' font-bold  '>
 					Calle :  <span className=' text-black font-normal '> {usuario.calle} </span>
 				</h1>
-				<h1 className='text-primary font-bold  '>
+				<h1 className=' font-bold  '>
 					Numero :  <span className=' text-black font-normal '> {usuario.numero} </span>
 				</h1>
-				<h1 className='text-primary font-bold  '>
+				<h1 className=' font-bold  '>
 					Codigo Postal : <span className='text-black font-normal '> {usuario.cp} </span>
 				</h1>
 				</div>
-				
-				<div className='p-2'>
 					<h1 className='text-primary font-bold   text-2xl'>
 					Informacion
 					</h1>
-					<h1 className='text-primary font-bold  '>
+				<div className='px-3'>
+					<h1 className=' font-bold  '>
 					Correo Electronico : <span className='text-black font-normal '> {usuario.correo} </span>
 					</h1>
-					<h1 className='text-primary font-bold  '>
+					<h1 className=' font-bold  '>
 					Estado Civil : <span className='text-black font-normal '> {usuario.estadocivil} </span>
 					</h1>
-					<h1 className='text-primary font-bold  '>
+					<h1 className=' font-bold  '>
 					RFC : <span className='text-black font-normal '> {usuario.rfc} </span>
 					</h1>
-					<h1 className='text-primary font-bold  '>
+					<h1 className=' font-bold  '>
 					CURP: <span className='text-black font-normal '> {usuario.curp} </span>
 					</h1>	
 				</div>
 				</div>
+					
+				</div>
 			</div>
 			</div>
 				<div className='bg-slate-200 md:w-1/2 '>
-					<div className='bg-white m-2 p-2 rounded-lg drop-shadow-md shadow-black gap-3 '>
+					<div className='bg-white grid justify-evenly m-2 p-2 rounded-lg drop-shadow-md shadow-black gap-5 '>
 						{Cards()}
 					</div>
 				</div>	
